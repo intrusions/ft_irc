@@ -1,4 +1,5 @@
-SRCS		=	main.cpp								\
+SRCS		=	./main.cpp								\
+				./srcs/Server.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 
@@ -10,7 +11,7 @@ CFLAGS		= 	-Wall -Wextra -Werror -I./includes
 
 CPPFLAGS	= 	-std=c++98
 
-NAME		=	ircserver
+NAME		=	ircserv
 
 all:		$(NAME)
 
