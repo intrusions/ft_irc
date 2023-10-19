@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/19 16:18:29 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/19 19:57:01 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ std::string Server::_check_password(char *password) {
 }
 
 /* server initialisation */
+/* ce code initialise un socket, configure certaines options,
+lie le socket à une adresse et un port,
+le met en ecoute pour les connexions entrantes,
+et l'ajoute a une liste de sockets surveilles par poll pour les
+evenements d'entree et de fermeture */
 void		Server::server_initialisation() {
 
 	int32_t	optsock = 1;
@@ -61,7 +66,7 @@ void		Server::server_initialisation() {
 
 	memset(&_addr, 0, sizeof(_addr));
 
-	_addr.sin_addr.s_addr = htonl(INADDR_ANY); 
+	_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	_addr.sin_family = AF_INET;
 	_addr.sin_port = htons(_port);
 
@@ -74,4 +79,16 @@ void		Server::server_initialisation() {
 	_fds.push_back(pollfd());
 	_fds.back().fd = _sockfd;
 	_fds.back().events = (POLLIN | POLLHUP);
+}
+
+void	Server::run() {
+	
+	if (poll(&_fds.front(), _fds.size(), -1) == -1)
+		return ;		
+
+	// if (_fds.front().revents == POLLIN) {
+	// 	acceptUser();
+	// } else {
+		
+	// }
 }

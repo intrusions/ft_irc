@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/19 16:19:13 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/19 19:40:09 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class Server {
 		struct sockaddr_in	_addr;
 		std::vector<pollfd> _fds;
 		
+		
 
 		uint16_t    _check_port(char *port);
 		std::string _check_password(char *password);
@@ -41,6 +42,7 @@ class Server {
 		~Server();
 
 		void	server_initialisation(void);
+		void	run(void);
 		
 		
 		class SocketInitialisationFailed : public std::exception {
