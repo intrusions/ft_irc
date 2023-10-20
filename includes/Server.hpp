@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/20 17:36:15 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/21 00:38:41 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #include <netinet/in.h>
 #include <poll.h>
 #include <cstring>
+#include <unistd.h>
+#include <signal.h>
 
 class User;
 
@@ -41,6 +43,7 @@ class Server {
 		uint16_t    _check_port(char *port);
 		std::string _check_password(char *password);
 		void		_accept_user(void);
+		void		_delete_user(int32_t fd);
 
 
 	public:

@@ -1,6 +1,6 @@
 SRCS		=	./main.cpp								\
 				./srcs/Server.cpp						\
-				./srcs/User.cpp						\
+				./srcs/User.cpp							\
 
 OBJS		=	$(SRCS:.cpp=.o)
 
@@ -8,7 +8,7 @@ CC			=	c++
 
 RM			=	rm -f
 
-CFLAGS		= 	-Wall -Wextra -Werror -I./includes
+CFLAGS		= 	-I./includes
 
 CPPFLAGS	= 	-std=c++98
 

@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/20 17:54:03 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/21 00:28:12 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,39 @@ void		Server::server_initialisation() {
 	_fds.back().events = (POLLIN | POLLHUP);
 }
 
+
+
 void	Server::run() {
-	
+
 	if (poll(&_fds.front(), _fds.size(), -1) == -1)
 		return ;		
 
 	if (_fds.front().revents == POLLIN) {
-		std::cout << "User connected" << std::endl;
 		_accept_user();
 	} else {
-		// std::cout << "Ici"  << std::endl;
+		
+		for (std::vector<pollfd>::iterator it = _fds.begin() + 1; it != _fds.end(); it++) {
+			if (it->revents == POLLIN) {
+				_users[it->fd]->receive_response();
+			} else if ((it->revents & POLLRDHUP) == POLLRDHUP) {
+				_delete_user(it->fd);
+				break ;
+			}
+		}		
+	}
+}
+
+void	Server::_delete_user(int32_t fd) {
+	
+	close(fd);
+	delete _users[fd];
+	_users.erase(_users.find(fd));
+	
+	for (std::vector<pollfd>::iterator it = _fds.begin(); it != _fds.end(); ++it) {
+		if (it->fd == fd) {
+			_fds.erase(it);
+			return ;
+		}
 	}
 }
 
