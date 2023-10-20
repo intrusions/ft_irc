@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 13:32:38 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/20 16:51:37 by jucheval         ###   ########.fr       */
+/*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
+/*   Updated: 2023/10/20 17:36:19 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/Server.hpp"
+#pragma once
 
-int main(int ac, char **av) {
+#include "./Server.hpp"
+#include <stdint.h>
+#include <netinet/in.h>
 
-	if (ac != 3) {
-		std::cout << "`error`: usage: ./ircserv [port] [password]" << std::endl;
-		return (EXIT_FAILURE);
-	}
+class Server;
+
+class User {
 	
-	try {
-		Server serv(av[1], av[2]);
-		serv.server_initialisation();
+	private:
+		int32_t				_fd;
+		Server				*_server;
+		struct sockaddr_in	_address;
 
-		while (1) {
-			serv.run();
-		}
-		
-	} catch(std::exception &err) {
-		std::cout << err.what() << std::endl;
-	}
-}
+	public:
+		User(int32_t fd, struct sockaddr_in addr, Server *serv);
+		~User();
+};

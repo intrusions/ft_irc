@@ -1,5 +1,6 @@
 SRCS		=	./main.cpp								\
-				./srcs/Server.cpp
+				./srcs/Server.cpp						\
+				./srcs/User.cpp						\
 
 OBJS		=	$(SRCS:.cpp=.o)
 

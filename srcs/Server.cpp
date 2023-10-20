@@ -6,11 +6,13 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/19 19:57:01 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:54:03 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Server.hpp"
+#include "../includes/User.hpp"
+
 
 /* constructor/destructor */
 Server::Server(char *port, char *password) {
@@ -86,9 +88,30 @@ void	Server::run() {
 	if (poll(&_fds.front(), _fds.size(), -1) == -1)
 		return ;		
 
-	// if (_fds.front().revents == POLLIN) {
-	// 	acceptUser();
-	// } else {
-		
-	// }
+	if (_fds.front().revents == POLLIN) {
+		std::cout << "User connected" << std::endl;
+		_accept_user();
+	} else {
+		// std::cout << "Ici"  << std::endl;
+	}
+}
+
+void	Server::_accept_user() {
+	
+	struct sockaddr_in	addr;
+	memset(&addr, 0, sizeof(addr));
+	
+	socklen_t sock_len = sizeof(addr);
+	int32_t fd = accept(_sockfd, (struct sockaddr *)&addr, &sock_len);
+
+	if (fd == -1) {
+		std::cout << "error: `accept()` function failed" << std::endl;
+		return ;
+	}
+
+	_users[fd] = new User(fd, addr, this);
+
+	_fds.push_back(pollfd());
+	_fds.back().fd = fd;
+	_fds.back().events = (POLLIN | POLLRDHUP);
 }
