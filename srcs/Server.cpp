@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/21 00:28:12 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:53:40 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ void	Server::run() {
 		
 		for (std::vector<pollfd>::iterator it = _fds.begin() + 1; it != _fds.end(); it++) {
 			if (it->revents == POLLIN) {
-				_users[it->fd]->receive_response();
+				_users[it->fd]->receive_client_input();
+				_users[it->fd]->DEBUG_PRINT_CMD_VEC();
 			} else if ((it->revents & POLLRDHUP) == POLLRDHUP) {
 				_delete_user(it->fd);
 				break ;
