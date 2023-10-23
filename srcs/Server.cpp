@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/21 21:24:13 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/23 21:07:30 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,9 @@ void	Server::_exec_client_commands(User *user) {
 
 		if (cmd_splited.size()) {
 		
-			if (cmd_splited[0] == "/NICK" || cmd_splited[0] == "NICK") {
+			if (cmd_splited[0] == "/PASS" || cmd_splited[0] == "PASS") {
+				_command_pass(cmd_splited, user->get_fd());
+			} else if (cmd_splited[0] == "/NICK" || cmd_splited[0] == "NICK") {
 				std::cout << "nick function" << std::endl;
 			} else if (cmd_splited[0] == "/TOPIC" || cmd_splited[0] == "TOPIC") {
 				std::cout << "topic function" << std::endl;
@@ -154,9 +156,6 @@ void	Server::_exec_client_commands(User *user) {
 				std::cout << "kill function" << std::endl;
 			} else if (cmd_splited[0] == "/OPER" || cmd_splited[0] == "OPER") {
 				std::cout << "oper function" << std::endl;
-			} else if (cmd_splited[0] == "/PASS" || cmd_splited[0] == "PASS") {
-				std::cout << "pass function" << std::endl;
-				// _server->_command_pass(cmd_splited, _fd);
 			} else if (cmd_splited[0] == "/USER" || cmd_splited[0] == "USER") {
 				std::cout << "user function" << std::endl;
 			} else if (cmd_splited[0] == "/QUIT" || cmd_splited[0] == "QUIT") {
@@ -222,15 +221,17 @@ void	Server::_delete_user(int32_t fd) {
 	}
 }
 
-// void	Server::_command_pass(std::vector<std::string> cmd, int32_t fd) {
+void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param) {
 
-// 	if (cmd.size() != 2) {
+	std::string reply;
 
-// 		send_reply(fd, 461, )
-// 	}
-// }
+	switch(err) {
 
-// void	_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param) {
-
-// }
-
+		case 461: reply = ERR_NEEDMOREPARAMS(_users[fd], err_param);	break;
+		case 462: reply = ERR_ALREADYREGISTERED(_users[fd]);			break;
+		case 464: reply = ERR_PASSWDMISMATCH(_users[fd]);				break;
+	}
+	
+	if (send(fd, reply.c_str(), reply.length(), 0) == -1)
+		return ;
+}

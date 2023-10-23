@@ -13,6 +13,7 @@
 #pragma once
 
 #include "./User.hpp"
+#include "./errors.hpp"
 #include <iostream>
 #include <stdint.h>
 #include <exception>
@@ -49,9 +50,11 @@ class Server {
 		void		_receive_client_input(User *user);
 		void		_exec_client_commands(User *user);
 
-		void		_command_pass(std::vector<std::string> cmd);
+		void		_command_pass(std::vector<std::string> cmd, int32_t fd);
 		
 		void		_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param);
+
+
 	
 	public:
 		Server(char *port, char *pass);
