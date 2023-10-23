@@ -61,42 +61,43 @@ void	User::exec_client_commands() {
 		std::vector<std::string> cmd_splited = split_space(*it);
 
 		if (cmd_splited.size()) {
+			std::cout << "debug: " << cmd_splited[0] << std::endl;
 		
-			if (cmd_splited[0] == "/NICK") {
+			if (cmd_splited[0] == "/NICK" || cmd_splited[0] == "NICK") {
 				std::cout << "nick function" << std::endl;
-			} else if (cmd_splited[0] == "/TOPIC") {
+			} else if (cmd_splited[0] == "/TOPIC" || cmd_splited[0] == "TOPIC") {
 				std::cout << "topic function" << std::endl;
-			} else if (cmd_splited[0] == "/die") {
+			} else if (cmd_splited[0] == "/die" || cmd_splited[0] == "die") {
 				std::cout << "die function" << std::endl;
-			} else if (cmd_splited[0] == "/kill") {
+			} else if (cmd_splited[0] == "/kill" || cmd_splited[0] == "kill") {
 				std::cout << "kill function" << std::endl;
-			} else if (cmd_splited[0] == "/OPER") {
+			} else if (cmd_splited[0] == "/OPER" || cmd_splited[0] == "OPER") {
 				std::cout << "oper function" << std::endl;
-			} else if (cmd_splited[0] == "/PASS") {
+			} else if (cmd_splited[0] == "/PASS" || cmd_splited[0] == "PASS") {
 				std::cout << "pass function" << std::endl;
-			} else if (cmd_splited[0] == "/USER") {
+			} else if (cmd_splited[0] == "/USER" || cmd_splited[0] == "USER") {
 				std::cout << "user function" << std::endl;
-			} else if (cmd_splited[0] == "/QUIT") {
+			} else if (cmd_splited[0] == "/QUIT" || cmd_splited[0] == "QUIT") {
 				std::cout << "quit function" << std::endl;
-			} else if (cmd_splited[0] == "/MODE") {
+			} else if (cmd_splited[0] == "/MODE" || cmd_splited[0] == "MODE") {
 				std::cout << "mode function" << std::endl;
-			} else if (cmd_splited[0] == "/PRIVMSG") {
+			} else if (cmd_splited[0] == "/PRIVMSG" || cmd_splited[0] == "PRIVMSG") {
 				std::cout << "privmsg function" << std::endl;
-			} else if (cmd_splited[0] == "/NOTICE") {
+			} else if (cmd_splited[0] == "/NOTICE" || cmd_splited[0] == "NOTICE") {
 				std::cout << "notice function" << std::endl;
-			} else if (cmd_splited[0] == "/JOIN") {
+			} else if (cmd_splited[0] == "/JOIN" || cmd_splited[0] == "JOIN") {
 				std::cout << "join function" << std::endl;
-			} else if (cmd_splited[0] == "/LIST") {
+			} else if (cmd_splited[0] == "/LIST" || cmd_splited[0] == "LIST") {
 				std::cout << "list function" << std::endl;
-			} else if (cmd_splited[0] == "/INVITE") {
+			} else if (cmd_splited[0] == "/INVITE" || cmd_splited[0] == "INVITE") {
 				std::cout << "invite function" << std::endl;
-			} else if (cmd_splited[0] == "/KICK") {
+			} else if (cmd_splited[0] == "/KICK" || cmd_splited[0] == "KICK") {
 				std::cout << "kick function" << std::endl;
-			} else if (cmd_splited[0] == "/PART") {
+			} else if (cmd_splited[0] == "/PART" || cmd_splited[0] == "PART") {
 				std::cout << "part function" << std::endl;
-			} else if (cmd_splited[0] == "/PING") {
+			} else if (cmd_splited[0] == "/PING" || cmd_splited[0] == "PING") {
 				std::cout << "ping function" << std::endl;
-			} else if (cmd_splited[0] == "/PONG") {
+			} else if (cmd_splited[0] == "/PONG" || cmd_splited[0] == "PONG") {
 				std::cout << "pong function" << std::endl;
 			}
 		}
