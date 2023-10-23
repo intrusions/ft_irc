@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:52:09 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/23 21:56:39 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/23 22:18:11 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ User::User(int32_t fd, struct sockaddr_in addr, Server *serv)
 	, _prefix("GUEST")
 	, _nickname("GUEST")
 	, _username ("GUEST")
+	, _realname ("GUEST")
 	, _hostname ("GUEST")
 	, _pass_is_valid(0) {}
 

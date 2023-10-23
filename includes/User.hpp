@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/23 21:57:32 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/23 22:18:05 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ class User {
 		std::string					_prefix;
 		std::string					_nickname;
 		std::string					_username;
+		std::string					_realname;
 		std::string					_hostname;
 
 		bool						_pass_is_valid;
