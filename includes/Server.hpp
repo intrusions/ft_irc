@@ -38,22 +38,30 @@ class Server {
 		struct sockaddr_in		_addr;
 		std::vector<pollfd>		_fds;
 		std::map<int, User *>	_users;
-		
+
 
 		uint16_t    _check_port(char *port);
 		std::string _check_password(char *password);
+
 		void		_accept_user(void);
 		void		_delete_user(int32_t fd);
 
+		void		_receive_client_input(User *user);
+		void		_exec_client_commands(User *user);
 
+		void		_command_pass(std::vector<std::string> cmd);
+		
+		void		_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param);
+	
 	public:
 		Server(char *port, char *pass);
 		~Server();
 
 		void	server_initialisation(void);
 		void	run(void);
-		
-		
+
+
+
 		class SocketInitialisationFailed : public std::exception {
 			public :
 			   virtual const char *what() const throw() {

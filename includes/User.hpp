@@ -18,7 +18,6 @@
 #include <vector>
 #include <stdint.h>
 #include <netinet/in.h>
-#include <sstream>
 
 class Server;
 
@@ -34,15 +33,6 @@ class User {
 		User(int32_t fd, struct sockaddr_in addr, Server *serv);
 		~User();
 
-		void	receive_client_input(void);
-		void	exec_client_commands(void);
-
-		int32_t	get_fd(void);
-
-		std::vector<std::string>	split_space(std::string cmd);
-
-
-		void	DEBUG_PRINT_CMD_VEC(void);
-		void	DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> cmd);
-
+		int32_t						get_fd(void);
+		std::vector<std::string>	*fetch_commands(void);
 };

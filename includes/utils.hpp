@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.cpp                                           :+:      :+:    :+:   */
+/*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 16:52:09 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/21 22:37:48 by jucheval         ###   ########.fr       */
+/*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
+/*   Updated: 2023/10/21 21:24:45 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/User.hpp"
+#pragma once
 
-/* constructor/destructor */
-User::User(int32_t fd, struct sockaddr_in addr, Server *serv)
-	: _fd(fd)
-	, _server(serv)
-	, _address(addr) {}
+#include "./User.hpp"
 
-User::~User() {}
+#include <iostream>
+#include <vector>
+#include <cstring>
+#include <sstream>
 
+std::vector<std::string>	split_space(std::string cmd);
 
-/* accessor */
-int32_t						User::get_fd() { return (_fd); }
-
-/* fetch arg */
-std::vector<std::string>	*User::fetch_commands() { return (&_commands); }
+void	DEBUG_PRINT_CMD_VEC(User *user);
+void	DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> cmd, User *user);
