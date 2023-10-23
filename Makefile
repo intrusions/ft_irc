@@ -4,6 +4,7 @@ SRCS		=	./main.cpp								\
 				./srcs/utils.cpp						\
 				./srcs/errors.cpp						\
 				./srcs/commands/command_pass.cpp		\
+				./srcs/commands/command_nick.cpp		\
 
 OBJS		=	$(SRCS:.cpp=.o)
 

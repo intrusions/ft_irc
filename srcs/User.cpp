@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:52:09 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/23 21:04:04 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/23 21:56:39 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ std::string		User::get_prefix() { return (_prefix); }
 std::string		User::get_nickname() { return (_prefix); }
 
 void			User::set_pass_is_valid(bool n) { _pass_is_valid = n; }
+void			User::set_nickname(std::string n) { _nickname = n; }
 
 /* fetch arg */
 std::vector<std::string>	*User::fetch_commands() { return (&_commands); }

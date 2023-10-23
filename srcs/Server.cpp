@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/23 21:07:30 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/23 21:54:16 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	Server::_exec_client_commands(User *user) {
 			if (cmd_splited[0] == "/PASS" || cmd_splited[0] == "PASS") {
 				_command_pass(cmd_splited, user->get_fd());
 			} else if (cmd_splited[0] == "/NICK" || cmd_splited[0] == "NICK") {
-				std::cout << "nick function" << std::endl;
+				_command_nick(cmd_splited, user->get_fd());
 			} else if (cmd_splited[0] == "/TOPIC" || cmd_splited[0] == "TOPIC") {
 				std::cout << "topic function" << std::endl;
 			} else if (cmd_splited[0] == "/die" || cmd_splited[0] == "die") {
@@ -230,6 +230,9 @@ void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_p
 		case 461: reply = ERR_NEEDMOREPARAMS(_users[fd], err_param);	break;
 		case 462: reply = ERR_ALREADYREGISTERED(_users[fd]);			break;
 		case 464: reply = ERR_PASSWDMISMATCH(_users[fd]);				break;
+		case 431: reply = ERR_NONICKNAMEGIVEN(_users[fd]);				break;
+		case 432: reply = ERR_ERRONEUSNICKNAME(_users[fd], err_param);	break;
+		case 433: reply = ERR_NICKNAMEINUSE(_users[fd], err_param);		break;
 	}
 	
 	if (send(fd, reply.c_str(), reply.length(), 0) == -1)

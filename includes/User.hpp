@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/23 21:04:30 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/23 21:57:32 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ class User {
 		std::string		get_nickname(void);
 
 		void			set_pass_is_valid(bool n);
+		void			set_nickname(std::string n);
+
 
 };
