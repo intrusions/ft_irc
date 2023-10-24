@@ -6,14 +6,15 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/23 22:00:21 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/24 03:39:43 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "./User.hpp"
-#include "./errors.hpp"
+#include "./reply.hpp"
+
 #include <iostream>
 #include <stdint.h>
 #include <exception>
@@ -35,6 +36,10 @@ class Server {
 	private:
 		uint16_t    			_port;
 		std::string 			_password;
+		std::string 			_networkname;
+		std::string 			_servername;
+		std::string				_start_time;
+		std::string				_version;
 		int32_t					_sockfd;
 		struct sockaddr_in		_addr;
 		std::vector<pollfd>		_fds;
@@ -52,9 +57,9 @@ class Server {
 
 		void		_command_pass(std::vector<std::string> cmd, int32_t fd);
 		void		_command_nick(std::vector<std::string> cmd, int32_t fd);
-		
-		void		_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param);
+		void		_command_user(std::string cmd, int32_t fd);
 
+		void		_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param);
 
 	
 	public:
@@ -64,6 +69,9 @@ class Server {
 		void	server_initialisation(void);
 		void	run(void);
 
+		std::string 	get_networkname(void);
+		std::string 	get_servername(void);
+		std::string 	get_start_time(void);
 
 
 		class SocketInitialisationFailed : public std::exception {

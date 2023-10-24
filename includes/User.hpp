@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/23 22:18:05 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/24 03:47:18 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,21 @@ class User {
 	public:
 		User(int32_t fd, struct sockaddr_in addr, Server *serv);
 		~User();
-
-		std::vector<std::string>	*fetch_commands(void);
-		
 		
 		int32_t			get_fd(void);
-		int32_t			get_pass_is_valid(void);
 		std::string		get_prefix(void);
 		std::string		get_nickname(void);
+		std::string		get_username(void);
+		std::string		get_realname(void);
+		std::string		get_hostname(void);
+		int32_t			get_pass_is_valid(void);
 
-		void			set_pass_is_valid(bool n);
+		void			set_prefix(void);
 		void			set_nickname(std::string n);
-
-
+		void			set_username(std::string n);
+		void			set_realname(std::string n);
+		void			set_hostname(std::string n);
+		void			set_pass_is_valid(bool n);
+		
+		std::vector<std::string>	*fetch_commands(void);
 };

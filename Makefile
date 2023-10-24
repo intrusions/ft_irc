@@ -2,9 +2,10 @@ SRCS		=	./main.cpp								\
 				./srcs/Server.cpp						\
 				./srcs/User.cpp							\
 				./srcs/utils.cpp						\
-				./srcs/errors.cpp						\
+				./srcs/reply.cpp						\
 				./srcs/commands/command_pass.cpp		\
 				./srcs/commands/command_nick.cpp		\
+				./srcs/commands/command_user.cpp		\
 
 OBJS		=	$(SRCS:.cpp=.o)
 

@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/23 22:44:47 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/24 03:45:44 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,21 @@ Server::Server(char *port, char *password) {
 	
 	_port = _check_port(port);
 	_password = _check_password(password);
+	_networkname = "Porte de la chapelle";
+	_servername = "Crackland";
+	_version = "1";
+
+	time_t	now = time(0);
+    tm		*ltm = localtime(&now);
+    char 	date[32];
+    
+	strftime(date, sizeof(date), "%Y-%m-%d %H:%M:%S", ltm);
+    
+	_start_time = std::string(date);
 }
 
 Server::~Server() {}
+
 
 /* main argument's parsing */
 uint16_t    Server::_check_port(char *port) {
@@ -49,6 +61,7 @@ std::string Server::_check_password(char *password) {
 	
 	return (nPass);
 }
+
 
 /* server initialisation */
 void		Server::server_initialisation() {
@@ -79,6 +92,7 @@ void		Server::server_initialisation() {
 	_fds.back().events = (POLLIN | POLLHUP);
 }
 
+
 /* server loop */
 void	Server::run() {
 
@@ -100,6 +114,7 @@ void	Server::run() {
 		}		
 	}
 }
+
 
 /* receive command from client, parse, execute and return an output */
 void	Server::_receive_client_input(User *user) {
@@ -146,7 +161,7 @@ void	Server::_exec_client_commands(User *user) {
 		
 			if (cmd_splited[0] == "/PASS" || cmd_splited[0] == "PASS")				{ _command_pass(cmd_splited, user->get_fd()); } 
 			else if (cmd_splited[0] == "/NICK" || cmd_splited[0] == "NICK") 		{ _command_nick(cmd_splited, user->get_fd()); } 
-			else if (cmd_splited[0] == "/USER" || cmd_splited[0] == "USER") 		{ /*_command_user(cmd_splited, user->get_fd());*/ }
+			else if (cmd_splited[0] == "/USER" || cmd_splited[0] == "USER") 		{ _command_user(*it, user->get_fd()); }
 			else if (cmd_splited[0] == "/die" || cmd_splited[0] == "die") 			{ std::cout << "die function" << std::endl;	}
 			else if (cmd_splited[0] == "/kill" || cmd_splited[0] == "kill")			{ std::cout << "kill function" << std::endl; }
 			else if (cmd_splited[0] == "/OPER" || cmd_splited[0] == "OPER")			{ std::cout << "oper function" << std::endl; }
@@ -166,6 +181,7 @@ void	Server::_exec_client_commands(User *user) {
 		it = cmd->erase(it);
 	}
 }
+
 
 /* user management (add && delete) */
 void	Server::_accept_user() {
@@ -202,20 +218,32 @@ void	Server::_delete_user(int32_t fd) {
 	}
 }
 
+
+/* reply management */
 void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param) {
 
 	std::string reply;
 
 	switch(err) {
 
-		case 461: reply = ERR_NEEDMOREPARAMS(_users[fd], err_param);	break;
-		case 462: reply = ERR_ALREADYREGISTERED(_users[fd]);			break;
-		case 464: reply = ERR_PASSWDMISMATCH(_users[fd]);				break;
-		case 431: reply = ERR_NONICKNAMEGIVEN(_users[fd]);				break;
-		case 432: reply = ERR_ERRONEUSNICKNAME(_users[fd], err_param);	break;
-		case 433: reply = ERR_NICKNAMEINUSE(_users[fd], err_param);		break;
+		case 001: reply = RPL_WELCOME(_users[fd], _networkname);				break;
+		case 002: reply = RPL_YOURHOST(_users[fd], _servername, _version);		break;
+		case 003: reply = RPL_CREATED(_users[fd], _start_time);					break;
+		case 004: reply = RPL_MYINFO(_users[fd], _servername, _version);		break;
+		case 461: reply = ERR_NEEDMOREPARAMS(_users[fd], err_param);			break;
+		case 462: reply = ERR_ALREADYREGISTERED(_users[fd]);					break;
+		case 464: reply = ERR_PASSWDMISMATCH(_users[fd]);						break;
+		case 431: reply = ERR_NONICKNAMEGIVEN(_users[fd]);						break;
+		case 432: reply = ERR_ERRONEUSNICKNAME(_users[fd], err_param);			break;
+		case 433: reply = ERR_NICKNAMEINUSE(_users[fd], err_param);				break;
 	}
 	
 	if (send(fd, reply.c_str(), reply.length(), 0) == -1)
 		return ;
 }
+
+
+/* accessor */
+std::string Server::get_networkname() { return (_networkname); }
+std::string Server::get_servername() { return (_servername); }
+std::string Server::get_start_time() { return (_start_time); }
