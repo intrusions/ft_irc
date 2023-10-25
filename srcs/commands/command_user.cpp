@@ -6,13 +6,18 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/10/24 03:36:42 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/25 22:30:26 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 #include "../../includes/User.hpp"
 #include "../../includes/utils.hpp"
+
+static bool	is_valid_realname(std::string realname) {
+	(void)realname;
+	return (true);
+}
 
 void	Server::_command_user(std::string cmd, int32_t fd) {
 
@@ -24,6 +29,8 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
     uint32_t 					pos = 0;
 	
 
+	/* envoyer un personnal pour dire que le /NICK
+	DOIT etre appelee avant le /USER */
 	if (_users[fd]->get_nickname() == "GUEST") {
 		std::cout << "nickname is guest" << std::endl;
 		return ;
@@ -47,7 +54,10 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 		hostname = cmd_splited[3];
 	}
 
-	// check if realname is valid
+	if (!is_valid_realname(realname)) {
+		_send_reply(fd, 461, err_param);
+		return ;
+	}
 
 	for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); it++) {
 

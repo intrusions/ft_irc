@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/24 03:45:44 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/25 22:16:25 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	Server::_receive_client_input(User *user) {
 	char			buff[512] = {};
 	int64_t			bytes_read;
 	uint8_t			delimiter_size;
-	int32_t			pos_delimiter;
+	uint32_t		pos_delimiter;
 	std::string		copy_buff;
 
 	bytes_read = recv(user->get_fd(), &buff, sizeof(buff), 0);

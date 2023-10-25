@@ -1,0 +1,4 @@
+### 1 ###
+/NICK
+:xelor!localhost@a :No nickname given
+:xelor!localhost@a :No nickname given
