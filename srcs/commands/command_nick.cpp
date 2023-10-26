@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_nick.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/10/24 01:58:55 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/26 03:12:26 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	Server::_command_nick(std::vector<std::string> cmd, int32_t fd) {
 			return ;
 		}
 	}
-	
+
 	_users[fd]->set_nickname(cmd[1]);
 	_users[fd]->set_prefix();
 }

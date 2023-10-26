@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/25 22:16:25 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/26 03:58:12 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,17 +121,16 @@ void	Server::_receive_client_input(User *user) {
 	
 	char			buff[512] = {};
 	int64_t			bytes_read;
-	uint8_t			delimiter_size;
-	uint32_t		pos_delimiter;
+	uint8_t			delimiter_size = 0;
+	uint64_t		pos_delimiter;
 	std::string		copy_buff;
 
 	bytes_read = recv(user->get_fd(), &buff, sizeof(buff), 0);
 	
 	if (bytes_read == -1) {
 		return ;
-	} else if (bytes_read == 512) {
-		buff[510] = '\n';
-		buff[511] = '\0';
+	} else {
+		buff[bytes_read] = 0;
 	}
 
 	copy_buff = buff;
@@ -153,12 +152,12 @@ void	Server::_exec_client_commands(User *user) {
 
 	std::vector<std::string> *cmd = user->fetch_commands();
 
-	for (std::vector<std::string>::iterator it = cmd->begin(); it != cmd->end(); ) {
+	for (std::vector<std::string>::iterator it = cmd->begin(); it != cmd->end(); it = cmd->erase(it)) {
 
 		std::vector<std::string> cmd_splited = split_space(*it);
 
 		if (cmd_splited.size()) {
-		
+
 			if (cmd_splited[0] == "/PASS" || cmd_splited[0] == "PASS")				{ _command_pass(cmd_splited, user->get_fd()); } 
 			else if (cmd_splited[0] == "/NICK" || cmd_splited[0] == "NICK") 		{ _command_nick(cmd_splited, user->get_fd()); } 
 			else if (cmd_splited[0] == "/USER" || cmd_splited[0] == "USER") 		{ _command_user(*it, user->get_fd()); }
@@ -178,7 +177,6 @@ void	Server::_exec_client_commands(User *user) {
 			else if (cmd_splited[0] == "/PING" || cmd_splited[0] == "PING")			{ std::cout << "ping function" << std::endl; }
 			else if (cmd_splited[0] == "/PONG" || cmd_splited[0] == "PONG")			{ std::cout << "pong function" << std::endl; }
 		}
-		it = cmd->erase(it);
 	}
 }
 
@@ -233,11 +231,15 @@ void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_p
 		case 461: reply = ERR_NEEDMOREPARAMS(_users[fd], err_param);			break;
 		case 462: reply = ERR_ALREADYREGISTERED(_users[fd]);					break;
 		case 464: reply = ERR_PASSWDMISMATCH(_users[fd]);						break;
-		case 431: reply = ERR_NONICKNAMEGIVEN(_users[fd]);						break;
+		case 431: reply = ERR_NONICKNAMEGIVEN(_users[fd]) + '\0';				break;
 		case 432: reply = ERR_ERRONEUSNICKNAME(_users[fd], err_param);			break;
 		case 433: reply = ERR_NICKNAMEINUSE(_users[fd], err_param);				break;
 	}
-	
+
+// std::string test = "HELLO TEAM\n";
+// send(fd, test.c_str(), test.length(), 0);
+
+
 	if (send(fd, reply.c_str(), reply.length(), 0) == -1)
 		return ;
 }

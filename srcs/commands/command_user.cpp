@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_user.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/10/25 22:30:26 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/26 04:27:34 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 	std::string					realname;
 	std::string					username;
 	std::string					hostname;
-    uint32_t 					pos = 0;
+    uint64_t 					pos = 0;
 	
 
 	/* envoyer un personnal pour dire que le /NICK
@@ -37,6 +37,7 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 	}
 
 	if ((pos = cmd.find(":")) && pos == std::string::npos) {
+		err_param.push_back("USER");
 		_send_reply(fd, 461, err_param);
 		return ;
 	} else {
@@ -47,6 +48,7 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 	cmd_splited = split_space(cmd);
 
 	if (cmd_splited.size() != 4) {
+		err_param.push_back("USER");
 		_send_reply(fd, 461, err_param);
 		return ;
 	} else {
@@ -55,6 +57,7 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 	}
 
 	if (!is_valid_realname(realname)) {
+		err_param.push_back("USER");
 		_send_reply(fd, 461, err_param);
 		return ;
 	}
