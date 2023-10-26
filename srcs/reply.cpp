@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reply.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/24 03:32:48 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/27 00:28:52 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,10 @@ std::string	ERR_ALREADYREGISTERED(User *user) {
 std::string	ERR_PASSWDMISMATCH(User *user) {
 
 	return (user->get_prefix() + " :Password incorrect\r\n");
+}
+
+/* 1001 */
+std::string	PER_NICKNAMECHANGE(std::vector<std::string> err_param) {
+
+	return (err_param[0] + " NICK " + err_param[1] + "\r\n");
 }

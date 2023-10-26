@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/26 19:21:52 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/27 00:47:26 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,7 @@ void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_p
 		case 431: reply = ERR_NONICKNAMEGIVEN(_users[fd]);						break;
 		case 432: reply = ERR_ERRONEUSNICKNAME(_users[fd], err_param);			break;
 		case 433: reply = ERR_NICKNAMEINUSE(_users[fd], err_param);				break;
+		case 1001: reply = PER_NICKNAMECHANGE(err_param);						break;
 	}
 
 	if (send(fd, reply.c_str(), reply.length(), 0) == -1)

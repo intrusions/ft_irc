@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reply.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/26 17:53:18 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/27 00:29:22 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,5 @@ std::string	ERR_PASSWDMISMATCH(User *user);
 std::string	ERR_NONICKNAMEGIVEN(User *user);
 std::string	ERR_ERRONEUSNICKNAME(User *user, std::vector<std::string> err_param);
 std::string	ERR_NICKNAMEINUSE(User *user, std::vector<std::string> err_param);
+
+std::string	PER_NICKNAMECHANGE(std::vector<std::string> err_param);
