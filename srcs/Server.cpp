@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/26 17:57:34 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/26 19:21:52 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_p
 		case 461: reply = ERR_NEEDMOREPARAMS(_users[fd], err_param);			break;
 		case 462: reply = ERR_ALREADYREGISTERED(_users[fd]);					break;
 		case 464: reply = ERR_PASSWDMISMATCH(_users[fd]);						break;
-		case 431: reply = ERR_NONICKNAMEGIVEN(_users[fd]) + '\0';				break;
+		case 431: reply = ERR_NONICKNAMEGIVEN(_users[fd]);						break;
 		case 432: reply = ERR_ERRONEUSNICKNAME(_users[fd], err_param);			break;
 		case 433: reply = ERR_NICKNAMEINUSE(_users[fd], err_param);				break;
 	}
