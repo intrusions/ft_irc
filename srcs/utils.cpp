@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/26 05:03:38 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:54:05 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ std::vector<std::string>	split_space(std::string cmd) {
 	return (tokens);
 }
 
-void logs(std::string str, int32_t color) {
+void logs(std::string str, uint8_t color) {
 
 	std::string color_code;
 

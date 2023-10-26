@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/26 03:58:12 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:57:34 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	Server::run() {
 		return ;		
 
 	if (_fds.front().revents == POLLIN) {
+		logs("logs(client socket created)", 2);
 		_accept_user();
 	} else {
 		
@@ -108,6 +109,7 @@ void	Server::run() {
 				_receive_client_input(_users[it->fd]);
 				_exec_client_commands(_users[it->fd]);
 			} else if ((it->revents & POLLRDHUP) == POLLRDHUP) {
+				logs("logs(client socket destroyed)", 1);
 				_delete_user(it->fd);
 				break ;
 			}
@@ -116,7 +118,7 @@ void	Server::run() {
 }
 
 
-/* receive command from client, parse, execute and return an output */
+/* receive command from client, and fill `_commands` vector with string splited by '\n' or '\r\n' */
 void	Server::_receive_client_input(User *user) {
 	
 	char			buff[512] = {};
@@ -148,6 +150,7 @@ void	Server::_receive_client_input(User *user) {
 	}
 }
 
+/* execute one by one the command in `_commands`, and erase node after execution of it */
 void	Server::_exec_client_commands(User *user) {
 
 	std::vector<std::string> *cmd = user->fetch_commands();
@@ -208,7 +211,7 @@ void	Server::_delete_user(int32_t fd) {
 	delete _users[fd];
 	_users.erase(_users.find(fd));
 	
-	for (std::vector<pollfd>::iterator it = _fds.begin(); it != _fds.end(); ++it) {
+	for (std::vector<pollfd>::iterator it = _fds.begin() + 1; it != _fds.end(); it++) {
 		if (it->fd == fd) {
 			_fds.erase(it);
 			return ;
@@ -236,16 +239,12 @@ void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_p
 		case 433: reply = ERR_NICKNAMEINUSE(_users[fd], err_param);				break;
 	}
 
-// std::string test = "HELLO TEAM\n";
-// send(fd, test.c_str(), test.length(), 0);
-
-
 	if (send(fd, reply.c_str(), reply.length(), 0) == -1)
 		return ;
 }
 
 
 /* accessor */
-std::string Server::get_networkname() { return (_networkname); }
-std::string Server::get_servername() { return (_servername); }
-std::string Server::get_start_time() { return (_start_time); }
+std::string Server::get_networkname()	{ return (_networkname); }
+std::string Server::get_servername()	{ return (_servername); }
+std::string Server::get_start_time()	{ return (_start_time); }

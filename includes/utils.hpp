@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/26 05:05:01 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:53:50 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 
 std::vector<std::string>	split_space(std::string cmd);
-void                      	logs(std::string str, int32_t color);
+void                      	logs(std::string str, uint8_t color);
 
 void	DEBUG_PRINT_CMD_VEC(User *user);
 void	DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> cmd, User *user);

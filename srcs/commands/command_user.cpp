@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_user.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/10/26 05:30:35 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:57:59 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 
 
 	if ((pos = cmd.find(":")) && pos == std::string::npos) {
-		err_param.push_back("USER");
+		err_param.push_back("/USER");
 		_send_reply(fd, 461, err_param);
 		return ;
 	} else {
@@ -41,7 +41,7 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 	cmd_splited = split_space(cmd);
 
 	if (cmd_splited.size() != 4) {
-		err_param.push_back("USER");
+		err_param.push_back("/USER");
 		_send_reply(fd, 461, err_param);
 		return ;
 	} else {
@@ -50,7 +50,7 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 	}
 
 	if (!is_valid_realname(realname)) {
-		err_param.push_back("USER");
+		err_param.push_back("/USER");
 		_send_reply(fd, 461, err_param);
 		return ;
 	}
@@ -78,5 +78,5 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 	_send_reply(fd, 003, err_param);
 	_send_reply(fd, 004, err_param);
 
-	logs("logs(Client connected)", 2);
+	logs("logs(client connected)", 2);
 }
