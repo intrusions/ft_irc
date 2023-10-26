@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/10/26 04:27:34 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/26 05:30:35 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,7 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 	std::string					username;
 	std::string					hostname;
     uint64_t 					pos = 0;
-	
 
-	/* envoyer un personnal pour dire que le /NICK
-	DOIT etre appelee avant le /USER */
-	if (_users[fd]->get_nickname() == "GUEST") {
-		std::cout << "nickname is guest" << std::endl;
-		return ;
-	}
 
 	if ((pos = cmd.find(":")) && pos == std::string::npos) {
 		err_param.push_back("USER");
@@ -70,6 +63,11 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 		}
 	}
 
+	if (_users[fd]->get_nickname() == "GUEST") {
+		logs("logs(client need to set a nickname before entering a /USER)", 3);
+		return ;
+	}
+
     _users[fd]->set_username(username);
     _users[fd]->set_realname(realname);
     _users[fd]->set_hostname(hostname);
@@ -79,4 +77,6 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 	_send_reply(fd, 002, err_param);
 	_send_reply(fd, 003, err_param);
 	_send_reply(fd, 004, err_param);
+
+	logs("logs(Client connected)", 2);
 }

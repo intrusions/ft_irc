@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/26 01:40:41 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/26 05:03:38 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ std::vector<std::string>	split_space(std::string cmd) {
 		tokens.push_back(token);
 	}
 	return (tokens);
+}
+
+void logs(std::string str, int32_t color) {
+
+	std::string color_code;
+
+	switch (color) {
+		case 1: color_code = RED_TEXT;		break;
+		case 2: color_code = GREEN_TEXT;	break;
+		case 3: color_code = YELLOW_TEXT;	break;
+		case 4: color_code = BLUE_TEXT;		break;
+		case 5:	color_code = MAGENTA_TEXT;	break;
+		case 6:	color_code = CYAN_TEXT;		break;
+		default: color_code = RESET_COLOR;	break;
+	}
+	std::cout << color_code << str << RESET_COLOR << std::endl;
 }
 
 /* debug */
