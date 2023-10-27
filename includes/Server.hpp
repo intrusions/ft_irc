@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/24 03:39:43 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/28 00:27:38 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ class Server {
 		void		_command_pass(std::vector<std::string> cmd, int32_t fd);
 		void		_command_nick(std::vector<std::string> cmd, int32_t fd);
 		void		_command_user(std::string cmd, int32_t fd);
+		void		_command_ping(uint32_t fd);
 
 		void		_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param);
 
-	
+
 	public:
 		Server(char *port, char *pass);
 		~Server();

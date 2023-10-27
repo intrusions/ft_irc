@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/27 00:47:26 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/28 00:37:56 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ void	Server::_exec_client_commands(User *user) {
 			if (cmd_splited[0] == "/PASS" || cmd_splited[0] == "PASS")				{ _command_pass(cmd_splited, user->get_fd()); } 
 			else if (cmd_splited[0] == "/NICK" || cmd_splited[0] == "NICK") 		{ _command_nick(cmd_splited, user->get_fd()); } 
 			else if (cmd_splited[0] == "/USER" || cmd_splited[0] == "USER") 		{ _command_user(*it, user->get_fd()); }
+			else if (cmd_splited[0] == "/PING" || cmd_splited[0] == "PING")			{ _command_ping(user->get_fd()); }
 			else if (cmd_splited[0] == "/die" || cmd_splited[0] == "die") 			{ std::cout << "die function" << std::endl;	}
 			else if (cmd_splited[0] == "/kill" || cmd_splited[0] == "kill")			{ std::cout << "kill function" << std::endl; }
 			else if (cmd_splited[0] == "/OPER" || cmd_splited[0] == "OPER")			{ std::cout << "oper function" << std::endl; }
@@ -177,7 +178,6 @@ void	Server::_exec_client_commands(User *user) {
 			else if (cmd_splited[0] == "/INVITE" || cmd_splited[0] == "INVITE")		{ std::cout << "invite function" << std::endl; }
 			else if (cmd_splited[0] == "/KICK" || cmd_splited[0] == "KICK")			{ std::cout << "kick function" << std::endl; }
 			else if (cmd_splited[0] == "/PART" || cmd_splited[0] == "PART")			{ std::cout << "part function" << std::endl; }
-			else if (cmd_splited[0] == "/PING" || cmd_splited[0] == "PING")			{ std::cout << "ping function" << std::endl; }
 			else if (cmd_splited[0] == "/PONG" || cmd_splited[0] == "PONG")			{ std::cout << "pong function" << std::endl; }
 		}
 	}
@@ -227,9 +227,9 @@ void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_p
 
 	switch(err) {
 
-		case 001: reply = RPL_WELCOME(_users[fd], _networkname);				break;
+		case 001: reply = RPL_WELCOME(_users[fd], _networkname, _servername);	break;
 		case 002: reply = RPL_YOURHOST(_users[fd], _servername, _version);		break;
-		case 003: reply = RPL_CREATED(_users[fd], _start_time);					break;
+		case 003: reply = RPL_CREATED(_users[fd], _start_time, _servername);					break;
 		case 004: reply = RPL_MYINFO(_users[fd], _servername, _version);		break;
 		case 461: reply = ERR_NEEDMOREPARAMS(_users[fd], err_param);			break;
 		case 462: reply = ERR_ALREADYREGISTERED(_users[fd]);					break;

@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/27 00:29:22 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/28 00:37:20 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 
 class User;
 
-std::string	RPL_WELCOME(User *user, std::string networkname);
+std::string	RPL_WELCOME(User *user, std::string networkname, std::string servername);
 std::string	RPL_YOURHOST(User *user, std::string servername, std::string version);
-std::string	RPL_CREATED(User *user, std::string start_time);
+std::string	RPL_CREATED(User *user, std::string start_time, std::string servername);
 std::string	RPL_MYINFO(User *user, std::string servername, std::string version);
 
 std::string ERR_NEEDMOREPARAMS(User *user, std::vector<std::string> err_param);
