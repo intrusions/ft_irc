@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/28 00:27:38 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/28 02:13:25 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ class Server {
 		void		_command_nick(std::vector<std::string> cmd, int32_t fd);
 		void		_command_user(std::string cmd, int32_t fd);
 		void		_command_ping(uint32_t fd);
+		void		_command_pong(void);
 
 		void		_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param);
 
@@ -70,9 +71,9 @@ class Server {
 		void	server_initialisation(void);
 		void	run(void);
 
-		std::string 	get_networkname(void);
-		std::string 	get_servername(void);
-		std::string 	get_start_time(void);
+		std::string 	get_networkname(void) const;
+		std::string 	get_servername(void) const;
+		std::string 	get_start_time(void) const;
 
 
 		class SocketInitialisationFailed : public std::exception {

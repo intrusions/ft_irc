@@ -7,6 +7,7 @@ SRCS		=	./main.cpp								\
 				./srcs/commands/command_nick.cpp		\
 				./srcs/commands/command_user.cpp		\
 				./srcs/commands/command_ping.cpp		\
+				./srcs/commands/command_pong.cpp		\
 
 OBJS		=	$(SRCS:.cpp=.o)
 

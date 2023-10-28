@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/28 00:37:56 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/28 02:14:00 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void	Server::_exec_client_commands(User *user) {
 			else if (cmd_splited[0] == "/NICK" || cmd_splited[0] == "NICK") 		{ _command_nick(cmd_splited, user->get_fd()); } 
 			else if (cmd_splited[0] == "/USER" || cmd_splited[0] == "USER") 		{ _command_user(*it, user->get_fd()); }
 			else if (cmd_splited[0] == "/PING" || cmd_splited[0] == "PING")			{ _command_ping(user->get_fd()); }
+			else if (cmd_splited[0] == "/PONG" || cmd_splited[0] == "PONG")			{ _command_pong(); }
 			else if (cmd_splited[0] == "/die" || cmd_splited[0] == "die") 			{ std::cout << "die function" << std::endl;	}
 			else if (cmd_splited[0] == "/kill" || cmd_splited[0] == "kill")			{ std::cout << "kill function" << std::endl; }
 			else if (cmd_splited[0] == "/OPER" || cmd_splited[0] == "OPER")			{ std::cout << "oper function" << std::endl; }
@@ -178,7 +179,6 @@ void	Server::_exec_client_commands(User *user) {
 			else if (cmd_splited[0] == "/INVITE" || cmd_splited[0] == "INVITE")		{ std::cout << "invite function" << std::endl; }
 			else if (cmd_splited[0] == "/KICK" || cmd_splited[0] == "KICK")			{ std::cout << "kick function" << std::endl; }
 			else if (cmd_splited[0] == "/PART" || cmd_splited[0] == "PART")			{ std::cout << "part function" << std::endl; }
-			else if (cmd_splited[0] == "/PONG" || cmd_splited[0] == "PONG")			{ std::cout << "pong function" << std::endl; }
 		}
 	}
 }
@@ -246,6 +246,6 @@ void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_p
 
 
 /* accessor */
-std::string Server::get_networkname()	{ return (_networkname); }
-std::string Server::get_servername()	{ return (_servername); }
-std::string Server::get_start_time()	{ return (_start_time); }
+std::string Server::get_networkname() const	{ return (_networkname); }
+std::string Server::get_servername() const	{ return (_servername); }
+std::string Server::get_start_time() const	{ return (_start_time); }

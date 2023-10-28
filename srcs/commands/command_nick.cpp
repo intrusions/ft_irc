@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/10/27 00:27:53 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/28 02:14:40 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void	Server::_command_nick(std::vector<std::string> cmd, int32_t fd) {
 		for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++) {
 			_send_reply(it->second->get_fd(), 1001, err_param);
 		}	
-	
-		
 	}
 
 	_users[fd]->set_nickname(cmd[1]);
