@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/28 02:14:00 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/10/29 18:20:42 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_p
 
 		case 001: reply = RPL_WELCOME(_users[fd], _networkname, _servername);	break;
 		case 002: reply = RPL_YOURHOST(_users[fd], _servername, _version);		break;
-		case 003: reply = RPL_CREATED(_users[fd], _start_time, _servername);					break;
+		case 003: reply = RPL_CREATED(_users[fd], _start_time, _servername);	break;
 		case 004: reply = RPL_MYINFO(_users[fd], _servername, _version);		break;
 		case 461: reply = ERR_NEEDMOREPARAMS(_users[fd], err_param);			break;
 		case 462: reply = ERR_ALREADYREGISTERED(_users[fd]);					break;

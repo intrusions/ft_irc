@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/10/26 17:57:59 by xel              ###   ########.fr       */
+/*   Updated: 2023/10/29 18:21:59 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../includes/User.hpp"
 #include "../../includes/utils.hpp"
 
+/* todo */
 static bool	is_valid_realname(std::string realname) {
 	(void)realname;
 	return (true);
