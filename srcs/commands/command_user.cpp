@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_user.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/10/29 18:21:59 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/08 21:16:38 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,16 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 		return ;
 	}
 
-	for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); it++) {
+	/**
+	 * Let this function commented if you work on local with multiple irssi client.
+	 */
+	// for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); it++) {
 
-		if (it->second->get_username() == username) {
-			_send_reply(fd, 462, err_param);
-			return ;
-		}
-	}
+	// 	if (it->second->get_username() == username) {
+	// 		_send_reply(fd, 462, err_param);
+	// 		return ;
+	// 	}
+	// }
 
 	if (_users[fd]->get_nickname() == "GUEST") {
 		logs("logs(client need to set a nickname before entering a /USER)", 3);
