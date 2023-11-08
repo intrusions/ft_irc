@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/29 18:23:14 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/08 22:48:33 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "./User.hpp"
+#include "./Channel.hpp"
 
 #include <iostream>
 #include <vector>
@@ -33,3 +34,4 @@ void						logs(std::string str, uint8_t color);
 
 void	DEBUG_PRINT_CMD_VEC(User *user);
 void	DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> cmd, User *user);
+void	DEBUG_PRINT_ALL_CHANNEL(std::vector<Channel *> channel);

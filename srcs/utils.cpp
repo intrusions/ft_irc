@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:05 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/08 23:32:08 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,24 @@ void	DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> cmd, User *user) {
 	for (std::vector<std::string>::iterator it = cmd.begin(); it != cmd.end(); it++) {
 		std::cout << "_fd[" << user->get_fd() << "] | ";
 		std::cout << "commands_split[" << i << "] : " << *it << std::endl;
+		i++;
+	}
+	std::cout << std::endl;
+}
+
+void	DEBUG_PRINT_ALL_CHANNEL(std::vector<Channel *> channel) {
+	
+	uint16_t i = 0;
+	
+	for (std::vector<Channel *>::iterator it = channel.begin(); it != channel.end(); it++) {
+
+		std::cout << "Channel[" << i << "] : " << (*it)->get_name() << " | ";
+
+		std::vector<int32_t>	user_list = (*it)->get_fds();
+		for (std::vector<int32_t>::iterator it2 = user_list.begin(); it2 != user_list.end(); it2++) {
+			std::cout << "'" << *it2 << "'" << " ";
+		}
+		std::cout << std::endl;
 		i++;
 	}
 	std::cout << std::endl;

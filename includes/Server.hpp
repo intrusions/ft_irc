@@ -6,13 +6,14 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/28 02:13:25 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/08 22:16:18 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "./User.hpp"
+#include "./Channel.hpp"
 #include "./reply.hpp"
 
 #include <iostream>
@@ -30,6 +31,7 @@
 #include <signal.h>
 
 class User;
+class Channel;
 
 class Server {
 	
@@ -44,6 +46,7 @@ class Server {
 		struct sockaddr_in		_addr;
 		std::vector<pollfd>		_fds;
 		std::map<int, User *>	_users;
+		std::vector<Channel *>	_channel;
 
 
 		uint16_t    _check_port(char *port);
@@ -60,6 +63,7 @@ class Server {
 		void		_command_user(std::string cmd, int32_t fd);
 		void		_command_ping(uint32_t fd);
 		void		_command_pong(void);
+		void		_command_join(std::vector<std::string> cmd, int32_t fd);
 
 		void		_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param);
 

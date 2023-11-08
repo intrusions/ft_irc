@@ -3,11 +3,13 @@ SRCS		=	./main.cpp								\
 				./srcs/User.cpp							\
 				./srcs/utils.cpp						\
 				./srcs/reply.cpp						\
+				./srcs/Channel.cpp						\
 				./srcs/commands/command_pass.cpp		\
 				./srcs/commands/command_nick.cpp		\
 				./srcs/commands/command_user.cpp		\
 				./srcs/commands/command_ping.cpp		\
 				./srcs/commands/command_pong.cpp		\
+				./srcs/commands/command_join.cpp		\
 
 OBJS		=	$(SRCS:.cpp=.o)
 

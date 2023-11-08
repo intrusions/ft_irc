@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/29 18:20:42 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/08 23:31:45 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ void	Server::_receive_client_input(User *user) {
 void	Server::_exec_client_commands(User *user) {
 
 	std::vector<std::string> *cmd = user->fetch_commands();
+	// DEBUG_PRINT_CMD_VEC(user);
 
 	for (std::vector<std::string>::iterator it = cmd->begin(); it != cmd->end(); it = cmd->erase(it)) {
 
@@ -166,6 +167,7 @@ void	Server::_exec_client_commands(User *user) {
 			else if (cmd_splited[0] == "/USER" || cmd_splited[0] == "USER") 		{ _command_user(*it, user->get_fd()); }
 			else if (cmd_splited[0] == "/PING" || cmd_splited[0] == "PING")			{ _command_ping(user->get_fd()); }
 			else if (cmd_splited[0] == "/PONG" || cmd_splited[0] == "PONG")			{ _command_pong(); }
+			else if (cmd_splited[0] == "/JOIN" || cmd_splited[0] == "JOIN")			{ _command_join(cmd_splited, user->get_fd()); }
 			else if (cmd_splited[0] == "/die" || cmd_splited[0] == "die") 			{ std::cout << "die function" << std::endl;	}
 			else if (cmd_splited[0] == "/kill" || cmd_splited[0] == "kill")			{ std::cout << "kill function" << std::endl; }
 			else if (cmd_splited[0] == "/OPER" || cmd_splited[0] == "OPER")			{ std::cout << "oper function" << std::endl; }
@@ -174,7 +176,6 @@ void	Server::_exec_client_commands(User *user) {
 			else if (cmd_splited[0] == "/MODE" || cmd_splited[0] == "MODE")			{ std::cout << "mode function" << std::endl; }
 			else if (cmd_splited[0] == "/PRIVMSG" || cmd_splited[0] == "PRIVMSG")	{ std::cout << "privmsg function" << std::endl; }
 			else if (cmd_splited[0] == "/NOTICE" || cmd_splited[0] == "NOTICE")		{ std::cout << "notice function" << std::endl; }
-			else if (cmd_splited[0] == "/JOIN" || cmd_splited[0] == "JOIN")			{ std::cout << "join function" << std::endl; }
 			else if (cmd_splited[0] == "/LIST" || cmd_splited[0] == "LIST")			{ std::cout << "list function" << std::endl; }
 			else if (cmd_splited[0] == "/INVITE" || cmd_splited[0] == "INVITE")		{ std::cout << "invite function" << std::endl; }
 			else if (cmd_splited[0] == "/KICK" || cmd_splited[0] == "KICK")			{ std::cout << "kick function" << std::endl; }
