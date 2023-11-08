@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/08 23:42:11 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/08 23:52:24 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
 	for (std::vector<Channel *>::iterator it = _channel.begin(); it != _channel.end(); it++) {
 		if (cmd[1] == (*it)->get_name()) {
 			logs("logs(this channel name is already exist, joining channel...)", 3);
-			(*it)->get_fds().push_back(fd);
+			(*it)->fetch_fds()->push_back(fd);
 			DEBUG_PRINT_ALL_CHANNEL(_channel);
 			return ;
 		}

@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:57:29 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/08 23:03:40 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/08 23:50:15 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ class Channel {
 		~Channel();
 
 		std::string				get_name(void);
-		std::vector<int32_t>	get_fds(void);
+		std::vector<int32_t>	*fetch_fds(void);
 };

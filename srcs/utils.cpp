@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/08 23:32:08 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/08 23:51:26 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void	DEBUG_PRINT_ALL_CHANNEL(std::vector<Channel *> channel) {
 
 		std::cout << "Channel[" << i << "] : " << (*it)->get_name() << " | ";
 
-		std::vector<int32_t>	user_list = (*it)->get_fds();
-		for (std::vector<int32_t>::iterator it2 = user_list.begin(); it2 != user_list.end(); it2++) {
+		std::vector<int32_t>	*user_list = (*it)->fetch_fds();
+		for (std::vector<int32_t>::iterator it2 = user_list->begin(); it2 != user_list->end(); it2++) {
 			std::cout << "'" << *it2 << "'" << " ";
 		}
 		std::cout << std::endl;
