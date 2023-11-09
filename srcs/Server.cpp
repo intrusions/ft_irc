@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/08 23:31:45 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/09 09:21:31 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,11 +154,10 @@ void	Server::_receive_client_input(User *user) {
 void	Server::_exec_client_commands(User *user) {
 
 	std::vector<std::string> *cmd = user->fetch_commands();
-	// DEBUG_PRINT_CMD_VEC(user);
 
 	for (std::vector<std::string>::iterator it = cmd->begin(); it != cmd->end(); it = cmd->erase(it)) {
 
-		std::vector<std::string> cmd_splited = split_space(*it);
+		std::vector<std::string> cmd_splited = split(*it, ' ');
 
 		if (cmd_splited.size()) {
 

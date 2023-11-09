@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/08 22:48:33 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/09 09:21:16 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 #define CYAN_TEXT		"\033[36m"
 
 
-std::vector<std::string>	split_space(std::string cmd);
+std::vector<std::string>	split(std::string cmd, char delimiter);
 void						logs(std::string str, uint8_t color);
 
 void	DEBUG_PRINT_CMD_VEC(User *user);

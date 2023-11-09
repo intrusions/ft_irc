@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_user.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/08 21:16:38 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/09 09:21:41 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 		cmd.erase(pos - 1, cmd.length());
 	}
 
-	cmd_splited = split_space(cmd);
+	cmd_splited = split(cmd, ' ');
 
 	if (cmd_splited.size() != 4) {
 		err_param.push_back("/USER");

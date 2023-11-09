@@ -1,1 +1,9 @@
 /connect localhost 6667 coucou xel
+
+/PASS coucou
+/NICK xel
+/USER l a a :b
+
+/PASS coucou
+/NICK xelor
+/USER l a a :b

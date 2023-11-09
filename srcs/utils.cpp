@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/08 23:51:26 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/09 09:21:03 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/utils.hpp"
 
 /* basic */
-std::vector<std::string>	split_space(std::string cmd) {
+std::vector<std::string>	split(std::string cmd, char delimiter) {
 	
 	std::vector<std::string>	tokens;
 	std::istringstream			token_stream(cmd);
 	std::string 				token;
 	
-	while (std::getline(token_stream, token, ' ')) {
+	while (std::getline(token_stream, token, delimiter)) {
 		tokens.push_back(token);
 	}
 	return (tokens);
