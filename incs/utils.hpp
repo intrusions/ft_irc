@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 16:00:31 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 16:09:25 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ enum e_log_lvl {
           << std::endl; \
 } while (0)
 
+#if 0
+#define __abort_if_fail__(expr) (void)expr
+#else
 #define __abort_if_fail__(expr) \
     do { \
         if (!(expr)) { \
@@ -57,6 +60,7 @@ enum e_log_lvl {
             std::abort();   \
         } \
     } while (0)
+#endif
 
 std::vector<std::string>	split(std::string cmd, char delimiter);
 

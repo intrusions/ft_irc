@@ -6,11 +6,12 @@
 /*   By: pducos <pducos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:32:38 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 01:02:49 by pducos           ###   ########.fr       */
+/*   Updated: 2023/11/10 14:05:56 by pducos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
+#include "utils.hpp"
 #include "utils.hpp"
 
 static bool __is_running__ = true;
@@ -18,13 +19,17 @@ static inline void	singleton_ctrl_c(int sig)
 { (void)sig; __is_running__ = false; }
 
 int main(int ac, char **av) {
+	const char *port = av[1];
+	const char *pass = av[2];
 	if (ac == 3) {
 		try {
 			signal(SIGINT, singleton_ctrl_c);
-			Server serv(av[1], av[2]);
+			Server serv(
+				port,
+				pass
+			);
 			serv.server_initialisation();
 
-			
 			logger(INFO, "Listening ...");
 			while (__is_running__)
 				serv.run();

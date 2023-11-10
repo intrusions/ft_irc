@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/08 21:19:19 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:09:14 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ class User {
 		int32_t			get_pass_is_valid(void) const;
 
 		void			set_prefix(void);
-		void			set_nickname(const std::string n);
-		void			set_username(const std::string n);
-		void			set_realname(const std::string n);
-		void			set_hostname(const std::string n);
+		void			set_nickname(const std::string &n);
+		void			set_username(const std::string &n);
+		void			set_realname(const std::string &n);
+		void			set_hostname(const std::string &n);
 		void			set_pass_is_valid(const bool n);
 		
 		std::vector<std::string>	*fetch_commands(void);

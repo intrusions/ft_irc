@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 16:01:09 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 16:09:01 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ class Server {
 		std::string 			_servername;
 		std::string				_start_time;
 		std::string				_version;
-		int32_t					_sockfd;
+		int32_t					      _sockfd;
 		struct sockaddr_in		_addr;
 		std::vector<pollfd>		_fds;
 		std::map<int, User *>	_users;
 		std::vector<Channel *>	_channel;
 
 
-		uint16_t    _check_port(char *port);
-		std::string _check_password(char *password);
+		uint16_t    _check_port(const char *port) const;
+		std::string _check_password(const char *password) const;
 
 		void		_accept_user(void);
 		void		_delete_user(int32_t fd);
@@ -69,7 +69,7 @@ class Server {
 
 
 	public:
-		Server(char *port, char *pass);
+		Server(const char *port, const char *pass);
 		~Server();
 
 		void	server_initialisation(void);

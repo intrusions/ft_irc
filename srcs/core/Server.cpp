@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 16:06:18 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 16:09:41 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "Command.hpp"
 
 /* constructor/destructor */
-Server::Server(char *port, char *password) {
+Server::Server(const char *port, const char *password) {
 	__abort_if_fail__(port);
 	__abort_if_fail__(password);
 	
@@ -39,7 +39,7 @@ Server::~Server() {}
 
 
 /* main argument's parsing */
-uint16_t    Server::_check_port(char *port) {
+uint16_t    Server::_check_port(const char *port) const {
 	__abort_if_fail__(port);
 	
 	uint16_t	nPort = atoi(port);
@@ -55,7 +55,7 @@ uint16_t    Server::_check_port(char *port) {
 	return (nPort);
 }
 
-std::string Server::_check_password(char *password) {
+std::string Server::_check_password(const char *password) const{
 	
 	std::string nPass(password);
 
