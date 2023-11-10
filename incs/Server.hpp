@@ -6,15 +6,15 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 17:08:41 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 17:44:36 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include "./User.hpp"
-#include "./Channel.hpp"
-#include "./reply.hpp"
+#include "User.hpp"
+#include "Channel.hpp"
+#include "reply.hpp"
 
 #include <iostream>
 #include <stdint.h>

@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:52:09 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 16:58:54 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 17:46:24 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ User::User(int32_t fd)
 User::~User() {}
 
 
-/* accessor */
+/* accessors */
 int32_t         User::get_fd() const            { return (_fd); }
 std::string     User::get_prefix() const        { return (_prefix); }
 std::string     User::get_nickname() const      { return (_nickname); }
 std::string     User::get_username() const      { return (_username); }
-std::string	    User::get_realname() const      { return (_realname); }
+std::string     User::get_realname() const      { return (_realname); }
 std::string     User::get_hostname() const      { return (_hostname); }
 int32_t         User::get_pass_is_valid() const { return (_pass_is_valid); }
 

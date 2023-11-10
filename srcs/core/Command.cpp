@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:49:36 by xel               #+#    #+#             */
-/*   Updated: 2023/11/10 17:13:35 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 17:40:44 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ Command::Command(std::string const &command, int32_t fd)
     : _command(command)
     , _user_fd(fd) { logger(DEBUG, "got new command: " + command); }
 
-int32_t             Command::get_user_fd() const	{ return (this->_user_fd); }
-std::string const   &Command::get_command() const	{ return (this->_command); }
+int32_t             Command::get_user_fd() const	{ return (_user_fd); }
+std::string const   &Command::get_command() const	{ return (_command); }
 
 std::ostream    &operator<<(std::ostream &o, Command const &rhs) {
     

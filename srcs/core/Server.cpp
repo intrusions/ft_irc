@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 17:35:30 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 17:46:22 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,7 +301,7 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &err
 }
 
 
-/* accessor */
+/* accessors */
 std::string Server::get_networkname() const	{ return (_networkname); }
 std::string Server::get_servername() const	{ return (_servername); }
 std::string Server::get_start_time() const	{ return (_start_time); }
