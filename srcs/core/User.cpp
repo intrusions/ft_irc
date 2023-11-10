@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:52:09 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/08 21:19:43 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:07:42 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/User.hpp"
+#include "User.hpp"
 
 /* constructor/destructor */
-User::User(int32_t fd, struct sockaddr_in addr, Server *serv)
+User::User(int32_t fd /*, struct sockaddr_in addr, Server *serv */)
 	: _fd(fd)
-	, _server(serv)
-	, _address(addr)
-	, _nickname("GUEST")
-	, _username ("GUEST")
-	, _realname ("GUEST")
-	, _hostname ("GUEST")
-	, _pass_is_valid(0) { (void)_server, (void)_address, set_prefix(); }
+	// , _server(serv)
+	// , _address(addr)
+	, _nickname(DEFAULT_INFO_VALUE)
+	, _username(DEFAULT_INFO_VALUE)
+	, _realname(DEFAULT_INFO_VALUE)
+	, _hostname(DEFAULT_INFO_VALUE)
+	, _pass_is_valid(0) { set_prefix(); }
 
 User::~User() {}
 

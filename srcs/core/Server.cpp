@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 12:35:46 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:06:18 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/Server.hpp"
-#include "../includes/User.hpp"
-#include "../includes/utils.hpp"
-
+#include "Server.hpp"
+#include "User.hpp"
+#include "utils.hpp"
+#include "Command.hpp"
 
 /* constructor/destructor */
 Server::Server(char *port, char *password) {
+	__abort_if_fail__(port);
+	__abort_if_fail__(password);
 	
 	_port = _check_port(port);
 	_password = _check_password(password);
@@ -38,6 +40,7 @@ Server::~Server() {}
 
 /* main argument's parsing */
 uint16_t    Server::_check_port(char *port) {
+	__abort_if_fail__(port);
 	
 	uint16_t	nPort = atoi(port);
 
@@ -100,7 +103,7 @@ void	Server::run() {
 		return ;		
 
 	if (_fds.front().revents == POLLIN) {
-		logs("logs(client socket created)", 2);
+		logger(INFO, "client socket created");
 		_accept_user();
 	} else {
 		
@@ -108,8 +111,14 @@ void	Server::run() {
 			if (it->revents == POLLIN) {
 				_receive_client_input(_users[it->fd]);
 				_exec_client_commands(_users[it->fd]);
+
+#ifdef __linux__
 			} else if ((it->revents & POLLRDHUP) == POLLRDHUP) {
-				logs("logs(client socket destroyed)", 1);
+#else
+			} else if ((it->revents & POLLHUP) == POLLHUP) {
+#endif
+
+				logger(INFO, "client socket destroyed");
 				_delete_user(it->fd);
 				break ;
 			}
@@ -120,6 +129,7 @@ void	Server::run() {
 
 /* receive command from client, and fill `_commands` vector with string splited by '\n' or '\r\n' */
 void	Server::_receive_client_input(User *user) {
+	__abort_if_fail__(user);
 	
 	char			buff[512] = {};
 	int64_t			bytes_read;
@@ -150,35 +160,106 @@ void	Server::_receive_client_input(User *user) {
 	}
 }
 
+t_command_type get_command_type_from_string(std::string &string)  {
+	if (string[0] == '\\') string.erase(0, 1);
+
+	if (!string.compare(COMMAND_PASS_STR))
+		return COMMAND_TYPE_PASS; 
+
+	if (!string.compare(COMMAND_NICK_STR))
+		return COMMAND_TYPE_NICK; 
+	
+	if (!string.compare(COMMAND_USER_STR))
+		return COMMAND_TYPE_USER; 
+
+	if (!string.compare(COMMAND_PING_STR))
+		return COMMAND_TYPE_PING; 
+
+	if (!string.compare(COMMAND_PONG_STR))
+		return COMMAND_TYPE_PONG; 
+
+	if (!string.compare(COMMAND_DIE_STR))
+		return COMMAND_TYPE_DIE; 
+
+	if (!string.compare(COMMAND_KILL_STR))
+		return COMMAND_TYPE_KILL; 
+	
+	if (!string.compare(COMMAND_OPER_STR))
+		return COMMAND_TYPE_OPER; 
+	
+	if (!string.compare(COMMAND_TOPIC_STR))
+		return COMMAND_TYPE_TOPIC; 
+	
+	if (!string.compare(COMMAND_QUIT_STR))
+		return COMMAND_TYPE_QUIT; 
+	
+	if (!string.compare(COMMAND_MODE_STR))
+		return COMMAND_TYPE_MODE; 
+	
+	if (!string.compare(COMMAND_PRIVMSG_STR))
+		return COMMAND_TYPE_PRIVMSG; 
+	
+	if (!string.compare(COMMAND_NOTICE_STR))
+		return COMMAND_TYPE_NOTICE; 
+	
+	if (!string.compare(COMMAND_JOIN_STR))
+		return COMMAND_TYPE_JOIN; 
+	
+	if (!string.compare(COMMAND_LIST_STR))
+		return COMMAND_TYPE_LIST;
+	
+	if (!string.compare(COMMAND_INVITE_STR))
+		return COMMAND_TYPE_USER; 
+	
+	if (!string.compare(COMMAND_KICK_STR))
+		return COMMAND_TYPE_KICK; 
+	
+	if (!string.compare(COMMAND_PART_STR))
+		return COMMAND_TYPE_PASS; 
+	
+	return COMMAND_TYPE_UNKNOWN;
+}
+
 /* execute one by one the command in `_commands`, and erase node after execution of it */
 void	Server::_exec_client_commands(User *user) {
+	__abort_if_fail__(user);
 
+	//DEBUG_PRINT_CMD_VEC(user);
 	std::vector<std::string> *cmd = user->fetch_commands();
-
 	for (std::vector<std::string>::iterator it = cmd->begin(); it != cmd->end(); it = cmd->erase(it)) {
 
+		Command command = Command(*it, user->get_fd());
+	
 		std::vector<std::string> cmd_splited = split(*it, ' ');
+		//DEBUG_PRINT_CMD_SPLIT_VEC(cmd_splited, user);
 
 		if (cmd_splited.size()) {
+		
+			t_command_type cmdtype = get_command_type_from_string(cmd_splited[0]);
+			switch (cmdtype) {
+				case COMMAND_TYPE_PASS: _command_pass(cmd_splited, user->get_fd()); break;
+				case COMMAND_TYPE_NICK: _command_nick(cmd_splited, user->get_fd()); break;
+				case COMMAND_TYPE_USER: _command_user(*it, user->get_fd()); break;
+				case COMMAND_TYPE_PING: _command_ping(user->get_fd()); break;
+				case COMMAND_TYPE_PONG: _command_pong(); break;
+				case COMMAND_TYPE_DIE: break;
+				case COMMAND_TYPE_KILL: break;
+				case COMMAND_TYPE_OPER: break;
+				case COMMAND_TYPE_TOPIC: break;
+				case COMMAND_TYPE_QUIT: break;
+				case COMMAND_TYPE_MODE: break;
+				case COMMAND_TYPE_PRIVMSG: break;
+				case COMMAND_TYPE_NOTICE: break;
+				case COMMAND_TYPE_JOIN: break;
+				case COMMAND_TYPE_LIST: break;
+				case COMMAND_TYPE_INVITE: break;
+				case COMMAND_TYPE_KICK: break;
+				case COMMAND_TYPE_PART: break;
 
-			if (cmd_splited[0] == "/PASS" || cmd_splited[0] == "PASS")				{ _command_pass(cmd_splited, user->get_fd()); } 
-			else if (cmd_splited[0] == "/NICK" || cmd_splited[0] == "NICK") 		{ _command_nick(cmd_splited, user->get_fd()); } 
-			else if (cmd_splited[0] == "/USER" || cmd_splited[0] == "USER") 		{ _command_user(*it, user->get_fd()); }
-			else if (cmd_splited[0] == "/PING" || cmd_splited[0] == "PING")			{ _command_ping(user->get_fd()); }
-			else if (cmd_splited[0] == "/PONG" || cmd_splited[0] == "PONG")			{ _command_pong(); }
-			else if (cmd_splited[0] == "/JOIN" || cmd_splited[0] == "JOIN")			{ _command_join(cmd_splited, user->get_fd()); }
-			else if (cmd_splited[0] == "/die" || cmd_splited[0] == "die") 			{ std::cout << "die function" << std::endl;	}
-			else if (cmd_splited[0] == "/kill" || cmd_splited[0] == "kill")			{ std::cout << "kill function" << std::endl; }
-			else if (cmd_splited[0] == "/OPER" || cmd_splited[0] == "OPER")			{ std::cout << "oper function" << std::endl; }
-			else if (cmd_splited[0] == "/TOPIC" || cmd_splited[0] == "TOPIC")		{ std::cout << "topic function" << std::endl; }
-			else if (cmd_splited[0] == "/QUIT" || cmd_splited[0] == "QUIT")			{ std::cout << "quit function" << std::endl; }
-			else if (cmd_splited[0] == "/MODE" || cmd_splited[0] == "MODE")			{ std::cout << "mode function" << std::endl; }
-			else if (cmd_splited[0] == "/PRIVMSG" || cmd_splited[0] == "PRIVMSG")	{ std::cout << "privmsg function" << std::endl; }
-			else if (cmd_splited[0] == "/NOTICE" || cmd_splited[0] == "NOTICE")		{ std::cout << "notice function" << std::endl; }
-			else if (cmd_splited[0] == "/LIST" || cmd_splited[0] == "LIST")			{ std::cout << "list function" << std::endl; }
-			else if (cmd_splited[0] == "/INVITE" || cmd_splited[0] == "INVITE")		{ std::cout << "invite function" << std::endl; }
-			else if (cmd_splited[0] == "/KICK" || cmd_splited[0] == "KICK")			{ std::cout << "kick function" << std::endl; }
-			else if (cmd_splited[0] == "/PART" || cmd_splited[0] == "PART")			{ std::cout << "part function" << std::endl; }
+				case COMMAND_TYPE_UNKNOWN:
+				default: 
+					logger(ERROR, "Unrecognized command: " + cmd_splited[0]);
+			}
 		}
 	}
 }
@@ -198,11 +279,17 @@ void	Server::_accept_user() {
 		return ;
 	}
 
-	_users[fd] = new User(fd, addr, this);
+	_users[fd] = new User(fd /*, addr, this */);
 
 	_fds.push_back(pollfd());
 	_fds.back().fd = fd;
+
+#ifdef __linux
 	_fds.back().events = (POLLIN | POLLRDHUP);
+#else
+	_fds.back().events = (POLLIN | POLLHUP);
+#endif
+
 }
 
 void	Server::_delete_user(int32_t fd) {
@@ -221,25 +308,25 @@ void	Server::_delete_user(int32_t fd) {
 
 
 /* reply management */
-void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param) {
+void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &err_param) {
 
 	std::string reply;
 
-	switch(err) {
+	switch(code) {
 
-		case 001: reply = RPL_WELCOME(_users[fd], _networkname, _servername);	break;
-		case 002: reply = RPL_YOURHOST(_users[fd], _servername, _version);		break;
-		case 003: reply = RPL_CREATED(_users[fd], _start_time, _servername);	break;
-		case 004: reply = RPL_MYINFO(_users[fd], _servername, _version);		break;
+		case 001: reply = CREATE_RPL_WELCOME(_users[fd], _networkname, _servername);	break;
+		case 002: reply = CREATE_RPL_YOURHOST(_users[fd], _servername, _version);		break;
+		case 003: reply = CREATE_RPL_CREATED(_users[fd], _start_time, _servername);	break;
+		case 004: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);		break;
 		case 332: reply = RPL_TOPIC(_users[fd], err_param);						break;
-		case 461: reply = ERR_NEEDMOREPARAMS(_users[fd], err_param);			break;
-		case 462: reply = ERR_ALREADYREGISTERED(_users[fd]);					break;
-		case 464: reply = ERR_PASSWDMISMATCH(_users[fd]);						break;
-		case 431: reply = ERR_NONICKNAMEGIVEN(_users[fd]);						break;
-		case 432: reply = ERR_ERRONEUSNICKNAME(_users[fd], err_param);			break;
-		case 433: reply = ERR_NICKNAMEINUSE(_users[fd], err_param);				break;
+		case 461: reply = CREATE_ERR_NEEDMOREPARAMS(_users[fd], err_param);			break;
+		case 462: reply = CREATE_ERR_ALREADYREGISTERED(_users[fd]);					break;
+		case 464: reply = CREATE_ERR_PASSWDMISMATCH(_users[fd]);						break;
+		case 431: reply = CREATE_ERR_NONICKNAMEGIVEN(_users[fd]);						break;
+		case 432: reply = CREATE_ERR_ERRONEUSNICKNAME(_users[fd], err_param);			break;
+		case 433: reply = CREATE_ERR_NICKNAMEINUSE(_users[fd], err_param);				break;
 		case 475: reply = ERR_BADCHANNELKEY(_users[fd], err_param);				break;
-		case 1001: reply = PER_NICKNAMECHANGE(err_param);						break;
+		case 1001: reply = CREATE_PER_NICKNAMECHANGE(err_param);						break;
 	}
 
 	if (send(fd, reply.c_str(), reply.length(), 0) == -1)

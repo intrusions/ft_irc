@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Server.hpp"
-#include "../../includes/User.hpp"
-#include "../../includes/utils.hpp"
+#include "Server.hpp"
+#include "User.hpp"
+#include "utils.hpp"
 
 void    Server::_command_ping(uint32_t fd) {
 	

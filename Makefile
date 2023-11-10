@@ -1,43 +1,38 @@
-SRCS		=	./main.cpp								\
-				./srcs/Server.cpp						\
-				./srcs/User.cpp							\
-				./srcs/utils.cpp						\
-				./srcs/reply.cpp						\
-				./srcs/Channel.cpp						\
-				./srcs/commands/command_pass.cpp		\
-				./srcs/commands/command_nick.cpp		\
-				./srcs/commands/command_user.cpp		\
-				./srcs/commands/command_ping.cpp		\
-				./srcs/commands/command_pong.cpp		\
-				./srcs/commands/command_join.cpp		\
+include irc.mk
 
-OBJS		=	$(SRCS:.cpp=.o)
+SRCS_OBJS := $(patsubst %.cpp,$(OBJS_DIR)/%.o,$(SRCS))
 
-CC			=	c++
+$(OBJS_DIR)/%.o:$(SRCS_DIR)/%.cpp
+	@mkdir -vp $(dir $@)
+	$(CC) \
+		$(CFLAGS) \
+		-MMD \
+		-MP \
+		-o $@ \
+		-c $< \
+		-I $(INCS_DIR)
 
-RM			=	rm -f
+all: $(NAME)
 
-CFLAGS		= 	-Wall -Wextra -Werror -I./includes
+-include  $(SRCS_OBJS:.o=.d)
 
-CPPFLAGS	= 	-std=c++98
+$(NAME): $(SRCS_OBJS)
+	$(CC) \
+		$^ \
+		$(CFLAGS) \
+		-o $(NAME) \
+		-I $(INCS_DIR)
 
-NAME		=	ircserv
-
-all:		$(NAME)
-
-.cpp.o:
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
-
-
-$(NAME):	$(OBJS)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJS) -o $(NAME)	
+g: CFLAGS += $(CFLAGS_DBG)
+g: all
 
 clean:
-	$(RM) $(OBJS)
+	rm -rf *.dSYM
+	rm -rf $(OBJS_DIR)
 
-fclean:		clean
-	$(RM) $(NAME)
+fclean: clean
+	rm -rf $(NAME)
 
-re:		fclean $(NAME)
+re: fclean all
 
-.PHONY:		all clean fclean re
+.PHONY	: all clean g spec fclean re 

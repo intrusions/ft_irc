@@ -6,13 +6,13 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/09 09:21:41 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 16:03:02 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Server.hpp"
-#include "../../includes/User.hpp"
-#include "../../includes/utils.hpp"
+#include "Server.hpp"
+#include "User.hpp"
+#include "utils.hpp"
 
 /* todo */
 static bool	is_valid_realname(std::string realname) {
@@ -68,7 +68,7 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 	// }
 
 	if (_users[fd]->get_nickname() == "GUEST") {
-		logs("logs(client need to set a nickname before entering a /USER)", 3);
+		logger(WARNING, "client need to set a nickname before entering a /USER");
 		return ;
 	}
 
@@ -82,5 +82,5 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 	_send_reply(fd, 003, err_param);
 	_send_reply(fd, 004, err_param);
 
-	logs("logs(client connected)", 2);
+	logger(INFO, "client connected");
 }

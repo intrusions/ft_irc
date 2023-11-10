@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/08 22:16:18 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:01:09 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ class Server {
 		void		_command_pong(void);
 		void		_command_join(std::vector<std::string> cmd, int32_t fd);
 
-		void		_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_param);
+		void		_send_reply(int32_t fd, int32_t code, std::vector<std::string> &err_param);
 
 
 	public:
@@ -105,3 +105,4 @@ class Server {
 				} 
 		};
 };
+

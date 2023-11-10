@@ -3,16 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   command_nick.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pducos <pducos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/10/28 02:14:40 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/01 22:47:38 by pducos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Server.hpp"
-#include "../../includes/User.hpp"
-#include "../../includes/utils.hpp"
+#include "Server.hpp"
+#include "User.hpp"
+#include "utils.hpp"
+
+// static bool is_nickname_valid(const std::string &nickname) {
+//     if (nickname.empty()
+// 		|| nickname[0] == '$'
+// 		|| nickname[0] == ':') {
+//         return (false);
+//     }
+
+//     const std::string forbiddenChars = " *,?!@";
+//     const std::string channelTypePrefixes = "#&+!";
+
+//     if (nickname.find_first_of(forbiddenChars) != std::string::npos
+// 		|| channelTypePrefixes.find(nickname[0]) != std::string::npos
+// 		|| nickname.find('.') != std::string::npos) {
+//         return (false);
+//     }
+
+//     return (true);
+// }
 
 void	Server::_command_nick(std::vector<std::string> cmd, int32_t fd) {
 
@@ -39,7 +58,7 @@ void	Server::_command_nick(std::vector<std::string> cmd, int32_t fd) {
 	}
 
 	if (!_users[fd]->get_pass_is_valid()) {
-		logs("logs(client need to set a password before entering a /NICK)", 3);
+		logger(WARNING, "client need to set a password before entering a /NICK");
 		return ;
 	}
 

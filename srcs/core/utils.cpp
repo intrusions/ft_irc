@@ -6,11 +6,12 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/09 09:21:03 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 16:08:26 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.hpp"
+#include "utils.hpp"
+#include "color.hpp"
 
 /* basic */
 std::vector<std::string>	split(std::string cmd, char delimiter) {
@@ -23,22 +24,6 @@ std::vector<std::string>	split(std::string cmd, char delimiter) {
 		tokens.push_back(token);
 	}
 	return (tokens);
-}
-
-void logs(std::string str, uint8_t color) {
-
-	std::string color_code;
-
-	switch (color) {
-		case 1: color_code = RED_TEXT;		break;
-		case 2: color_code = GREEN_TEXT;	break;
-		case 3: color_code = YELLOW_TEXT;	break;
-		case 4: color_code = BLUE_TEXT;		break;
-		case 5:	color_code = MAGENTA_TEXT;	break;
-		case 6:	color_code = CYAN_TEXT;		break;
-		default: color_code = RESET_COLOR;	break;
-	}
-	std::cout << color_code << str << RESET_COLOR << std::endl;
 }
 
 /* debug */
