@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/28 01:58:11 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/10 12:24:47 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ std::string	RPL_CREATED(User *user, std::string start_time, std::string serverna
 std::string	RPL_MYINFO(User *user, std::string servername, std::string version) {
 
 	return (":" + servername + " 004 " + user->get_nickname() + " " + servername + " " + version + " <available user modes> \n<available channel modes> [<channel modes with a parameter>]" + "\r\n");
+}
+
+/* 332 */
+std::string RPL_TOPIC(User *user, std::vector<std::string> err_param) {
+	
+	return (user->get_prefix() + " " + err_param[0] + " :" + err_param[1] + "\r\n");
 }
 
 /* 431 */
@@ -70,6 +76,12 @@ std::string	ERR_ALREADYREGISTERED(User *user) {
 std::string	ERR_PASSWDMISMATCH(User *user) {
 
 	return (user->get_prefix() + " :Password incorrect\r\n");
+}
+
+/* 475 */
+std::string	ERR_BADCHANNELKEY(User *user, std::vector<std::string> err_param) {
+
+	return (user->get_prefix() + " " + err_param[0] + " :Cannot join channel (+k)\r\n");
 }
 
 /* 1001 */

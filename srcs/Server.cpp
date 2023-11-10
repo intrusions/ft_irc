@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/09 09:21:31 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 12:35:46 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,12 +231,14 @@ void	Server::_send_reply(int32_t fd, int32_t err, std::vector<std::string> err_p
 		case 002: reply = RPL_YOURHOST(_users[fd], _servername, _version);		break;
 		case 003: reply = RPL_CREATED(_users[fd], _start_time, _servername);	break;
 		case 004: reply = RPL_MYINFO(_users[fd], _servername, _version);		break;
+		case 332: reply = RPL_TOPIC(_users[fd], err_param);						break;
 		case 461: reply = ERR_NEEDMOREPARAMS(_users[fd], err_param);			break;
 		case 462: reply = ERR_ALREADYREGISTERED(_users[fd]);					break;
 		case 464: reply = ERR_PASSWDMISMATCH(_users[fd]);						break;
 		case 431: reply = ERR_NONICKNAMEGIVEN(_users[fd]);						break;
 		case 432: reply = ERR_ERRONEUSNICKNAME(_users[fd], err_param);			break;
 		case 433: reply = ERR_NICKNAMEINUSE(_users[fd], err_param);				break;
+		case 475: reply = ERR_BADCHANNELKEY(_users[fd], err_param);				break;
 		case 1001: reply = PER_NICKNAMECHANGE(err_param);						break;
 	}
 
