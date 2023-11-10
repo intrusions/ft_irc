@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/10 17:11:51 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 18:00:23 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void	Server::_command_nick(std::vector<std::string> cmd, int32_t fd) {
     }
 
     if (!_users[fd]->get_pass_is_valid()) {
-        logger(WARNING, "client need to set a password before entering a /NICK");
+        logger(WARNING, "Client need to set a password before entering a `/NICK`");
         return ;
     }
 
-    if ((_users[fd]->get_nickname() != "GUEST") && (_users[fd]->get_username() != "GUEST")) {
+    if ((_users[fd]->get_nickname() != DEFAULT_INFO_VALUE) && (_users[fd]->get_username() != DEFAULT_INFO_VALUE)) {
         
         err_param.push_back(_users[fd]->get_prefix());
         err_param.push_back(cmd[1]);

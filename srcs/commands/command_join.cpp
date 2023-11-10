@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/10 17:11:28 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 18:38:54 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                 if ((*it2)->get_password() != "") {
 
                     if (password_list.size() && (*it2)->get_password() == password_list[0]) {
-                        logger(INFO, "logs(this channel is already exist, valid password, joining channel...)");
+                        logger(INFO, "This channel is already exist, valid password, joining channel...");
                         
                         err_param.push_back((*it2)->get_name());
                         err_param.push_back("topic ???");
@@ -54,14 +54,14 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                         password_list.erase(password_list.begin());
                         break ;
                     } else {
-                        logger(INFO, "logs(this channel is already exist, invalid password, return `475` irc error code...)");
+                        logger(INFO, "This channel is already exist, invalid password");
                         
                         err_param.push_back((*it2)->get_name());
                         _send_reply(fd, 475, err_param);
                         break ;
                     }
                 } else {
-                    logger(INFO, "logs(this channel is already exist, no expected password, joining channel...)");
+                    logger(INFO, "This channel is already exist, no expected password, joining channel...");
                     
                     err_param.push_back((*it2)->get_name());
                     err_param.push_back("topic ???");
@@ -73,7 +73,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
         }
 
         if (found == false) {
-            logger(INFO, "logs(this channel doesn't exist, creating channel...)");
+            logger(INFO, "This channel doesn't exist, creating channel...");
 
             err_param.push_back(*it);
             err_param.push_back("No topic");

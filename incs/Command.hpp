@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:44:28 by xel               #+#    #+#             */
-/*   Updated: 2023/11/10 17:01:11 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 18:16:40 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 #define COMMAND_KICK_STR     "KICK"
 #define COMMAND_PART_STR     "PART"
 
+
 typedef enum {
     COMMAND_TYPE_PASS,
     COMMAND_TYPE_NICK,
@@ -59,6 +60,7 @@ typedef enum {
     COMMAND_TYPE_UNKNOWN
 }	t_command_type;
 
+
 class Command {
     protected:
         std::string const   _command;
@@ -66,10 +68,10 @@ class Command {
 
     public:
         Command(std::string const &command, int32_t fd);
-        virtual ~Command(void) { };
+        virtual ~Command(void);
 
-        int32_t             get_user_fd() const;
-        std::string const   &get_command() const;
+        int32_t             get_user_fd(void) const;
+        std::string const   &get_command(void) const;
 };
 
 std::ostream &operator<<(std::ostream const &o, Command const &rhs);

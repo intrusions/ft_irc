@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/10 17:12:45 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 18:00:28 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
     // 	}
     // }
 
-    if (_users[fd]->get_nickname() == "GUEST") {
-        logger(WARNING, "client need to set a nickname before entering a /USER");
+    if (_users[fd]->get_nickname() == DEFAULT_INFO_VALUE) {
+        logger(WARNING, "Client need to set a nickname before entering a `/USER`");
         return ;
     }
 
@@ -82,5 +82,5 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
     _send_reply(fd, 003, err_param);
     _send_reply(fd, 004, err_param);
 
-    logger(INFO, "client connected");
+    logger(INFO, "Client connected");
 }

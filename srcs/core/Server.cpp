@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 17:46:22 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 18:37:34 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 #include "Command.hpp"
 #include "utils.hpp"
 
-/* constructor/destructor */
+/**
+ * Constructor for the Server class.
+ *
+ * This constructor initializes a Server object with the provided port and password.
+ * It checks and sets the port and password after validation. It also sets default
+ * values for other server properties such as network name, server name, and version.
+ * The constructor calculates and stores the server start time.
+ */
 Server::Server(const char *port, const char *password) {
     __abort_if_fail__(port);
     __abort_if_fail__(password);
@@ -38,7 +45,9 @@ Server::Server(const char *port, const char *password) {
 Server::~Server() {}
 
 
-/* main argument's parsing */
+/**
+ * Check and convert a string to a valid port number.
+ */
 uint16_t    Server::_check_port(const char *port) const {
     __abort_if_fail__(port);
     
@@ -55,6 +64,9 @@ uint16_t    Server::_check_port(const char *port) const {
     return (nPort);
 }
 
+/**
+ * Check and validate a password string.
+ */
 std::string Server::_check_password(const char *password) const{
     
     std::string nPass(password);
@@ -66,7 +78,13 @@ std::string Server::_check_password(const char *password) const{
 }
 
 
-/* server initialisation */
+/**
+ * Initialize the server by creating, configuring, and binding a socket,
+ *        and set up for listening using the poll mechanism.
+ *
+ * This function performs socket creation, sets options for reuse, 
+ * binds to a specified address and port, and sets up for listening.
+ */
 void		Server::server_initialisation() {
 
     int32_t	optsock = 1;
@@ -96,14 +114,30 @@ void		Server::server_initialisation() {
 }
 
 
-/* server loop */
+/**
+ * Run the server, handling events using the poll mechanism.
+ * 
+ * This function uses the poll system call to wait for events on the registered
+ * file descriptors. It handles the events for the server socket and client
+ * sockets accordingly, calling relevant functions.
+ *
+ * - If the server socket has an event (POLLIN), it indicates a new connection
+ *   request, and the `_accept_user` function is called to handle the new user.
+ *
+ * - For client sockets with events (POLLIN), the `_receive_client_input` function
+ *   is called to receive input, and the `_exec_client_commands` function is
+ *   called to execute client commands based on the received input.
+ *
+ * - On client socket events (POLLRDHUP or POLLHUP), indicating that the client
+ *   has disconnected, the associated user is deleted, and the logger is informed.
+ */
 void	Server::run() {
 
     if (poll(&_fds.front(), _fds.size(), -1) == -1)
         return ;
 
     if (_fds.front().revents == POLLIN) {
-        logger(INFO, "client socket created");
+        logger(INFO, "Client socket created");
         _accept_user();
     } else {
         
@@ -118,7 +152,7 @@ void	Server::run() {
             } else if ((it->revents & POLLHUP) == POLLHUP) {
 #endif
 
-                logger(INFO, "client socket destroyed");
+                logger(INFO, "Client socket destroyed");
                 _delete_user(it->fd);
                 break ;
             }
@@ -127,7 +161,13 @@ void	Server::run() {
 }
 
 
-/* receive command from client, and fill `_commands` vector with string splited by '\n' or '\r\n' */
+/**
+ * Receive input from a client and process it.
+ *
+ * This function reads input from the specified client socket and processes it.
+ * The received data is parsed based on newline characters ("\r\n" or "\n"), and
+ * individual commands are added to the user's command queue for further processing.
+ */
 void	Server::_receive_client_input(User *user) {
     __abort_if_fail__(user);
     
@@ -160,6 +200,13 @@ void	Server::_receive_client_input(User *user) {
     }
 }
 
+/**
+ * Get the command type from a string representation.
+ *
+ * This function takes a string representation of a command and returns its
+ * corresponding command type. It checks the provided string against predefined
+ * command strings and returns the appropriate command type.
+ */
 t_command_type get_command_type_from_string(std::string &string)  {
     
     if (string[0] == '/')
@@ -184,10 +231,20 @@ t_command_type get_command_type_from_string(std::string &string)  {
     if (!string.compare(COMMAND_KICK_STR))      return (COMMAND_TYPE_KICK); 
     if (!string.compare(COMMAND_PART_STR))      return (COMMAND_TYPE_PASS); 
     
-    return COMMAND_TYPE_UNKNOWN;
+    return (COMMAND_TYPE_UNKNOWN);
 }
 
-/* execute one by one the command in `_commands`, and erase node after execution of it */
+/**
+ * Execute commands from the user's command queue.
+ *
+ * This function processes commands from the user's command queue, where each
+ * command is represented as a string. It iterates through the commands,
+ * parses them, and invokes the corresponding functions based on the command type.
+ * The function uses a switch statement to handle recognized command types,
+ * and logs an error for unrecognized commands.
+ *
+ * The function modifies the user's command queue by erasing processed commands.
+ */
 void	Server::_exec_client_commands(User *user) {
     __abort_if_fail__(user);
 
@@ -225,14 +282,24 @@ void	Server::_exec_client_commands(User *user) {
                 case COMMAND_TYPE_PART:                                                break;
 
                 default: 
-                    logger(ERROR, "Unrecognized command: " + cmd_splited[0]);
+                    logger(ERROR, "Unrecognized command: '" + cmd_splited[0] + "'");
             }
         }
     }
 }
 
 
-/* user management (add && delete) */
+/**
+ * Accept a new user connection.
+ *
+ * This function accepts a new user connection by calling the `accept` function
+ * on the server socket. If the connection is successful, it creates a new User
+ * object to represent the client and adds the client's file descriptor to the
+ * list of file descriptors monitored by the poll mechanism.
+ *
+ * The function sets up appropriate events for the poll mechanism based on
+ * the operating system (Linux or non-Linux).
+ */
 void	Server::_accept_user() {
     
     struct sockaddr_in	addr;
@@ -256,9 +323,16 @@ void	Server::_accept_user() {
 #else
     _fds.back().events = (POLLIN | POLLHUP);
 #endif
-
 }
 
+
+/**
+ * Delete a user and clean up resources.
+ *
+ * This function deletes a user by closing the user's file descriptor, freeing
+ * the associated User object, and removing the user from the user map and the
+ * list of file descriptors monitored by the poll mechanism.
+ */
 void	Server::_delete_user(int32_t fd) {
     
     close(fd);
@@ -274,7 +348,18 @@ void	Server::_delete_user(int32_t fd) {
 }
 
 
-/* reply management */
+/**
+ * Send a server reply to a specific user.
+ *
+ * This function sends a server reply to a user identified by their file descriptor.
+ * The reply is selected based on the provided code, and additional parameters can
+ * be passed to customize certain replies. The function constructs the reply message
+ * and sends it to the user's file descriptor using the `send` function.
+ *
+ * @param fd The file descriptor of the target user.
+ * @param code The code indicating the type of reply to send.
+ * @param err_param Additional parameters for customizing certain replies.
+ */
 void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &err_param) {
 
     std::string reply;

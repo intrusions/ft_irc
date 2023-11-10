@@ -29,7 +29,7 @@ SRCS :=                             \
     core/User.cpp                   \
     core/utils.cpp                  \
     core/Channel.cpp                \
-    errors/reply.cpp                \
+    reply/reply.cpp                \
     core/Command.cpp                \
     commands/command_pass.cpp       \
     commands/command_nick.cpp       \
