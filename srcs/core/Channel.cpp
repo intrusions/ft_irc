@@ -6,11 +6,11 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:03:06 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/09 09:51:31 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 16:21:24 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/Channel.hpp"
+#include "Channel.hpp"
 
 /* constructor/destructor */
 Channel::Channel(std::string name, int32_t fd)

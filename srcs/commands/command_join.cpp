@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   command_join.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/10 12:41:00 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:20:09 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Server.hpp"
-#include "../../includes/User.hpp"
-#include "../../includes/Channel.hpp"
-#include "../../includes/utils.hpp"
+#include "Server.hpp"
+#include "User.hpp"
+#include "Channel.hpp"
+#include "utils.hpp"
 
 void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
 
@@ -45,7 +45,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
 				if ((*it2)->get_password() != "") {
 
 					if (password_list.size() && (*it2)->get_password() == password_list[0]) {
-						logs("logs(this channel is already exist, valid password, joining channel...)", 3);
+						logger(INFO, "logs(this channel is already exist, valid password, joining channel...)");
 						
 						err_param.push_back((*it2)->get_name());
 						err_param.push_back("topic ???");
@@ -54,14 +54,14 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
 						password_list.erase(password_list.begin());
 						break ;
 					} else {
-						logs("logs(this channel is already exist, invalid password, return `475` irc error code...)", 3);
+						logger(INFO, "logs(this channel is already exist, invalid password, return `475` irc error code...)");
 						
 						err_param.push_back((*it2)->get_name());
 						_send_reply(fd, 475, err_param);
 						break ;
 					}
 				} else {
-					logs("logs(this channel is already exist, no expected password, joining channel...)", 3);
+					logger(INFO, "logs(this channel is already exist, no expected password, joining channel...)");
 					
 					err_param.push_back((*it2)->get_name());
 					err_param.push_back("topic ???");
@@ -73,7 +73,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
 		}
 
 		if (found == false) {
-			logs("logs(this channel doesn't exist, creating channel...)", 3);
+			logger(INFO, "logs(this channel doesn't exist, creating channel...)");
 
 			err_param.push_back(*it);
 			err_param.push_back("No topic");

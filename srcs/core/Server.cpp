@@ -6,14 +6,14 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 16:09:41 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 16:36:18 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 #include "User.hpp"
-#include "utils.hpp"
 #include "Command.hpp"
+#include "utils.hpp"
 
 /* constructor/destructor */
 Server::Server(const char *port, const char *password) {
@@ -161,7 +161,7 @@ void	Server::_receive_client_input(User *user) {
 }
 
 t_command_type get_command_type_from_string(std::string &string)  {
-	if (string[0] == '\\') string.erase(0, 1);
+	if (string[0] == '/') string.erase(0, 1);
 
 	if (!string.compare(COMMAND_PASS_STR))
 		return COMMAND_TYPE_PASS; 
@@ -236,25 +236,26 @@ void	Server::_exec_client_commands(User *user) {
 		if (cmd_splited.size()) {
 		
 			t_command_type cmdtype = get_command_type_from_string(cmd_splited[0]);
+			std::cout << cmdtype << std::endl;
 			switch (cmdtype) {
-				case COMMAND_TYPE_PASS: _command_pass(cmd_splited, user->get_fd()); break;
-				case COMMAND_TYPE_NICK: _command_nick(cmd_splited, user->get_fd()); break;
-				case COMMAND_TYPE_USER: _command_user(*it, user->get_fd()); break;
-				case COMMAND_TYPE_PING: _command_ping(user->get_fd()); break;
-				case COMMAND_TYPE_PONG: _command_pong(); break;
-				case COMMAND_TYPE_DIE: break;
-				case COMMAND_TYPE_KILL: break;
-				case COMMAND_TYPE_OPER: break;
-				case COMMAND_TYPE_TOPIC: break;
-				case COMMAND_TYPE_QUIT: break;
-				case COMMAND_TYPE_MODE: break;
-				case COMMAND_TYPE_PRIVMSG: break;
-				case COMMAND_TYPE_NOTICE: break;
-				case COMMAND_TYPE_JOIN: break;
-				case COMMAND_TYPE_LIST: break;
-				case COMMAND_TYPE_INVITE: break;
-				case COMMAND_TYPE_KICK: break;
-				case COMMAND_TYPE_PART: break;
+				case COMMAND_TYPE_PASS: _command_pass(cmd_splited, user->get_fd());    break;
+				case COMMAND_TYPE_NICK: _command_nick(cmd_splited, user->get_fd());    break;
+				case COMMAND_TYPE_USER: _command_user(*it, user->get_fd());            break;
+				case COMMAND_TYPE_PING: _command_ping(user->get_fd());                 break;
+				case COMMAND_TYPE_PONG: _command_pong();                               break;
+				case COMMAND_TYPE_JOIN: _command_join(cmd_splited, user->get_fd());    break;
+				case COMMAND_TYPE_DIE:                                                 break;
+				case COMMAND_TYPE_KILL:                                                break;
+				case COMMAND_TYPE_OPER:                                                break;
+				case COMMAND_TYPE_TOPIC:                                               break;
+				case COMMAND_TYPE_QUIT:                                                break;
+				case COMMAND_TYPE_MODE:                                                break;
+				case COMMAND_TYPE_PRIVMSG:                                             break;
+				case COMMAND_TYPE_NOTICE:                                              break;
+				case COMMAND_TYPE_LIST:                                                break;
+				case COMMAND_TYPE_INVITE:                                              break;
+				case COMMAND_TYPE_KICK:                                                break;
+				case COMMAND_TYPE_PART:                                                break;
 
 				case COMMAND_TYPE_UNKNOWN:
 				default: 

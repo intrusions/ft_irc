@@ -28,10 +28,12 @@ SRCS := \
 	core/Server.cpp						\
 	core/User.cpp						\
 	core/utils.cpp						\
+	core/Channel.cpp						\
 	errors/reply.cpp			\
 	core/Command.cpp \
 	commands/command_pass.cpp		\
 	commands/command_nick.cpp		\
 	commands/command_user.cpp		\
 	commands/command_ping.cpp		\
-	commands/command_pong.cpp
+	commands/command_pong.cpp       \
+	commands/command_join.cpp       

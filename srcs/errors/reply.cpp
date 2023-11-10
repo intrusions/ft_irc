@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reply.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/10/28 01:58:11 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:26:34 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ std::string	CREATE_ERR_NONICKNAMEGIVEN(const User *user) {
 	return (user->get_prefix() + " :No nickname given\r\n");
 }
 
+/* 332 */
+std::string RPL_TOPIC(User *user, std::vector<std::string> err_param) {
+	
+	return (user->get_prefix() + " " + err_param[0] + " :" + err_param[1] + "\r\n");
+}
+
 /* 432 */
 std::string	CREATE_ERR_ERRONEUSNICKNAME(const User *user, const std::vector<std::string> &err_param) {
 
@@ -82,6 +88,12 @@ std::string	CREATE_ERR_ALREADYREGISTERED(const User *user) {
 std::string	CREATE_ERR_PASSWDMISMATCH(const User *user) {
 
 	return (user->get_prefix() + " :Password incorrect\r\n");
+}
+
+/* 475 */
+std::string	ERR_BADCHANNELKEY(User *user, std::vector<std::string> err_param) {
+
+	return (user->get_prefix() + " " + err_param[0] + " :Cannot join channel (+k)\r\n");
 }
 
 /* 1001 */

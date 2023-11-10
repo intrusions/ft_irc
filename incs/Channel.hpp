@@ -6,13 +6,13 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:57:29 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/09 09:51:45 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 16:21:33 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include "./Server.hpp"
+#include "Server.hpp"
 
 #include <iostream>
 #include <vector>
