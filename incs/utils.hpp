@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 17:51:51 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 18:48:44 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,3 @@ std::vector<std::string>    split(std::string cmd, char delimiter);
 void    DEBUG_PRINT_CMD_VEC(User *user);
 void    DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> cmd, User *user);
 void    DEBUG_PRINT_ALL_CHANNEL(std::vector<Channel *> channel);
-

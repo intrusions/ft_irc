@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 17:44:36 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 18:48:35 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ class Server {
         void        _receive_client_input(User *user);
         void        _exec_client_commands(User *user);
 
+        t_command_type get_command_type_from_string(std::string &string);
+
+
         void        _command_pass(std::vector<std::string> cmd, int32_t fd);
         void        _command_nick(std::vector<std::string> cmd, int32_t fd);
         void        _command_user(std::string cmd, int32_t fd);
@@ -105,4 +108,3 @@ class Server {
                 } 
         };
 };
-

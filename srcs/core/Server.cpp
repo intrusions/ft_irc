@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 18:37:34 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 18:47:08 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 Server::Server(const char *port, const char *password) {
     __abort_if_fail__(port);
     __abort_if_fail__(password);
-    
+
     _port = _check_port(port);
     _password = _check_password(password);
     _networkname = "Porte de la chapelle";
@@ -36,9 +36,9 @@ Server::Server(const char *port, const char *password) {
     time_t  now = time(0);
     tm      *ltm = localtime(&now);
     char    date[32];
-    
+
     strftime(date, sizeof(date), "%Y-%m-%d %H:%M:%S", ltm);
-    
+
     _start_time = std::string(date);
 }
 
@@ -207,7 +207,7 @@ void	Server::_receive_client_input(User *user) {
  * corresponding command type. It checks the provided string against predefined
  * command strings and returns the appropriate command type.
  */
-t_command_type get_command_type_from_string(std::string &string)  {
+t_command_type get_command_type_from_string(std::string &string) {
     
     if (string[0] == '/')
         string.erase(0, 1);
@@ -259,7 +259,7 @@ void	Server::_exec_client_commands(User *user) {
 
         if (cmd_splited.size()) {
         
-            t_command_type cmdtype = get_command_type_from_string(cmd_splited[0]);
+            t_command_type  cmdtype = get_command_type_from_string(cmd_splited[0]);
             
             switch (cmdtype) {
                 case COMMAND_TYPE_PASS: _command_pass(cmd_splited, user->get_fd());    break;
