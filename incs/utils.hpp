@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 16:09:25 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 17:11:07 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ enum e_log_lvl {
 
 std::vector<std::string>	split(std::string cmd, char delimiter);
 
-void	DEBUG_PRINT_CMD_VEC(User *user);
-void	DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> cmd, User *user);
-void	DEBUG_PRINT_ALL_CHANNEL(std::vector<Channel *> channel);
+void    DEBUG_PRINT_CMD_VEC(User *user);
+void    DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> cmd, User *user);
+void    DEBUG_PRINT_ALL_CHANNEL(std::vector<Channel *> channel);
 

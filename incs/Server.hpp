@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 16:09:01 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 17:08:41 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,75 +34,75 @@ class User;
 class Channel;
 
 class Server {
-	
-	private:
-		uint16_t    			_port;
-		std::string 			_password;
-		std::string 			_networkname;
-		std::string 			_servername;
-		std::string				_start_time;
-		std::string				_version;
-		int32_t					      _sockfd;
-		struct sockaddr_in		_addr;
-		std::vector<pollfd>		_fds;
-		std::map<int, User *>	_users;
-		std::vector<Channel *>	_channel;
+    
+    private:
+        uint16_t                _port;
+        std::string             _password;
+        std::string             _networkname;
+        std::string             _servername;
+        std::string             _start_time;
+        std::string             _version;
+        int32_t                 _sockfd;
+        struct sockaddr_in      _addr;
+        std::vector<pollfd>     _fds;
+        std::map<int, User *>   _users;
+        std::vector<Channel *>  _channel;
 
 
-		uint16_t    _check_port(const char *port) const;
-		std::string _check_password(const char *password) const;
+        uint16_t    _check_port(const char *port) const;
+        std::string _check_password(const char *password) const;
 
-		void		_accept_user(void);
-		void		_delete_user(int32_t fd);
+        void        _accept_user(void);
+        void        _delete_user(int32_t fd);
 
-		void		_receive_client_input(User *user);
-		void		_exec_client_commands(User *user);
+        void        _receive_client_input(User *user);
+        void        _exec_client_commands(User *user);
 
-		void		_command_pass(std::vector<std::string> cmd, int32_t fd);
-		void		_command_nick(std::vector<std::string> cmd, int32_t fd);
-		void		_command_user(std::string cmd, int32_t fd);
-		void		_command_ping(uint32_t fd);
-		void		_command_pong(void);
-		void		_command_join(std::vector<std::string> cmd, int32_t fd);
+        void        _command_pass(std::vector<std::string> cmd, int32_t fd);
+        void        _command_nick(std::vector<std::string> cmd, int32_t fd);
+        void        _command_user(std::string cmd, int32_t fd);
+        void        _command_ping(uint32_t fd);
+        void        _command_pong(void);
+        void        _command_join(std::vector<std::string> cmd, int32_t fd);
 
-		void		_send_reply(int32_t fd, int32_t code, std::vector<std::string> &err_param);
-
-
-	public:
-		Server(const char *port, const char *pass);
-		~Server();
-
-		void	server_initialisation(void);
-		void	run(void);
-
-		std::string 	get_networkname(void) const;
-		std::string 	get_servername(void) const;
-		std::string 	get_start_time(void) const;
+        void        _send_reply(int32_t fd, int32_t code, std::vector<std::string> &err_param);
 
 
-		class SocketInitialisationFailed : public std::exception {
-			public :
-			   virtual const char *what() const throw() {
-					return ("error: `socket()` function failed");
-				} 
-		};
-		class SetSockOptFailed : public std::exception {
-			public :
-			   virtual const char *what() const throw() {
-					return ("error: `setsockopt()` function failed");
-				} 
-		};
-		class BindFailed : public std::exception {
-			public :
-			   virtual const char *what() const throw() {
-					return ("error: `bind()` function failed");
-				} 
-		};
-		class ListenFailed : public std::exception {
-			public :
-			   virtual const char *what() const throw() {
-					return ("error: `listen()` function failed");
-				} 
-		};
+    public:
+        Server(const char *port, const char *pass);
+        ~Server();
+
+        void	server_initialisation(void);
+        void	run(void);
+
+        std::string     get_networkname(void) const;
+        std::string     get_servername(void) const;
+        std::string     get_start_time(void) const;
+
+
+        class SocketInitialisationFailed : public std::exception {
+            public :
+               virtual const char *what() const throw() {
+                    return ("error: `socket()` function failed");
+                } 
+        };
+        class SetSockOptFailed : public std::exception {
+            public :
+               virtual const char *what() const throw() {
+                    return ("error: `setsockopt()` function failed");
+                } 
+        };
+        class BindFailed : public std::exception {
+            public :
+               virtual const char *what() const throw() {
+                    return ("error: `bind()` function failed");
+                } 
+        };
+        class ListenFailed : public std::exception {
+            public :
+               virtual const char *what() const throw() {
+                    return ("error: `listen()` function failed");
+                } 
+        };
 };
 
