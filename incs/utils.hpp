@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 17:44:27 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 17:51:51 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ enum e_log_lvl {
 # define logger(level, str)                                         \
     do {                                                            \
         const char* level_str;                                      \
+                                                                    \
         switch (level) {                                            \
             case    INFO: level_str = BLU    "INFO" CRESET; break;  \
             case   DEBUG: level_str = YEL   "DEBUG" CRESET; break;  \
@@ -38,10 +39,11 @@ enum e_log_lvl {
             case   ERROR: level_str = RED   "ERROR" CRESET; break;  \
             default:      level_str =       "OTHER";        break;  \
         }                                                           \
+                                                                    \
         std::cerr                                                   \
-          << "[" << level_str                                       \
-          << "]: " << str                                           \
-          << std::endl;                                             \
+            << "[" << level_str                                     \
+            << "]: " << str                                         \
+            << std::endl;                                           \
 } while (0)
 
 #if 0
@@ -51,17 +53,17 @@ enum e_log_lvl {
         do {                                                \
             if (!(expr)) {                                  \
                 std::cerr                                   \
-                << "[" << __FILE__                          \
-                << ":" << __LINE__                          \
-                << "] Assertion failed: "                   \
-                << #expr                                    \
-                << std::endl;                               \
+                    << "[" << __FILE__                      \
+                    << ":" << __LINE__                      \
+                    << "] Assertion failed: "               \
+                    << #expr                                \
+                    << std::endl;                           \
                 std::abort();                               \
             }                                               \
         } while (0)
 #endif
 
-std::vector<std::string>	split(std::string cmd, char delimiter);
+std::vector<std::string>    split(std::string cmd, char delimiter);
 
 void    DEBUG_PRINT_CMD_VEC(User *user);
 void    DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> cmd, User *user);

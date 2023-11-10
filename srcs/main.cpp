@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:32:38 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 17:27:16 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 17:52:35 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 static bool __is_running__ = true;
 
 static inline void	singleton_ctrl_c(int sig) {
-    (void)sig; __is_running__ = false;
+    (void)sig;
+    __is_running__ = false;
 }
 
 int main(int ac, char **av) {
