@@ -17,7 +17,7 @@ all: $(NAME)
 -include  $(SRCS_OBJS:.o=.d)
 
 $(NAME): $(SRCS_OBJS)
-	$(CC) \
+	@$(CC) \
 		$^ \
 		$(CFLAGS) \
 		-o $(NAME) \

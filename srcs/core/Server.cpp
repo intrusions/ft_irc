@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 17:14:14 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/10 17:35:30 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ Server::Server(const char *port, const char *password) {
     _servername = "Crackland";
     _version = "1";
 
-    time_t	now = time(0);
-    tm		*ltm = localtime(&now);
-    char 	date[32];
+    time_t  now = time(0);
+    tm      *ltm = localtime(&now);
+    char    date[32];
     
     strftime(date, sizeof(date), "%Y-%m-%d %H:%M:%S", ltm);
     
@@ -42,7 +42,7 @@ Server::~Server() {}
 uint16_t    Server::_check_port(const char *port) const {
     __abort_if_fail__(port);
     
-    uint16_t	nPort = atoi(port);
+    uint16_t    nPort = atoi(port);
 
     for (uint8_t i = 0; port[i]; i++) {
         if (!isdigit(port[i]))
@@ -100,7 +100,7 @@ void		Server::server_initialisation() {
 void	Server::run() {
 
     if (poll(&_fds.front(), _fds.size(), -1) == -1)
-        return ;		
+        return ;
 
     if (_fds.front().revents == POLLIN) {
         logger(INFO, "client socket created");
@@ -281,19 +281,19 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &err
 
     switch(code) {
 
-        case 001: reply = CREATE_RPL_WELCOME(_users[fd], _networkname, _servername);	break;
-        case 002: reply = CREATE_RPL_YOURHOST(_users[fd], _servername, _version);		break;
-        case 003: reply = CREATE_RPL_CREATED(_users[fd], _start_time, _servername);	break;
-        case 004: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);		break;
-        case 332: reply = RPL_TOPIC(_users[fd], err_param);						break;
-        case 461: reply = CREATE_ERR_NEEDMOREPARAMS(_users[fd], err_param);			break;
-        case 462: reply = CREATE_ERR_ALREADYREGISTERED(_users[fd]);					break;
-        case 464: reply = CREATE_ERR_PASSWDMISMATCH(_users[fd]);						break;
-        case 431: reply = CREATE_ERR_NONICKNAMEGIVEN(_users[fd]);						break;
-        case 432: reply = CREATE_ERR_ERRONEUSNICKNAME(_users[fd], err_param);			break;
-        case 433: reply = CREATE_ERR_NICKNAMEINUSE(_users[fd], err_param);				break;
-        case 475: reply = ERR_BADCHANNELKEY(_users[fd], err_param);				break;
-        case 1001: reply = CREATE_PER_NICKNAMECHANGE(err_param);						break;
+        case 001: reply = CREATE_RPL_WELCOME(_users[fd], _networkname, _servername);    break;
+        case 002: reply = CREATE_RPL_YOURHOST(_users[fd], _servername, _version);       break;
+        case 003: reply = CREATE_RPL_CREATED(_users[fd], _start_time, _servername);     break;
+        case 004: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);         break;
+        case 332: reply = RPL_TOPIC(_users[fd], err_param);                             break;
+        case 461: reply = CREATE_ERR_NEEDMOREPARAMS(_users[fd], err_param);             break;
+        case 462: reply = CREATE_ERR_ALREADYREGISTERED(_users[fd]);                     break;
+        case 464: reply = CREATE_ERR_PASSWDMISMATCH(_users[fd]);                        break;
+        case 431: reply = CREATE_ERR_NONICKNAMEGIVEN(_users[fd]);                       break;
+        case 432: reply = CREATE_ERR_ERRONEUSNICKNAME(_users[fd], err_param);           break;
+        case 433: reply = CREATE_ERR_NICKNAMEINUSE(_users[fd], err_param);              break;
+        case 475: reply = ERR_BADCHANNELKEY(_users[fd], err_param);                     break;
+        case 1001: reply = CREATE_PER_NICKNAMECHANGE(err_param);                        break;
     }
 
     if (send(fd, reply.c_str(), reply.length(), 0) == -1)
