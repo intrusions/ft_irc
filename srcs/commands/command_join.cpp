@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/11 19:29:50 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 20:17:37 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include "User.hpp"
 #include "Channel.hpp"
 #include "utils.hpp"
+
+// todo:
+// check if the user is not banned when he want join a channel
+// erase the first '#' in channel name if one is found
+// delete the channel if the last client in leave it
 
 void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
 
@@ -53,7 +58,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                         logger(INFO, "This channel is already exist, valid password, joining channel...");
                         
                         reply_arg.push_back((*it2)->get_name());
-                        reply_arg.push_back("topic ???");
+                        reply_arg.push_back((*it2)->get_topic());
                         _send_reply(fd, 332, reply_arg);
                         (*it2)->fetch_fds()->push_back(fd);
                         password_list.erase(password_list.begin());
@@ -69,7 +74,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                     logger(INFO, "This channel is already exist, no expected password, joining channel...");
                     
                     reply_arg.push_back((*it2)->get_name());
-                    reply_arg.push_back("topic ???");
+                    reply_arg.push_back((*it2)->get_topic());
                     _send_reply(fd, 332, reply_arg);
                     (*it2)->fetch_fds()->push_back(fd);
                     break ;
@@ -80,16 +85,16 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
         if (found == false) {
             logger(INFO, "This channel doesn't exist, creating channel...");
 
-            reply_arg.push_back(*it);
-            reply_arg.push_back("No topic");
-            _send_reply(fd, 332, reply_arg);
-
             if (password_list.size()) {
                 _channel.push_back(new Channel(*it, fd, password_list[0]));
                 password_list.erase(password_list.begin());
             } else {
                 _channel.push_back(new Channel(*it, fd));
             }
+
+            reply_arg.push_back(*it);
+            reply_arg.push_back(_channel.back()->get_topic());
+            _send_reply(fd, 332, reply_arg);
         }
     }
     DEBUG_PRINT_ALL_CHANNEL(_channel);

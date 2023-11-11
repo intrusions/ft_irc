@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 17:14:53 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 19:46:38 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> &cmd, User *user) {
 void	DEBUG_PRINT_ALL_CHANNEL(std::vector<Channel *> channel) {
     
     uint16_t i = 0;
+    
+    logger(DEBUG, "Channel list [ [channel name] | ['fd' 'fd' ...] ]");
     
     for (std::vector<Channel *>::iterator it = channel.begin(); it != channel.end(); it++) {
 

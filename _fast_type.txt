@@ -7,3 +7,5 @@
 /PASS coucou
 /NICK xelor
 /USER l a a :b
+
+/JOIN CHAN1,CHAN2,CHAN3, PASS1,PASS2
