@@ -1,8 +1,6 @@
 #include "unit.hpp"
 #include <stdio.h>
 
-t_xre_specs_state  __xre_specs__;
-
 int main(void) {
 	__xre_specs__.passed = 0,
 	__xre_specs__.failed = 0,
