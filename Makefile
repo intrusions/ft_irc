@@ -1,4 +1,5 @@
 include irc.mk
+include specs.mk
 
 SRCS_OBJS := $(patsubst %.cpp,$(OBJS_DIR)/%.o,$(SRCS))
 
@@ -19,9 +20,19 @@ all: $(NAME)
 $(NAME): $(SRCS_OBJS)
 	@$(CC) \
 		$^ \
+		$(MAIN) \
 		$(CFLAGS) \
 		-o $(NAME) \
 		-I $(INCS_DIR)
+
+spec: $(SRCS_OBJS)
+	$(CC) \
+		$^ \
+		$(TEST_MAIN) \
+		$(SPECS_SRCS) \
+		$(CFLAGS_DBG) \
+		-o $(NAME) \
+		-I $(INCS_DIR) \
 
 g: CFLAGS += $(CFLAGS_DBG)
 g: all

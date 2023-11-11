@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reply.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pducos <pducos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/11 18:39:23 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 20:24:15 by pducos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,3 +101,4 @@ std::string	CREATE_PER_NICKNAMECHANGE(const std::vector<std::string> &reply_arg)
 
     return (reply_arg[0] + " NICK " + reply_arg[1] + "\r\n");
 }
+

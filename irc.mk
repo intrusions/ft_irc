@@ -3,6 +3,8 @@ CC           := c++
 SRCS_DIR     := srcs
 OBJS_DIR     := .objs
 INCS_DIR     := incs
+TEST_MAIN    := srcs/tests/__main__.cpp
+MAIN         := srcs/main.cpp
 
 CFLAGS :=                           \
     -std=c++98                      \
@@ -29,11 +31,12 @@ SRCS :=                             \
     core/User.cpp                   \
     core/utils.cpp                  \
     core/Channel.cpp                \
-    reply/reply.cpp                \
+    reply/reply.cpp                 \
     core/Command.cpp                \
     commands/command_pass.cpp       \
     commands/command_nick.cpp       \
     commands/command_user.cpp       \
     commands/command_ping.cpp       \
     commands/command_pong.cpp       \
-    commands/command_join.cpp       
+    commands/command_join.cpp       \
+		tests/unit.cpp
