@@ -6,7 +6,7 @@
 /*   By: pducos <pducos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:03:06 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/11 20:23:46 by pducos           ###   ########.fr       */
+/*   Updated: 2023/11/11 20:26:50 by pducos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ std::string             Channel::get_name(void) const { return (_name); }
 std::string             Channel::get_password(void) const { return (_password); }
 std::string             Channel::get_topic(void) const { return (_topic); }
 
-std::vector<int32_t>    *Channel::fetch_fds(void) { return (&_fds); }
 
 bool    Channel::find_fds(const int32_t fd) {
 

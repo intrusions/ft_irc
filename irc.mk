@@ -26,7 +26,6 @@ CFLAGS_DBG :=                       \
     -fno-optimize-sibling-calls 
 
 SRCS :=                             \
-    main.cpp                        \
     core/Server.cpp                 \
     core/User.cpp                   \
     core/utils.cpp                  \
