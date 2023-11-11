@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/11 18:33:14 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 19:29:50 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
             if (*it == (*it2)->get_name()) {
                 found = true;
                 
+                if ((*it2)->find_fds(fd)) {
+                    logger(INFO, "Client are already in this channel");
+                    break ;
+                }
+
                 if ((*it2)->get_password() != "") {
 
                     if (password_list.size() && (*it2)->get_password() == password_list[0]) {
@@ -87,5 +92,5 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
             }
         }
     }
-    // DEBUG_PRINT_ALL_CHANNEL(_channel);
+    DEBUG_PRINT_ALL_CHANNEL(_channel);
 }

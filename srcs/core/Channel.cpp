@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:03:06 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/11 18:44:46 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 19:29:28 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,14 @@ std::string             Channel::get_name(void) const { return (_name); }
 std::string             Channel::get_password(void) const { return (_password); }
 
 std::vector<int32_t>    *Channel::fetch_fds(void) { return (&_fds); }
+
+bool    Channel::find_fds(const int32_t fd) {
+
+    for (std::vector<int32_t>::iterator it = _fds.begin(); it != _fds.end(); it++) {
+
+        if (*it == fd)
+            return (true);
+    }
+    return (false);
+}
+

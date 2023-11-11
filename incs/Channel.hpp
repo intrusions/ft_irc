@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:57:29 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/11 18:50:29 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 19:29:24 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,6 @@ class Channel {
         std::string             get_password(void) const;
 
         std::vector<int32_t>    *fetch_fds(void);
+
+        bool    find_fds(const int32_t fd);
 };
