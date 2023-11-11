@@ -12,11 +12,6 @@
 #include <wait.h>
 #endif
 
-t_xre_specs_state  __xre_specs__ = {
-	.passed  = 0,
-	.failed  = 0,
-};
-
 bool declare_test(bool (* test)(void), const char *title)
 {
 	fprintf(stderr, " running: %s%35s%s -> ", YEL, title, CRESET);
