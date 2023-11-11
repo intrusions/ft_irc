@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 18:52:48 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 19:07:55 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "User.hpp"
 #include "Channel.hpp"
 #include "reply.hpp"
+#include "Command.hpp"
 
 #include <iostream>
 #include <stdint.h>
@@ -32,6 +33,7 @@
 
 class User;
 class Channel;
+
 
 class Server {
     
@@ -65,7 +67,9 @@ class Server {
         void        _command_pong(void);
         void        _command_join(std::vector<std::string> cmd, int32_t fd);
 
-        void        _send_reply(int32_t fd, int32_t code, std::vector<std::string> &err_param);
+        void        _send_reply(int32_t fd, int32_t code, std::vector<std::string> &reply_arg);
+
+        uint8_t     _get_command_type_from_string(std::string &string) const;
 
 
     public:

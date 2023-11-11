@@ -6,13 +6,12 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 18:47:08 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 19:07:38 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 #include "User.hpp"
-#include "Command.hpp"
 #include "utils.hpp"
 
 /**
@@ -207,7 +206,7 @@ void	Server::_receive_client_input(User *user) {
  * corresponding command type. It checks the provided string against predefined
  * command strings and returns the appropriate command type.
  */
-t_command_type get_command_type_from_string(std::string &string) {
+uint8_t Server::_get_command_type_from_string(std::string &string) const {
     
     if (string[0] == '/')
         string.erase(0, 1);
@@ -259,7 +258,7 @@ void	Server::_exec_client_commands(User *user) {
 
         if (cmd_splited.size()) {
         
-            t_command_type  cmdtype = get_command_type_from_string(cmd_splited[0]);
+            uint8_t cmdtype = _get_command_type_from_string(cmd_splited[0]);
             
             switch (cmdtype) {
                 case COMMAND_TYPE_PASS: _command_pass(cmd_splited, user->get_fd());    break;
@@ -358,9 +357,9 @@ void	Server::_delete_user(int32_t fd) {
  *
  * @param fd The file descriptor of the target user.
  * @param code The code indicating the type of reply to send.
- * @param err_param Additional parameters for customizing certain replies.
+ * @param reply_arg Additional parameters for customizing certain replies.
  */
-void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &err_param) {
+void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &reply_arg) {
 
     std::string reply;
 
@@ -370,15 +369,15 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &err
         case 002: reply = CREATE_RPL_YOURHOST(_users[fd], _servername, _version);       break;
         case 003: reply = CREATE_RPL_CREATED(_users[fd], _start_time, _servername);     break;
         case 004: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);         break;
-        case 332: reply = RPL_TOPIC(_users[fd], err_param);                             break;
-        case 461: reply = CREATE_ERR_NEEDMOREPARAMS(_users[fd], err_param);             break;
+        case 332: reply = CREATE_RPL_TOPIC(_users[fd], reply_arg);                      break;
+        case 461: reply = CREATE_ERR_NEEDMOREPARAMS(_users[fd], reply_arg);             break;
         case 462: reply = CREATE_ERR_ALREADYREGISTERED(_users[fd]);                     break;
         case 464: reply = CREATE_ERR_PASSWDMISMATCH(_users[fd]);                        break;
         case 431: reply = CREATE_ERR_NONICKNAMEGIVEN(_users[fd]);                       break;
-        case 432: reply = CREATE_ERR_ERRONEUSNICKNAME(_users[fd], err_param);           break;
-        case 433: reply = CREATE_ERR_NICKNAMEINUSE(_users[fd], err_param);              break;
-        case 475: reply = ERR_BADCHANNELKEY(_users[fd], err_param);                     break;
-        case 1001: reply = CREATE_PER_NICKNAMECHANGE(err_param);                        break;
+        case 432: reply = CREATE_ERR_ERRONEUSNICKNAME(_users[fd], reply_arg);           break;
+        case 433: reply = CREATE_ERR_NICKNAMEINUSE(_users[fd], reply_arg);              break;
+        case 475: reply = CREATE_ERR_BADCHANNELKEY(_users[fd], reply_arg);              break;
+        case 1001: reply = CREATE_PER_NICKNAMECHANGE(reply_arg);                        break;
     }
 
     if (send(fd, reply.c_str(), reply.length(), 0) == -1)

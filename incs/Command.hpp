@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:44:28 by xel               #+#    #+#             */
-/*   Updated: 2023/11/10 18:16:40 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 18:52:57 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 #define COMMAND_PART_STR     "PART"
 
 
-typedef enum {
+typedef enum e_command_type {
     COMMAND_TYPE_PASS,
     COMMAND_TYPE_NICK,
     COMMAND_TYPE_USER,

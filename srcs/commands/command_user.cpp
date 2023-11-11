@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/10 18:00:28 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 18:33:14 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static bool	is_valid_realname(std::string realname) {
 
 void	Server::_command_user(std::string cmd, int32_t fd) {
 
-    std::vector<std::string>    err_param;
+    std::vector<std::string>    reply_arg;
     std::vector<std::string>    cmd_splited;
     std::string                 realname;
     std::string                 username;
@@ -31,8 +31,8 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
 
 
     if ((pos = cmd.find(":")) && pos == std::string::npos) {
-        err_param.push_back("/USER");
-        _send_reply(fd, 461, err_param);
+        reply_arg.push_back("/USER");
+        _send_reply(fd, 461, reply_arg);
         return ;
     } else {
         realname = cmd.substr(pos + 1, cmd.length());
@@ -42,8 +42,8 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
     cmd_splited = split(cmd, ' ');
 
     if (cmd_splited.size() != 4) {
-        err_param.push_back("/USER");
-        _send_reply(fd, 461, err_param);
+        reply_arg.push_back("/USER");
+        _send_reply(fd, 461, reply_arg);
         return ;
     } else {
         username = cmd_splited[1];
@@ -51,8 +51,8 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
     }
 
     if (!is_valid_realname(realname)) {
-        err_param.push_back("/USER");
-        _send_reply(fd, 461, err_param);
+        reply_arg.push_back("/USER");
+        _send_reply(fd, 461, reply_arg);
         return ;
     }
 
@@ -62,7 +62,7 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
     // for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); it++) {
 
     // 	if (it->second->get_username() == username) {
-    // 		_send_reply(fd, 462, err_param);
+    // 		_send_reply(fd, 462, reply_arg);
     // 		return ;
     // 	}
     // }
@@ -77,10 +77,10 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
     _users[fd]->set_hostname(hostname);
     _users[fd]->set_prefix();
     
-    _send_reply(fd, 001, err_param);
-    _send_reply(fd, 002, err_param);
-    _send_reply(fd, 003, err_param);
-    _send_reply(fd, 004, err_param);
+    _send_reply(fd, 001, reply_arg);
+    _send_reply(fd, 002, reply_arg);
+    _send_reply(fd, 003, reply_arg);
+    _send_reply(fd, 004, reply_arg);
 
     logger(INFO, "Client connected");
 }

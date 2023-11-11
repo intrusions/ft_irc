@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 17:15:06 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 18:39:23 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,27 +55,27 @@ std::string	CREATE_ERR_NONICKNAMEGIVEN(const User *user) {
 }
 
 /* 332 */
-std::string RPL_TOPIC(User *user, std::vector<std::string> err_param) {
+std::string CREATE_RPL_TOPIC(const User *user, const std::vector<std::string> &reply_arg) {
     
-    return (user->get_prefix() + " " + err_param[0] + " :" + err_param[1] + "\r\n");
+    return (user->get_prefix() + " " + reply_arg[0] + " :" + reply_arg[1] + "\r\n");
 }
 
 /* 432 */
-std::string	CREATE_ERR_ERRONEUSNICKNAME(const User *user, const std::vector<std::string> &err_param) {
+std::string	CREATE_ERR_ERRONEUSNICKNAME(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + err_param[0] + " :Erroneus nickname\r\n");
+    return (user->get_prefix() + " " + reply_arg[0] + " :Erroneus nickname\r\n");
 }
 
 /* 433 */
-std::string	CREATE_ERR_NICKNAMEINUSE(const User *user, const std::vector<std::string> &err_param) {
+std::string	CREATE_ERR_NICKNAMEINUSE(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + err_param[0] + " :Nickname is already in use\r\n");
+    return (user->get_prefix() + " " + reply_arg[0] + " :Nickname is already in use\r\n");
 }
 
 /* 461 */
-std::string	CREATE_ERR_NEEDMOREPARAMS(const User *user, const std::vector<std::string> &err_param) {
+std::string	CREATE_ERR_NEEDMOREPARAMS(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + err_param[0] + " :Not enough parameters\r\n");
+    return (user->get_prefix() + " " + reply_arg[0] + " :Not enough parameters\r\n");
 }
 
 /* 462 */
@@ -91,13 +91,13 @@ std::string	CREATE_ERR_PASSWDMISMATCH(const User *user) {
 }
 
 /* 475 */
-std::string	ERR_BADCHANNELKEY(User *user, std::vector<std::string> err_param) {
+std::string	CREATE_ERR_BADCHANNELKEY(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + err_param[0] + " :Cannot join channel (+k)\r\n");
+    return (user->get_prefix() + " " + reply_arg[0] + " :Cannot join channel (+k)\r\n");
 }
 
 /* 1001 */
-std::string	CREATE_PER_NICKNAMECHANGE(const std::vector<std::string> &err_param) {
+std::string	CREATE_PER_NICKNAMECHANGE(const std::vector<std::string> &reply_arg) {
 
-    return (err_param[0] + " NICK " + err_param[1] + "\r\n");
+    return (reply_arg[0] + " NICK " + reply_arg[1] + "\r\n");
 }

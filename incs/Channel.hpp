@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:57:29 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 16:59:58 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 18:50:29 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ class Channel {
 
         ~Channel();
 
-        std::string             get_name(void);
-        std::string             get_password(void);
+        std::string             get_name(void) const;
+        std::string             get_password(void) const;
 
         std::vector<int32_t>    *fetch_fds(void);
 };

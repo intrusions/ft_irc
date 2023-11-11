@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/10 18:00:23 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 18:33:14 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,24 @@
 
 void	Server::_command_nick(std::vector<std::string> cmd, int32_t fd) {
 
-    std::vector<std::string>    err_param;
+    std::vector<std::string>    reply_arg;
 
     if (cmd.size() != 2) {
-        _send_reply(fd, 431, err_param);
+        _send_reply(fd, 431, reply_arg);
         return ;
     }
 
     if (isdigit(cmd[1][0]) || cmd[1][0] == '#' || cmd[1][0] == ':' || cmd[1].length() > 31) {
-        err_param.push_back(cmd[1]);
-        _send_reply(fd, 432, err_param);
+        reply_arg.push_back(cmd[1]);
+        _send_reply(fd, 432, reply_arg);
         return ;
     }
 
     for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++) {
         
         if (it->second->get_nickname() == cmd[1]) {
-            err_param.push_back(cmd[1]);
-            _send_reply(fd, 433, err_param);
+            reply_arg.push_back(cmd[1]);
+            _send_reply(fd, 433, reply_arg);
             return ;
         }
     }
@@ -64,10 +64,10 @@ void	Server::_command_nick(std::vector<std::string> cmd, int32_t fd) {
 
     if ((_users[fd]->get_nickname() != DEFAULT_INFO_VALUE) && (_users[fd]->get_username() != DEFAULT_INFO_VALUE)) {
         
-        err_param.push_back(_users[fd]->get_prefix());
-        err_param.push_back(cmd[1]);
+        reply_arg.push_back(_users[fd]->get_prefix());
+        reply_arg.push_back(cmd[1]);
         for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++) {
-            _send_reply(it->second->get_fd(), 1001, err_param);
+            _send_reply(it->second->get_fd(), 1001, reply_arg);
         }	
     }
 

@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/10 17:12:06 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/11 18:33:14 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 
 void	Server::_command_pass(std::vector<std::string> cmd, int32_t fd) {
 
-    std::vector<std::string>    err_param;
+    std::vector<std::string>    reply_arg;
 
     if (cmd.size() != 2) {
-        err_param.push_back(cmd[0]);
-        _send_reply(fd, 461, err_param);
+        reply_arg.push_back(cmd[0]);
+        _send_reply(fd, 461, reply_arg);
         return ;
     }
 
     if (_users[fd]->get_nickname() != DEFAULT_INFO_VALUE) {
-        _send_reply(fd, 462, err_param);
+        _send_reply(fd, 462, reply_arg);
         return ;
     }
 
     if (_password != cmd[1]) {
-        _send_reply(fd, 464, err_param);
+        _send_reply(fd, 464, reply_arg);
         return ;
     }
 
