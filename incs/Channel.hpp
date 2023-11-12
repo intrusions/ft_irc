@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:57:29 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 02:00:37 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 07:00:49 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,4 @@ class Channel {
 
         std::vector<int32_t>    *fetch_fds(void);
         std::vector<int32_t>    *fetch_banned_fds(void);
-
 };

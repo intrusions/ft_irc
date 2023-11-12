@@ -38,4 +38,5 @@ SRCS :=                             \
     commands/command_ping.cpp       \
     commands/command_pong.cpp       \
     commands/command_join.cpp       \
+    commands/command_kick.cpp       \
 		tests/unit.cpp

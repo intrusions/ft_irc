@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/11 19:07:55 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 07:40:16 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ class Server {
         void        _command_ping(uint32_t fd);
         void        _command_pong(void);
         void        _command_join(std::vector<std::string> cmd, int32_t fd);
+        void        _command_kick(std::vector<std::string> cmd, int32_t fd);
 
         void        _send_reply(int32_t fd, int32_t code, std::vector<std::string> &reply_arg);
 

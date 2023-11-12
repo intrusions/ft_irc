@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 02:26:27 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 07:57:50 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,22 @@ std::string	CREATE_RPL_MYINFO(const User *user, const std::string &servername, c
     );
 }
 
-/* 431 */
-std::string	CREATE_ERR_NONICKNAMEGIVEN(const User *user) {
-
-    return (user->get_prefix() + " :No nickname given\r\n");
-}
-
 /* 332 */
 std::string CREATE_RPL_TOPIC(const User *user, const std::vector<std::string> &reply_arg) {
     
     return (user->get_prefix() + " " + reply_arg[0] + " :" + reply_arg[1] + "\r\n");
+}
+
+/* 403 */
+std::string	CREATE_ERR_NOSUCHCHANNEL(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (user->get_prefix() + " " + reply_arg[0] + " :No such channel\r\n");
+}
+
+/* 431 */
+std::string	CREATE_ERR_NONICKNAMEGIVEN(const User *user) {
+
+    return (user->get_prefix() + " :No nickname given\r\n");
 }
 
 /* 432 */
@@ -70,6 +76,18 @@ std::string	CREATE_ERR_ERRONEUSNICKNAME(const User *user, const std::vector<std:
 std::string	CREATE_ERR_NICKNAMEINUSE(const User *user, const std::vector<std::string> &reply_arg) {
 
     return (user->get_prefix() + " " + reply_arg[0] + " :Nickname is already in use\r\n");
+}
+
+/* 441 */
+std::string	CREATE_ERR_USERNOTINCHANNEL(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (user->get_prefix() + " " + reply_arg[0] + " " + reply_arg[1] + " :They aren't on that channel\r\n");
+}
+
+/* 442 */
+std::string	CREATE_ERR_NOTONCHANNEL(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (user->get_prefix() + " " + reply_arg[0] + ":You're not on that channel\r\n");
 }
 
 /* 461 */

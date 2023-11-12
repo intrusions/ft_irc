@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/12 02:31:28 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 06:37:11 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,10 @@
 #include "Channel.hpp"
 #include "utils.hpp"
 
-// todo:
-// 405
-//
 
 static bool  channel_name_is_valid(std::string c_name) {
     
-        return (!(c_name[0] == '#'));
+    return (!(c_name[0] == '#'));
 }
 
 void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
@@ -31,7 +28,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
     std::vector<std::string>    password_list;
     bool                        found;
 
-    if (cmd.size() == 1) {
+    if (cmd.size() <= 1) {
         reply_arg.push_back(cmd[0]);
         _send_reply(fd, 461, reply_arg);
         return ;

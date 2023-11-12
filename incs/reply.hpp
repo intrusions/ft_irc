@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 02:26:12 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 07:41:43 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,17 @@ std::string CREATE_RPL_CREATED(const User *user, const std::string &start_time, 
 std::string CREATE_RPL_MYINFO(const User *user, const std::string &servername, const std::string &version);
 std::string CREATE_RPL_TOPIC(const User *user, const std::vector<std::string> &reply_arg);
 
+std::string	CREATE_ERR_USERNOTINCHANNEL(const User *user, const std::vector<std::string> &reply_arg);
+std::string	CREATE_ERR_NOTONCHANNEL(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_NEEDMOREPARAMS(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_ALREADYREGISTERED(const User *user);
 std::string CREATE_ERR_PASSWDMISMATCH(const User *user);
+std::string	CREATE_ERR_NOSUCHCHANNEL(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_NONICKNAMEGIVEN(const User *user);
 std::string CREATE_ERR_ERRONEUSNICKNAME(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_NICKNAMEINUSE(const User *user, const std::vector<std::string> &reply_arg);
-std::string	CREATE_ERR_BANNEDFROMCHAN(const User *user, const std::vector<std::string> &reply_arg);
+std::string CREATE_ERR_BANNEDFROMCHAN(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_BADCHANNELKEY(const User *user, const std::vector<std::string> &reply_arg);
-std::string	CREATE_ERR_BADCHANMASK(const std::vector<std::string> &reply_arg);
+std::string CREATE_ERR_BADCHANMASK(const std::vector<std::string> &reply_arg);
 
 std::string CREATE_PER_NICKNAMECHANGE(const std::vector<std::string> &reply_arg);
