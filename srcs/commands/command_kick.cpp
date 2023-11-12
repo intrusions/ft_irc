@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 06:33:56 by xel               #+#    #+#             */
-/*   Updated: 2023/11/12 09:41:52 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 11:57:19 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	Server::_command_kick(std::vector<std::string> cmd, int32_t fd) {
 
     if (operator_is_in_channel(*channel_it, fd) == 0) {
         logger(INFO, "The client who would like kick, is not in this channel");
-      
+
         reply_arg.push_back(cmd[1]);
         _send_reply(fd, 442, reply_arg);
         return ;
