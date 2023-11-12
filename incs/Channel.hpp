@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:57:29 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 07:00:49 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 08:09:24 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ class Channel {
         std::string             _password;
         std::vector<int32_t>    _fds;
         std::vector<int32_t>    _banned_fds;
+        //std::map<int, User *>   _users;
+
         
     public:
         Channel(std::string name, int32_t fd);

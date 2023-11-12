@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/12 06:37:11 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 09:45:30 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "User.hpp"
 #include "Channel.hpp"
 #include "utils.hpp"
-
 
 static bool  channel_name_is_valid(std::string c_name) {
     

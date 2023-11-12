@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 07:57:50 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 09:04:04 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ std::string	CREATE_ERR_USERNOTINCHANNEL(const User *user, const std::vector<std:
 /* 442 */
 std::string	CREATE_ERR_NOTONCHANNEL(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + ":You're not on that channel\r\n");
+    return (user->get_prefix() + " " + reply_arg[0] + " :You're not on that channel\r\n");
 }
 
 /* 461 */

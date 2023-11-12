@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 02:01:34 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 09:21:22 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,4 @@ void	DEBUG_PRINT_ALL_CHANNEL(std::vector<Channel *> channel) {
         std::cout << std::endl;
         i++;
     }
-    std::cout << std::endl;
 }
