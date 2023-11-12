@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_join.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pducos <pducos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/11 20:23:28 by pducos           ###   ########.fr       */
+/*   Updated: 2023/11/12 02:05:16 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,17 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
             if (*it == (*it2)->get_name()) {
                 found = true;
                 
-                if ((*it2)->find_fds(fd)) {
+                if (find_fds_in_vec((*it2)->fetch_fds(), fd)) {
                     logger(INFO, "Client are already in this channel");
+                   
+                    break ;
+                }
+
+                if (find_fds_in_vec((*it2)->fetch_banned_fds(), fd)) {
+                    logger(INFO, "Client has been banned from this channel");
+
+                    reply_arg.push_back((*it2)->get_name());
+                    _send_reply(fd, 474, reply_arg);
                     break ;
                 }
 

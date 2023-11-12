@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reply.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pducos <pducos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/11 20:24:15 by pducos           ###   ########.fr       */
+/*   Updated: 2023/11/12 01:45:16 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,12 @@ std::string	CREATE_ERR_ALREADYREGISTERED(const User *user) {
 std::string	CREATE_ERR_PASSWDMISMATCH(const User *user) {
 
     return (user->get_prefix() + " :Password incorrect\r\n");
+}
+
+/* 474 */
+std::string	CREATE_ERR_BANNEDFROMCHAN(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (user->get_prefix() + " " + reply_arg[0] + " :Cannot join channel (+b)\r\n");
 }
 
 /* 475 */

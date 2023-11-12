@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pducos <pducos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:03:06 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/11 20:26:50 by pducos           ###   ########.fr       */
+/*   Updated: 2023/11/12 02:00:05 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,10 @@ Channel::Channel(std::string name, int32_t fd, std::string password)
 Channel::~Channel() {}
 
 /* accessors */
-std::string             Channel::get_name(void) const { return (_name); }
-std::string             Channel::get_password(void) const { return (_password); }
-std::string             Channel::get_topic(void) const { return (_topic); }
+std::string             Channel::get_name(void) const       { return (_name); }
+std::string             Channel::get_password(void) const   { return (_password); }
+std::string             Channel::get_topic(void) const      { return (_topic); }
 
 
-bool    Channel::find_fds(const int32_t fd) {
-
-    for (std::vector<int32_t>::iterator it = _fds.begin(); it != _fds.end(); it++) {
-
-        if (*it == fd)
-            return (true);
-    }
-    return (false);
-}
-
-std::vector<int32_t>	*Channel::fetch_fds(void) { return (&_fds); }
+std::vector<int32_t>	*Channel::fetch_fds(void)           { return (&_fds); }
+std::vector<int32_t>	*Channel::fetch_banned_fds(void)    { return (&_banned_fds); }

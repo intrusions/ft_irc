@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/11 18:43:59 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 01:45:37 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ std::string CREATE_ERR_PASSWDMISMATCH(const User *user);
 std::string CREATE_ERR_NONICKNAMEGIVEN(const User *user);
 std::string CREATE_ERR_ERRONEUSNICKNAME(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_NICKNAMEINUSE(const User *user, const std::vector<std::string> &reply_arg);
+std::string	CREATE_ERR_BANNEDFROMCHAN(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_BADCHANNELKEY(const User *user, const std::vector<std::string> &reply_arg);
 
 std::string CREATE_PER_NICKNAMECHANGE(const std::vector<std::string> &reply_arg);

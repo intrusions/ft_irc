@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pducos <pducos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:57:29 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/11 20:22:51 by pducos           ###   ########.fr       */
+/*   Updated: 2023/11/12 02:00:37 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ class Channel {
         std::string             _topic;
         std::string             _password;
         std::vector<int32_t>    _fds;
+        std::vector<int32_t>    _banned_fds;
         
     public:
         Channel(std::string name, int32_t fd);
@@ -37,6 +38,6 @@ class Channel {
         std::string             get_topic(void) const;
 
         std::vector<int32_t>    *fetch_fds(void);
+        std::vector<int32_t>    *fetch_banned_fds(void);
 
-        bool    find_fds(const int32_t fd);
 };

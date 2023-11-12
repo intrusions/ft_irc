@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 18:48:44 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 02:01:14 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ enum e_log_lvl {
 #endif
 
 std::vector<std::string>    split(std::string cmd, char delimiter);
+
+bool    find_fds_in_vec(std::vector<int32_t> *vec, const int32_t fd);
+
 
 void    DEBUG_PRINT_CMD_VEC(User *user);
 void    DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> cmd, User *user);
