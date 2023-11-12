@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/12 02:05:16 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 02:31:28 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@
 #include "utils.hpp"
 
 // todo:
-// check if the user is not banned when he want join a channel
-// erase the first '#' in channel name if one is found
-// delete the channel if the last client in leave it
+// 405
+//
+
+static bool  channel_name_is_valid(std::string c_name) {
+    
+        return (!(c_name[0] == '#'));
+}
 
 void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
 
@@ -49,7 +53,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                 
                 if (find_fds_in_vec((*it2)->fetch_fds(), fd)) {
                     logger(INFO, "Client are already in this channel");
-                   
+                
                     break ;
                 }
 
@@ -93,6 +97,14 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
 
         if (found == false) {
             logger(INFO, "This channel doesn't exist, creating channel...");
+
+            if (!channel_name_is_valid(*it)) {
+                logger(INFO, "This channel name is not valid");
+
+                reply_arg.push_back(*it);
+                _send_reply(fd, 476, reply_arg);
+                continue ;
+            }
 
             if (password_list.size()) {
                 _channel.push_back(new Channel(*it, fd, password_list[0]));

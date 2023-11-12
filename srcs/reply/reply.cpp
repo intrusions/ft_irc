@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 01:45:16 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 02:26:27 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,12 @@ std::string	CREATE_ERR_BANNEDFROMCHAN(const User *user, const std::vector<std::s
 std::string	CREATE_ERR_BADCHANNELKEY(const User *user, const std::vector<std::string> &reply_arg) {
 
     return (user->get_prefix() + " " + reply_arg[0] + " :Cannot join channel (+k)\r\n");
+}
+
+/* 476 */
+std::string	CREATE_ERR_BADCHANMASK(const std::vector<std::string> &reply_arg) {
+
+    return (reply_arg[0] + " :Bad Channel Mask\r\n");
 }
 
 /* 1001 */

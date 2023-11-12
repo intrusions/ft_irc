@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 01:46:25 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/12 02:26:47 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,6 +378,7 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case 433: reply = CREATE_ERR_NICKNAMEINUSE(_users[fd], reply_arg);              break;
         case 474: reply = CREATE_ERR_BANNEDFROMCHAN(_users[fd], reply_arg);             break;
         case 475: reply = CREATE_ERR_BADCHANNELKEY(_users[fd], reply_arg);              break;
+        case 476: reply = CREATE_ERR_BADCHANMASK(reply_arg);                            break;
         case 1001: reply = CREATE_PER_NICKNAMECHANGE(reply_arg);                        break;
     }
 
