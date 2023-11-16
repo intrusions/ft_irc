@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_join.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/12 09:45:30 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/16 19:00:47 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,14 @@
 #include "Channel.hpp"
 #include "utils.hpp"
 
+
+/**
+ * Irrsi put automatically a `#` at the beginning of the string.
+ */
 static bool  channel_name_is_valid(std::string c_name) {
     
-    return (!(c_name[0] == '#'));
-}
+    return ((c_name[0] == '#'));
+`}
 
 void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
 
