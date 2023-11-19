@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reply.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 09:04:04 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/19 17:26:23 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,34 @@ std::string CREATE_RPL_TOPIC(const User *user, const std::vector<std::string> &r
     return (user->get_prefix() + " " + reply_arg[0] + " :" + reply_arg[1] + "\r\n");
 }
 
+/* 401 */
+std::string	CREATE_ERR_NOSUCHNICK(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (user->get_prefix() + " " + reply_arg[0] + " :No such nick/channel\r\n");
+}
+
 /* 403 */
 std::string	CREATE_ERR_NOSUCHCHANNEL(const User *user, const std::vector<std::string> &reply_arg) {
 
     return (user->get_prefix() + " " + reply_arg[0] + " :No such channel\r\n");
+}
+
+/* 404 */
+std::string	CREATE_ERR_CANNOTSENDTOCHAN(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (user->get_prefix() + " " + reply_arg[0] + " :Cannot send to channel\r\n");
+}
+
+/* 411 */
+std::string	CREATE_ERR_NORECIPIENT(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (user->get_prefix() + " :No recipient given (" + reply_arg[0] + ")\r\n");
+}
+
+/* 412 */
+std::string	CREATE_ERR_NOTEXTTOSEND(const User *user) {
+
+    return (user->get_prefix() + " :No text to send\r\n");
 }
 
 /* 431 */
@@ -132,3 +156,8 @@ std::string	CREATE_PER_NICKNAMECHANGE(const std::vector<std::string> &reply_arg)
     return (reply_arg[0] + " NICK " + reply_arg[1] + "\r\n");
 }
 
+/* 1002 */
+std::string	CREATE_PER_SENDMESSAGETOCHANNEL(const std::vector<std::string> &reply_arg) {
+
+    return (reply_arg[0] + " " + reply_arg[1] + " " + reply_arg[2] + " :" + reply_arg[3] + "\r\n");
+}

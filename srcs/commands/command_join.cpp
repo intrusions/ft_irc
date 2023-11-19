@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/16 19:00:47 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/19 13:19:09 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 static bool  channel_name_is_valid(std::string c_name) {
     
     return ((c_name[0] == '#'));
-`}
+}
 
 void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
 

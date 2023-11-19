@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 07:40:16 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/19 17:17:37 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,13 @@ class Server {
         void        _command_pong(void);
         void        _command_join(std::vector<std::string> cmd, int32_t fd);
         void        _command_kick(std::vector<std::string> cmd, int32_t fd);
+        void        _command_privmsg(std::string cmd, int32_t fd);
 
         void        _send_reply(int32_t fd, int32_t code, std::vector<std::string> &reply_arg);
+        void        _send_message_by_channel_name(std::string &c_name, std::string &message, int32_t fd);
+        void        _send_message_by_nickname(std::string &nickname, std::string &message, int32_t fd);
+
+
 
         uint8_t     _get_command_type_from_string(std::string &string) const;
 
