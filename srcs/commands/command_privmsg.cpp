@@ -1,21 +1,18 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   command_privmsg.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:32:24 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/19 17:42:10 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:30:51 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
 #include "utils.hpp"
-
-// todo
-// user cant send privmsg in a channel if he ban
 
 void    Server::_send_message_by_channel_name(std::string &c_name, std::string &message, int32_t fd) {
 
@@ -54,7 +51,6 @@ void    Server::_send_message_by_channel_name(std::string &c_name, std::string &
         return ;
     }
 
-    // ban tcheck
     for (std::vector<int32_t>::iterator it = channel->fetch_banned_fds()->begin(); it != channel->fetch_banned_fds()->end(); it++) {
     
         if (*it == fd) {

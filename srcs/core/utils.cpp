@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 09:21:22 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 12:27:46 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "utils.hpp"
 #include "color.hpp"
@@ -71,7 +71,7 @@ void	DEBUG_PRINT_ALL_CHANNEL(std::vector<Channel *> channel) {
     
     for (std::vector<Channel *>::iterator it = channel.begin(); it != channel.end(); it++) {
 
-        std::cout << "Channel[" << i << "] : " << (*it)->get_name() << " | ";
+        std::cout << "      Channel[" << i << "] : " << (*it)->get_name() << " | ";
 
         std::vector<int32_t>	*user_list = (*it)->fetch_fds();
         for (std::vector<int32_t>::iterator it2 = user_list->begin(); it2 != user_list->end(); it2++) {

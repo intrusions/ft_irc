@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/19 17:16:32 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:32:11 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -386,7 +386,7 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case 475: reply = CREATE_ERR_BADCHANNELKEY(_users[fd], reply_arg);              break;
         case 476: reply = CREATE_ERR_BADCHANMASK(reply_arg);                            break;
         case 1001: reply = CREATE_PER_NICKNAMECHANGE(reply_arg);                        break;
-        case 1002: reply = CREATE_PER_SENDMESSAGETOCHANNEL(reply_arg);      break;
+        case 1002: reply = CREATE_PER_SENDMESSAGETOCHANNEL(reply_arg);                  break;
     }
 
     if (send(fd, reply.c_str(), reply.length(), 0) == -1)
