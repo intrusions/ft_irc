@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:32:24 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 12:30:51 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 12:44:28 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -65,7 +65,7 @@ void    Server::_send_message_by_channel_name(std::string &c_name, std::string &
     for (std::vector<int32_t>::iterator it = channel->fetch_fds()->begin(); it != channel->fetch_fds()->end(); it++) {
         
         if (*it != fd) {
-            logger(INFO, "Message sended to client in Channel");
+            logger(INFO, "Message sended to channel");
             
             reply_arg.push_back(_users[fd]->get_prefix());
             reply_arg.push_back("PRIVMSG");
