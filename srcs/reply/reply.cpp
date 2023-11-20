@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 18:30:12 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 19:44:20 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -160,6 +160,12 @@ std::string	CREATE_ERR_BADCHANMASK(const std::vector<std::string> &reply_arg) {
 std::string	CREATE_ERR_CHANOPRIVSNEEDED(const User *user, const std::vector<std::string> &reply_arg) {
 
     return (user->get_prefix() + " " + reply_arg[0] + " :You're not channel operator\r\n");
+}
+
+/* 501 */
+std::string	CREATE_ERR_UMODEUNKNOWNFLAG(const User *user) {
+
+    return (user->get_prefix() + " :Unknown MODE flag\r\n");
 }
 
 /* 502 */

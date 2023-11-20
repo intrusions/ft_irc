@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:03:06 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 18:14:01 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 21:35:17 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -34,3 +34,5 @@ std::string             Channel::get_topic(void) const      { return (_topic); }
 std::vector<int32_t>	*Channel::fetch_fds(void)           { return (&_fds); }
 std::vector<int32_t>	*Channel::fetch_banned_fds(void)    { return (&_banned_fds); }
 std::vector<int32_t>	*Channel::fetch_operator_fds(void)  { return (&_operator_fds); }
+uint64_t	            Channel::get_mflags(void)            { return (_mflags); }
+void                    Channel::set_mflags(uint64_t flags) { _mflags = flags; }

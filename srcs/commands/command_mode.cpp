@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:55:28 by xel               #+#    #+#             */
-/*   Updated: 2023/11/20 18:33:22 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 22:19:50 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,6 +15,77 @@
 #include "Channel.hpp"
 #include "utils.hpp"
 #include "assert.h"
+
+static uint64_t mode_to_flag(const char mode) {
+    switch (mode) {
+        case 'i': return (CHANNEL_MODE_INVITE_ONLY);
+        case 't': return (CHANNEL_MODE_TOPIC_MANAGE);
+        case 'k': return (CHANNEL_MODE_CHANGE_PASS);
+        case 'o': return (CHANNEL_MODE_OPERATOR_PRIV);
+        case 'l': return (CHANNEL_MODE_USER_LIMIT);
+        default:  return 0;
+    }
+}
+
+void Server::_handle_add_mode(std::string modes, Channel *channel, int32_t fd) {
+    
+    std::string                 message;
+    std::vector<std::string>    reply_arg;
+    
+    for (uint8_t i = 0; modes[i]; i++) {
+        uint64_t mode = mode_to_flag(modes[i]);
+        if (mode) {
+            if (!(mode & channel->get_mflags())) {
+                logger(INFO, "Channel mode added");
+                channel->set_mflags(channel->get_mflags() | mode);
+                
+                switch (mode) {
+                    case (CHANNEL_MODE_INVITE_ONLY): break;
+                    case (CHANNEL_MODE_TOPIC_MANAGE): break;
+                    case (CHANNEL_MODE_CHANGE_PASS): break;
+                    case (CHANNEL_MODE_OPERATOR_PRIV): break;
+                    case (CHANNEL_MODE_USER_LIMIT): break;
+                }
+                
+            } else {
+                logger(INFO, "Channel mode is already set");
+            }
+        } else {
+            logger(INFO, "Channel mode is not supported on this server");
+            _send_reply(fd, 501, reply_arg);
+        }
+    }
+}
+
+void Server::_handle_remove_mode(std::string modes, Channel *channel, int32_t fd) {
+    
+    std::string                 message;
+    std::vector<std::string>    reply_arg;
+
+    for (uint8_t i = 0; modes[i]; i++) {
+        uint64_t mode = mode_to_flag(modes[i]);
+        if (mode) {
+            if (mode & channel->get_mflags()) {
+                logger(INFO, "Channel mode removed");
+                channel->set_mflags(channel->get_mflags() & ~(mode));
+            
+                switch (mode) {
+                    case (CHANNEL_MODE_INVITE_ONLY): break;
+                    case (CHANNEL_MODE_TOPIC_MANAGE): break;
+                    case (CHANNEL_MODE_CHANGE_PASS): break;
+                    case (CHANNEL_MODE_OPERATOR_PRIV): break;
+                    case (CHANNEL_MODE_USER_LIMIT): break;
+                }
+        
+            } else {
+                logger(INFO, "Channel mode is not set");
+            }
+        } else {
+            logger(INFO, "Channel mode is not supported on this server");
+            _send_reply(fd, 501, reply_arg);
+        }
+    }
+}
 
 void  Server::_handle_channel_mode(std::vector<std::string> cmd, int32_t fd) {
   
@@ -47,21 +118,21 @@ void  Server::_handle_channel_mode(std::vector<std::string> cmd, int32_t fd) {
 	std::string mode_string = cmd[2];
 	switch (mode_string[0]) {
 		case '+':
-			// handle_add(&mode_string[1]);
-		    logger(INFO, "+ Mode");
+			_handle_add_mode(&mode_string[1], channel, fd);
 		break;
 		case '-':
-			// handle_remove(&mode_string[1]);
-		    logger(INFO, "- Mode");
+			_handle_remove_mode(&mode_string[1], channel, fd);
 		break;
 	}
+
+    DEBUG_PRINT_MODESTR(channel->get_mflags());
 }
 
 void	Server::_command_mode(std::vector<std::string> cmd, int32_t fd) {
 
     std::vector<std::string>    reply_arg;
 
-    if (cmd.size() < 3) {
+    if (cmd.size() < 4) {
         logger(WARNING, "No channel name or mode are given");
 
         reply_arg.push_back("No mode");

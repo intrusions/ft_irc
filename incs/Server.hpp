@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 18:18:26 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 19:54:51 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -72,6 +72,9 @@ class Server {
         void	    _command_mode(std::vector<std::string> cmd, int32_t fd);
         void        _handle_channel_mode(std::vector<std::string> cmd, int32_t fd);
         void        _handle_user_mode(std::vector<std::string> cmd, int32_t fd);
+        void        _handle_remove_mode(std::string modes, Channel *channel, int32_t fd);
+        void        _handle_add_mode(std::string modes, Channel *channel, int32_t fd);
+
 
         void        _send_reply(int32_t fd, int32_t code, std::vector<std::string> &reply_arg);
         void        _send_message_by_channel_name(std::string &c_name, std::string &message, int32_t fd);

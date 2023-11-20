@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 02:01:14 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 21:32:15 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #pragma once
 
@@ -71,3 +71,4 @@ bool    find_fds_in_vec(std::vector<int32_t> *vec, const int32_t fd);
 void    DEBUG_PRINT_CMD_VEC(User *user);
 void    DEBUG_PRINT_CMD_SPLIT_VEC(std::vector<std::string> cmd, User *user);
 void    DEBUG_PRINT_ALL_CHANNEL(std::vector<Channel *> channel);
+void    DEBUG_PRINT_MODESTR(uint64_t flags);

@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 12:27:46 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 21:38:28 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -80,4 +80,15 @@ void	DEBUG_PRINT_ALL_CHANNEL(std::vector<Channel *> channel) {
         std::cout << std::endl;
         i++;
     }
+}
+
+void DEBUG_PRINT_MODESTR(uint64_t flags) {
+    
+    logger(DEBUG, "Channel Flags:");
+
+    if (flags & CHANNEL_MODE_INVITE_ONLY)   { std::cout << "  Invite Only" << std::endl; }
+    if (flags & CHANNEL_MODE_USER_LIMIT)    { std::cout << "  User Limit" << std::endl; }
+    if (flags & CHANNEL_MODE_CHANGE_PASS)   { std::cout << "  Change Password" << std::endl; }
+    if (flags & CHANNEL_MODE_OPERATOR_PRIV) { std::cout << "  Operator Privileges" << std::endl; }
+    if (flags & CHANNEL_MODE_TOPIC_MANAGE)  { std::cout << "  Topic Management" << std::endl; }
 }

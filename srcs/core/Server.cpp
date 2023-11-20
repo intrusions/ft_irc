@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 18:24:25 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 19:45:11 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -387,7 +387,8 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case 475: reply = CREATE_ERR_BADCHANNELKEY(_users[fd], reply_arg);              break;
         case 482: reply = CREATE_ERR_CHANOPRIVSNEEDED(_users[fd], reply_arg);           break;
         case 476: reply = CREATE_ERR_BADCHANMASK(reply_arg);                            break;
-        case 502: reply = CREATE_ERR_USERSDONTMATCH(_users[fd]);                         break;
+        case 501: reply = CREATE_ERR_UMODEUNKNOWNFLAG(_users[fd]);                      break;
+        case 502: reply = CREATE_ERR_USERSDONTMATCH(_users[fd]);                        break;
         case 1001: reply = CREATE_PER_NICKNAMECHANGE(reply_arg);                        break;
         case 1002: reply = CREATE_PER_SENDMESSAGETOCHANNEL(reply_arg);                  break;
     }
