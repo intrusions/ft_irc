@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 12:29:36 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 18:11:45 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -25,6 +25,7 @@ std::string CREATE_RPL_YOURHOST(const User *user, const std::string &servername,
 std::string CREATE_RPL_CREATED(const User *user, const std::string &start_time, const std::string &servername);
 std::string CREATE_RPL_MYINFO(const User *user, const std::string &servername, const std::string &version);
 std::string CREATE_RPL_TOPIC(const User *user, const std::vector<std::string> &reply_arg);
+std::string CREATE_RPL_UMODEIS(const User *user, const std::vector<std::string> &reply_arg);
 
 std::string CREATE_ERR_NOSUCHNICK(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_USERNOTINCHANNEL(const User *user, const std::vector<std::string> &reply_arg);
@@ -42,6 +43,8 @@ std::string CREATE_ERR_NICKNAMEINUSE(const User *user, const std::vector<std::st
 std::string CREATE_ERR_BANNEDFROMCHAN(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_BADCHANNELKEY(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_BADCHANMASK(const std::vector<std::string> &reply_arg);
+std::string	CREATE_ERR_CHANOPRIVSNEEDED(const User *user, const std::vector<std::string> &reply_arg);
+std::string	CREATE_ERR_USERSDONTMATCH(const User *user);
 
 std::string CREATE_PER_NICKNAMECHANGE(const std::vector<std::string> &reply_arg);
 std::string CREATE_PER_SENDMESSAGETOCHANNEL(const std::vector<std::string> &reply_arg);

@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:32:24 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 12:44:28 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 16:15:54 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -88,7 +88,6 @@ void    Server::_send_message_by_nickname(std::string &nickname, std::string &me
             break ;
         }
     }
-
     if (fd_to_send == false) {
         logger(WARNING, "Can't send message, client are not in server");
 
@@ -99,7 +98,6 @@ void    Server::_send_message_by_nickname(std::string &nickname, std::string &me
 
     if (fd != fd_to_send) {
         logger(INFO, "Message sended to client");
-
         reply_arg.push_back(_users[fd]->get_nickname());
         reply_arg.push_back("PRIVMSG");
         reply_arg.push_back(nickname);
@@ -143,5 +141,4 @@ void    Server::_command_privmsg(std::string cmd, int32_t fd) {
             _send_message_by_nickname(*it, message, fd);
         }
     }
-
 }

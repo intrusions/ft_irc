@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:57:29 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/12 09:48:14 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 18:13:38 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #pragma once
 
@@ -26,6 +26,8 @@ class Channel {
         std::string             _password;
         std::vector<int32_t>    _fds;
         std::vector<int32_t>    _banned_fds;
+        std::vector<int32_t>    _operator_fds;
+        std::vector<char>       _modes;
 
         
     public:
@@ -40,4 +42,5 @@ class Channel {
 
         std::vector<int32_t>    *fetch_fds(void);
         std::vector<int32_t>    *fetch_banned_fds(void);
+        std::vector<int32_t>    *fetch_operator_fds(void);
 };

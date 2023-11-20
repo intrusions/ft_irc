@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   reply.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/19 17:26:23 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:30:12 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "reply.hpp"
 
@@ -46,6 +46,12 @@ std::string	CREATE_RPL_MYINFO(const User *user, const std::string &servername, c
         ":" + servername + " 004 " + user->get_nickname() + " "
         + servername + " " + version + " <available user modes> \n<available channel modes> [<channel modes with a parameter>]" + "\r\n"
     );
+}
+
+/* 221 */
+std::string CREATE_RPL_UMODEIS(const User *user, const std::vector<std::string> &reply_arg) {
+    
+    return (user->get_prefix() + " " + reply_arg[0] + "\r\n");
 }
 
 /* 332 */
@@ -148,6 +154,18 @@ std::string	CREATE_ERR_BADCHANNELKEY(const User *user, const std::vector<std::st
 std::string	CREATE_ERR_BADCHANMASK(const std::vector<std::string> &reply_arg) {
 
     return (reply_arg[0] + " :Bad Channel Mask\r\n");
+}
+
+/* 482 */
+std::string	CREATE_ERR_CHANOPRIVSNEEDED(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (user->get_prefix() + " " + reply_arg[0] + " :You're not channel operator\r\n");
+}
+
+/* 502 */
+std::string	CREATE_ERR_USERSDONTMATCH(const User *user) {
+
+    return (user->get_prefix() + " :Cant change mode for other users\r\n");
 }
 
 /* 1001 */

@@ -40,4 +40,5 @@ SRCS :=                             \
     commands/command_join.cpp       \
     commands/command_kick.cpp       \
     commands/command_privmsg.cpp    \
+    commands/command_mode.cpp       \
 		tests/unit.cpp

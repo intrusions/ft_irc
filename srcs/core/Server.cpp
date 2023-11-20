@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 12:32:11 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/20 18:24:25 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -269,12 +269,12 @@ void	Server::_exec_client_commands(User *user) {
                 case COMMAND_TYPE_JOIN:     _command_join(cmd_splited, user->get_fd());     break;
                 case COMMAND_TYPE_KICK:     _command_kick(cmd_splited, user->get_fd());     break;
                 case COMMAND_TYPE_PRIVMSG:  _command_privmsg(*it, user->get_fd());          break;
+                case COMMAND_TYPE_MODE:     _command_mode(cmd_splited, user->get_fd());     break;
                 case COMMAND_TYPE_DIE:                                                      break;
                 case COMMAND_TYPE_KILL:                                                     break;
                 case COMMAND_TYPE_OPER:                                                     break;
                 case COMMAND_TYPE_TOPIC:                                                    break;
                 case COMMAND_TYPE_QUIT:                                                     break;
-                case COMMAND_TYPE_MODE:                                                     break;
                 case COMMAND_TYPE_NOTICE:                                                   break;
                 case COMMAND_TYPE_LIST:                                                     break;
                 case COMMAND_TYPE_INVITE:                                                   break;
@@ -365,10 +365,11 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
 
     switch(code) {
 
-        case 001: reply = CREATE_RPL_WELCOME(_users[fd], _networkname, _servername);    break;
-        case 002: reply = CREATE_RPL_YOURHOST(_users[fd], _servername, _version);       break;
-        case 003: reply = CREATE_RPL_CREATED(_users[fd], _start_time, _servername);     break;
-        case 004: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);         break;
+        case   1: reply = CREATE_RPL_WELCOME(_users[fd], _networkname, _servername);    break;
+        case   2: reply = CREATE_RPL_YOURHOST(_users[fd], _servername, _version);       break;
+        case   3: reply = CREATE_RPL_CREATED(_users[fd], _start_time, _servername);     break;
+        case   4: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);         break;
+        case 221: reply = CREATE_RPL_UMODEIS(_users[fd], reply_arg);                      break;
         case 332: reply = CREATE_RPL_TOPIC(_users[fd], reply_arg);                      break;
         case 401: reply = CREATE_ERR_NOSUCHNICK(_users[fd], reply_arg);                 break;
         case 403: reply = CREATE_ERR_NOSUCHCHANNEL(_users[fd], reply_arg);              break;
@@ -384,7 +385,9 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case 433: reply = CREATE_ERR_NICKNAMEINUSE(_users[fd], reply_arg);              break;
         case 474: reply = CREATE_ERR_BANNEDFROMCHAN(_users[fd], reply_arg);             break;
         case 475: reply = CREATE_ERR_BADCHANNELKEY(_users[fd], reply_arg);              break;
+        case 482: reply = CREATE_ERR_CHANOPRIVSNEEDED(_users[fd], reply_arg);           break;
         case 476: reply = CREATE_ERR_BADCHANMASK(reply_arg);                            break;
+        case 502: reply = CREATE_ERR_USERSDONTMATCH(_users[fd]);                         break;
         case 1001: reply = CREATE_PER_NICKNAMECHANGE(reply_arg);                        break;
         case 1002: reply = CREATE_PER_SENDMESSAGETOCHANNEL(reply_arg);                  break;
     }
