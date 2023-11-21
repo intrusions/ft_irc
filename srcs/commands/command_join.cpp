@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   command_join.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/19 13:19:09 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/21 11:58:41 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -64,42 +64,62 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                     _send_reply(fd, 474, reply_arg);
                     break ;
                 }
+                
+                if ((*it2)->get_is_invite_only() == false) {
+                    
+                    if ((*it2)->get_password() != "") {
 
-                if ((*it2)->get_password() != "") {
-
-                    if (password_list.size() && (*it2)->get_password() == password_list[0]) {
-                        logger(INFO, "This channel is already exist, valid password, joining channel...");
+                        if (password_list.size() && (*it2)->get_password() == password_list[0]) {
+                            logger(INFO, "Channel is already exist, valid password, joining channel...");
+                            
+                            reply_arg.push_back((*it2)->get_name());
+                            reply_arg.push_back((*it2)->get_topic());
+                            _send_reply(fd, 332, reply_arg);
+                            (*it2)->fetch_fds()->push_back(fd);
+                            password_list.erase(password_list.begin());
+                            break ;
+                        } else {
+                            logger(INFO, "Channel is already exist, invalid password");
+                            
+                            reply_arg.push_back((*it2)->get_name());
+                            _send_reply(fd, 475, reply_arg);
+                            break ;
+                        }
+                    } else {
+                        logger(INFO, "Channel is already exist, no expected password, joining channel...");
                         
                         reply_arg.push_back((*it2)->get_name());
                         reply_arg.push_back((*it2)->get_topic());
                         _send_reply(fd, 332, reply_arg);
                         (*it2)->fetch_fds()->push_back(fd);
-                        password_list.erase(password_list.begin());
-                        break ;
-                    } else {
-                        logger(INFO, "This channel is already exist, invalid password");
-                        
-                        reply_arg.push_back((*it2)->get_name());
-                        _send_reply(fd, 475, reply_arg);
                         break ;
                     }
                 } else {
-                    logger(INFO, "This channel is already exist, no expected password, joining channel...");
-                    
-                    reply_arg.push_back((*it2)->get_name());
-                    reply_arg.push_back((*it2)->get_topic());
-                    _send_reply(fd, 332, reply_arg);
-                    (*it2)->fetch_fds()->push_back(fd);
+
+                    if (find_fds_in_vec((*it2)->fetch_invite_fds(), fd)) {
+                        logger(INFO, "Channel is Invite Only, client has ben invited");
+                        
+                        reply_arg.push_back((*it2)->get_name());
+                        reply_arg.push_back((*it2)->get_topic());
+                        _send_reply(fd, 332, reply_arg);
+                        (*it2)->fetch_fds()->push_back(fd);
+                    } else {
+                        logger(INFO, "Channel is Invite Only, client was not invited");
+
+                        reply_arg.push_back((*it2)->get_name());
+                        _send_reply(fd, 473, reply_arg);
+                    }
+
                     break ;
                 }
             }
         }
 
         if (found == false) {
-            logger(INFO, "This channel doesn't exist, creating channel...");
+            logger(INFO, "Channel doesn't exist, creating channel...");
 
             if (!channel_name_is_valid(*it)) {
-                logger(INFO, "This channel name is not valid");
+                logger(INFO, "Channel name is not valid");
 
                 reply_arg.push_back(*it);
                 _send_reply(fd, 476, reply_arg);

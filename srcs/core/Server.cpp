@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 19:45:11 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/21 11:56:08 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -369,7 +369,7 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case   2: reply = CREATE_RPL_YOURHOST(_users[fd], _servername, _version);       break;
         case   3: reply = CREATE_RPL_CREATED(_users[fd], _start_time, _servername);     break;
         case   4: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);         break;
-        case 221: reply = CREATE_RPL_UMODEIS(_users[fd], reply_arg);                      break;
+        case 221: reply = CREATE_RPL_UMODEIS(_users[fd], reply_arg);                    break;
         case 332: reply = CREATE_RPL_TOPIC(_users[fd], reply_arg);                      break;
         case 401: reply = CREATE_ERR_NOSUCHNICK(_users[fd], reply_arg);                 break;
         case 403: reply = CREATE_ERR_NOSUCHCHANNEL(_users[fd], reply_arg);              break;
@@ -386,6 +386,7 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case 474: reply = CREATE_ERR_BANNEDFROMCHAN(_users[fd], reply_arg);             break;
         case 475: reply = CREATE_ERR_BADCHANNELKEY(_users[fd], reply_arg);              break;
         case 482: reply = CREATE_ERR_CHANOPRIVSNEEDED(_users[fd], reply_arg);           break;
+        case 473: reply = CREATE_ERR_INVITEONLYCHAN(_users[fd], reply_arg);             break;
         case 476: reply = CREATE_ERR_BADCHANMASK(reply_arg);                            break;
         case 501: reply = CREATE_ERR_UMODEUNKNOWNFLAG(_users[fd]);                      break;
         case 502: reply = CREATE_ERR_USERSDONTMATCH(_users[fd]);                        break;

@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 19:44:20 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/21 11:53:28 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -136,6 +136,12 @@ std::string	CREATE_ERR_ALREADYREGISTERED(const User *user) {
 std::string	CREATE_ERR_PASSWDMISMATCH(const User *user) {
 
     return (user->get_prefix() + " :Password incorrect\r\n");
+}
+
+/* 473 */
+std::string	CREATE_ERR_INVITEONLYCHAN(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (user->get_prefix() + " " + reply_arg[0] + " :Cannot join channel (+i)\r\n");
 }
 
 /* 474 */
