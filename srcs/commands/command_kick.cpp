@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   command_kick.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 06:33:56 by xel               #+#    #+#             */
-/*   Updated: 2023/11/16 16:33:06 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/11/22 10:54:50 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -38,9 +38,19 @@ int32_t    user_is_in_channel(std::map<int, User *> &users, Channel *channel, st
     return (0);
 }
 
-bool    operator_is_in_channel(Channel *channel, int32_t fd) {
+bool    kicker_is_in_channel(Channel *channel, int32_t fd) {
 
     for (std::vector<int32_t>::iterator it = channel->fetch_fds()->begin(); it != channel->fetch_fds()->end(); it++) {
+        if (*it == fd) {
+            return (true);
+        }
+    }
+    return (false);
+}
+
+bool    operator_is_in_channel(Channel *channel, int32_t fd) {
+
+    for (std::vector<int32_t>::iterator it = channel->fetch_operator_fds()->begin(); it != channel->fetch_operator_fds()->end(); it++) {
         if (*it == fd) {
             return (true);
         }
@@ -55,13 +65,15 @@ void	Server::_command_kick(std::vector<std::string> cmd, int32_t fd) {
     int32_t                             user_to_kick;
 
     if (cmd.size() < 3) {
+        logger(WARNING, "No channel name or nickname are given");
+        
         reply_arg.push_back(cmd[0]);
         _send_reply(fd, 461, reply_arg);
         return ;
     }
 
     if ((channel_it = channel_is_existing(_channel, cmd[1])) == _channel.end()) {
-        logger(INFO, "This channel does not exist");
+        logger(WARNING, "This channel does not exist");
 
         reply_arg.push_back(cmd[1]);
         _send_reply(fd, 403, reply_arg);
@@ -69,7 +81,7 @@ void	Server::_command_kick(std::vector<std::string> cmd, int32_t fd) {
     }
     
     if ((user_to_kick = user_is_in_channel(_users, *channel_it, cmd[2])) == 0) {
-        logger(INFO, "The client who should be kicked, is not in this channel");
+        logger(WARNING, "The client who should be kicked, is not in this channel");
 
         reply_arg.push_back(cmd[2]);
         reply_arg.push_back(cmd[1]);
@@ -78,27 +90,42 @@ void	Server::_command_kick(std::vector<std::string> cmd, int32_t fd) {
     }
 
     if (user_to_kick == fd) {
-        logger(INFO, "A client can't be kick himself");
+        logger(WARNING, "A client can't be kick himself");
+        
         return ;
     }
 
-    if (operator_is_in_channel(*channel_it, fd) == 0) {
-        logger(INFO, "The client who would like kick, is not in this channel");
+    if (kicker_is_in_channel(*channel_it, fd) == false) {
+        logger(WARNING, "The client who would like kick, is not in this channel");
 
         reply_arg.push_back(cmd[1]);
         _send_reply(fd, 442, reply_arg);
         return ;
-    } else {
-        uint8_t i = 0;
-        for (std::vector<int32_t>::iterator it = (*channel_it)->fetch_fds()->begin(); it != (*channel_it)->fetch_fds()->end(); it++) {
-            if (*it == user_to_kick) {
-                logger(INFO, "Client is successfully kicked");
+    }
+        
+    if (operator_is_in_channel(*channel_it, fd) == false) {
+        logger(WARNING, "The client who would like kick, is not operator on this channel");
 
-                (*channel_it)->fetch_fds()->erase((*channel_it)->fetch_fds()->begin() + i);
-                DEBUG_PRINT_ALL_CHANNEL(_channel);
-                return ;
-            }
-            i++;
+        reply_arg.push_back(cmd[1]);
+        _send_reply(fd, 482, reply_arg);
+        return ;
+    }
+    
+    
+    reply_arg.push_back(_users[fd]->get_prefix());
+    reply_arg.push_back(cmd[0]);
+    reply_arg.push_back(cmd[1]);
+    reply_arg.push_back(cmd[2]);
+
+    for (std::vector<int32_t>::iterator it = (*channel_it)->fetch_fds()->begin(); it != (*channel_it)->fetch_fds()->end(); ) {
+        _send_reply(*it, 1002, reply_arg);
+        if (*it == user_to_kick) {
+            logger(INFO, "Client is successfully kicked");
+
+            it = (*channel_it)->fetch_fds()->erase(it);
+        } else {
+            it++;
         }
     }
+    DEBUG_PRINT_ALL_CHANNEL(_channel);
 }

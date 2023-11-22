@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/21 12:02:20 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/22 11:02:07 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -103,6 +103,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                         reply_arg.push_back((*it2)->get_topic());
                         _send_reply(fd, 332, reply_arg);
                         (*it2)->fetch_fds()->push_back(fd);
+                        
                     } else {
                         logger(INFO, "Channel is Invite Only, client was not invited");
 
