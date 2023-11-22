@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/21 12:48:44 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/22 12:06:55 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -30,6 +30,9 @@
 #include <cstring>
 #include <unistd.h>
 #include <signal.h>
+
+#define ADD_MODE    1
+#define REMOVE_MODE 0
 
 class User;
 class Channel;
@@ -74,15 +77,16 @@ class Server {
         void        _command_mode(std::vector<std::string> cmd, int32_t fd);
         void        _handle_channel_mode(std::vector<std::string> cmd, int32_t fd);
         void        _handle_user_mode(std::vector<std::string> cmd, int32_t fd);
-        void        _handle_remove_mode(std::string modes, Channel *channel, int32_t fd);
-        void        _handle_add_mode(std::string modes, Channel *channel, int32_t fd);
+        void        _handle_remove_mode(std::string modes, Channel *channel, std::vector<std::string> cmd, int32_t fd);
+        void        _handle_add_mode(std::string modes, Channel *channel, std::vector<std::string> cmd, int32_t fd);
 
 
         void        _send_reply(int32_t fd, int32_t code, std::vector<std::string> &reply_arg);
         void        _send_message_by_channel_name(std::string &c_name, std::string &message, int32_t fd);
         void        _send_message_by_nickname(std::string &nickname, std::string &message, int32_t fd);
 
-
+        void        _mode_invite_only(Channel *channel, bool add_or_rm);
+        void        _mode_change_pass(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
 
         uint8_t     _get_command_type_from_string(std::string &string) const;
 

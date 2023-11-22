@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:55:28 by xel               #+#    #+#             */
-/*   Updated: 2023/11/21 11:26:18 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/22 12:58:58 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,7 +15,6 @@
 #include "Channel.hpp"
 #include "utils.hpp"
 #include "assert.h"
-#include "modes.hpp"
 
 static uint64_t mode_to_flag(const char mode) {
     
@@ -29,7 +28,7 @@ static uint64_t mode_to_flag(const char mode) {
     }
 }
 
-void Server::_handle_add_mode(std::string modes, Channel *channel, int32_t fd) {
+void Server::_handle_add_mode(std::string modes, Channel *channel, std::vector<std::string> cmd, int32_t fd) {
     
     std::string                 message;
     std::vector<std::string>    reply_arg;
@@ -39,20 +38,12 @@ void Server::_handle_add_mode(std::string modes, Channel *channel, int32_t fd) {
         uint64_t mode = mode_to_flag(modes[i]);
         if (mode) {
             
-            if (!(mode & channel->get_mflags())) {
-                logger(INFO, "Channel mode added");
-                
-                channel->set_mflags(channel->get_mflags() | mode);
-                switch (mode) {
-                    case (CHANNEL_MODE_INVITE_ONLY):    mode_invite_only(channel, ADD_MODE);   break;
-                    case (CHANNEL_MODE_TOPIC_MANAGE):                                          break;
-                    case (CHANNEL_MODE_CHANGE_PASS):                                           break;
-                    case (CHANNEL_MODE_OPERATOR_PRIV):                                         break;
-                    case (CHANNEL_MODE_USER_LIMIT):                                            break;
-                }
-                
-            } else {
-                logger(INFO, "Channel mode is already set");
+            switch (mode) {
+                case (CHANNEL_MODE_INVITE_ONLY):    _mode_invite_only(channel, ADD_MODE);           break;
+                case (CHANNEL_MODE_CHANGE_PASS):    _mode_change_pass(channel, cmd, ADD_MODE, fd);  break;
+                case (CHANNEL_MODE_TOPIC_MANAGE):                                                   break;
+                case (CHANNEL_MODE_OPERATOR_PRIV):                                                  break;
+                case (CHANNEL_MODE_USER_LIMIT):                                                     break;
             }
         } else {
             logger(INFO, "Channel mode is not supported on this server");
@@ -61,7 +52,7 @@ void Server::_handle_add_mode(std::string modes, Channel *channel, int32_t fd) {
     }
 }
 
-void Server::_handle_remove_mode(std::string modes, Channel *channel, int32_t fd) {
+void Server::_handle_remove_mode(std::string modes, Channel *channel, std::vector<std::string> cmd, int32_t fd) {
     
     std::string                 message;
     std::vector<std::string>    reply_arg;
@@ -71,20 +62,12 @@ void Server::_handle_remove_mode(std::string modes, Channel *channel, int32_t fd
         uint64_t mode = mode_to_flag(modes[i]);
         if (mode) {
             
-            if (mode & channel->get_mflags()) {
-                logger(INFO, "Channel mode removed");
-                
-                channel->set_mflags(channel->get_mflags() & ~(mode));
-                switch (mode) {
-                    case (CHANNEL_MODE_INVITE_ONLY):    mode_invite_only(channel, REMOVE_MODE);    break;
-                    case (CHANNEL_MODE_CHANGE_PASS):                                               break;
-                    case (CHANNEL_MODE_TOPIC_MANAGE):                                              break;
-                    case (CHANNEL_MODE_OPERATOR_PRIV):                                             break;
-                    case (CHANNEL_MODE_USER_LIMIT):                                                break;
-                }
-        
-            } else {
-                logger(INFO, "Channel mode is not set");
+            switch (mode) {
+                case (CHANNEL_MODE_INVITE_ONLY):    _mode_invite_only(channel, REMOVE_MODE);            break;
+                case (CHANNEL_MODE_CHANGE_PASS):    _mode_change_pass(channel, cmd, REMOVE_MODE, fd);   break;
+                case (CHANNEL_MODE_TOPIC_MANAGE):                                                       break;
+                case (CHANNEL_MODE_OPERATOR_PRIV):                                                      break;
+                case (CHANNEL_MODE_USER_LIMIT):                                                         break;
             }
         } else {
             logger(INFO, "Channel mode is not supported on this server");
@@ -124,10 +107,10 @@ void  Server::_handle_channel_mode(std::vector<std::string> cmd, int32_t fd) {
 	std::string mode_string = cmd[2];
 	switch (mode_string[0]) {
 		case '+':
-			_handle_add_mode(&mode_string[1], channel, fd);
+			_handle_add_mode(&mode_string[1], channel, cmd, fd);
 		break;
 		case '-':
-			_handle_remove_mode(&mode_string[1], channel, fd);
+			_handle_remove_mode(&mode_string[1], channel, cmd, fd);
 		break;
 	}
 

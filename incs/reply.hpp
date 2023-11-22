@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/21 12:47:13 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/22 11:53:49 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -49,6 +49,7 @@ std::string CREATE_ERR_BADCHANMASK(const std::vector<std::string> &reply_arg);
 std::string	CREATE_ERR_CHANOPRIVSNEEDED(const User *user, const std::vector<std::string> &reply_arg);
 std::string	CREATE_ERR_UMODEUNKNOWNFLAG(const User *user);
 std::string	CREATE_ERR_USERSDONTMATCH(const User *user);
+std::string	CREATE_ERR_INVALIDMODEPARAM(const User *user, const std::vector<std::string> &reply_arg);
 
 std::string CREATE_PER_NICKNAMECHANGE(const std::vector<std::string> &reply_arg);
 std::string CREATE_PER_SENDMESSAGETOCHANNEL(const std::vector<std::string> &reply_arg);

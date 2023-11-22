@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/21 12:46:15 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/22 11:56:46 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -190,6 +190,15 @@ std::string	CREATE_ERR_UMODEUNKNOWNFLAG(const User *user) {
 std::string	CREATE_ERR_USERSDONTMATCH(const User *user) {
 
     return (user->get_prefix() + " :Cant change mode for other users\r\n");
+}
+
+/* 696 */
+std::string	CREATE_ERR_INVALIDMODEPARAM(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (
+        user->get_prefix() + " " + reply_arg[0] + " " + reply_arg[1] + " "
+        + reply_arg[2] + " " + reply_arg[3] + "\r\n"
+    );
 }
 
 /* 1001 */

@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 06:33:56 by xel               #+#    #+#             */
-/*   Updated: 2023/11/22 10:54:50 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/22 11:19:43 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,8 +15,9 @@
 #include "Channel.hpp"
 #include "utils.hpp"
 
-// todo (when mode is coded)
-// 482 - "<client> <channel> :You're not channel operator"
+// todo
+// if a channel is invite-only, and operator invite a client, it join it, and be kicked by operator
+// ADD a remove of it old invitation
 
 std::vector<Channel *>::iterator    channel_is_existing(std::vector<Channel *> &c_list, std::string &c_name) {
     

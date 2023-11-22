@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/21 12:55:33 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/22 13:19:32 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -392,6 +392,7 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case 476: reply = CREATE_ERR_BADCHANMASK(reply_arg);                            break;
         case 501: reply = CREATE_ERR_UMODEUNKNOWNFLAG(_users[fd]);                      break;
         case 502: reply = CREATE_ERR_USERSDONTMATCH(_users[fd]);                        break;
+        case 696: reply = CREATE_ERR_INVALIDMODEPARAM(_users[fd], reply_arg);           break;
         case 1001: reply = CREATE_PER_NICKNAMECHANGE(reply_arg);                        break;
         case 1002: reply = CREATE_PER_SENDMESSAGETOCHANNEL(reply_arg);                  break;
     }
