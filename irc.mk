@@ -44,4 +44,5 @@ SRCS :=                             \
     commands/command_invite.cpp     \
     modes/mode_invite_only.cpp      \
     modes/mode_change_pass.cpp      \
+    modes/mode_user_limit.cpp       \
 		tests/unit.cpp

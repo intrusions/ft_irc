@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/22 12:06:55 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/22 14:45:00 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -87,6 +87,7 @@ class Server {
 
         void        _mode_invite_only(Channel *channel, bool add_or_rm);
         void        _mode_change_pass(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
+        void        _mode_user_limit(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
 
         uint8_t     _get_command_type_from_string(std::string &string) const;
 

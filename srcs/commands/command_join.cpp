@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/22 11:02:07 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/22 15:48:22 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,6 +15,11 @@
 #include "Channel.hpp"
 #include "utils.hpp"
 
+
+//todo
+// if a user is invited in a channel with a password
+// we actually dont check if his pass is valid
+// we adding in automatically if he try to join
 
 /**
  * Irrsi put automatically a `#` at the beginning of the string.
@@ -70,14 +75,23 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                     if ((*it2)->get_password() != "") {
 
                         if (password_list.size() && (*it2)->get_password() == password_list[0]) {
-                            logger(INFO, "Channel is already exist, valid password, joining channel...");
-                            
-                            reply_arg.push_back((*it2)->get_name());
-                            reply_arg.push_back((*it2)->get_topic());
-                            _send_reply(fd, 332, reply_arg);
-                            (*it2)->fetch_fds()->push_back(fd);
-                            password_list.erase(password_list.begin());
-                            break ;
+
+                            if ((int32_t)((*it2)->fetch_fds()->size() + 1) <= (*it2)->get_limits()) {
+                                logger(INFO, "Channel is already exist, valid password, joining channel...");
+                                
+                                reply_arg.push_back((*it2)->get_name());
+                                reply_arg.push_back((*it2)->get_topic());
+                                _send_reply(fd, 332, reply_arg);
+                                (*it2)->fetch_fds()->push_back(fd);
+                                password_list.erase(password_list.begin());
+                                break ;
+                            } else {
+                                logger(WARNING, "User limit reached");
+
+                                reply_arg.push_back((*it2)->get_name());
+                                _send_reply(fd, 471, reply_arg);
+                                break ;
+                            }
                         } else {
                             logger(INFO, "Channel is already exist, invalid password");
                             
@@ -86,31 +100,47 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                             break ;
                         }
                     } else {
-                        logger(INFO, "Channel is already exist, no expected password, joining channel...");
-                        
-                        reply_arg.push_back((*it2)->get_name());
-                        reply_arg.push_back((*it2)->get_topic());
-                        _send_reply(fd, 332, reply_arg);
-                        (*it2)->fetch_fds()->push_back(fd);
-                        break ;
+
+                        if ((int32_t)((*it2)->fetch_fds()->size() + 1) <= (*it2)->get_limits()) {
+                            logger(INFO, "Channel is already exist, no expected password, joining channel...");
+                            
+                            reply_arg.push_back((*it2)->get_name());
+                            reply_arg.push_back((*it2)->get_topic());
+                            _send_reply(fd, 332, reply_arg);
+                            (*it2)->fetch_fds()->push_back(fd);
+                            break ;
+                        } else {
+                            logger(WARNING, "User limit reached");
+
+                            reply_arg.push_back((*it2)->get_name());
+                            _send_reply(fd, 471, reply_arg);
+                            break ;
+                        }
                     }
                 } else {
 
                     if (find_fds_in_vec((*it2)->fetch_invite_fds(), fd)) {
-                        logger(INFO, "Channel is Invite Only, client has been invited");
-                        
-                        reply_arg.push_back((*it2)->get_name());
-                        reply_arg.push_back((*it2)->get_topic());
-                        _send_reply(fd, 332, reply_arg);
-                        (*it2)->fetch_fds()->push_back(fd);
-                        
+
+                        if ((int32_t)((*it2)->fetch_fds()->size() + 1) <= (*it2)->get_limits()) {
+                            logger(INFO, "Channel is Invite Only, client has been invited, joining channel...");
+                            
+                            reply_arg.push_back((*it2)->get_name());
+                            reply_arg.push_back((*it2)->get_topic());
+                            _send_reply(fd, 332, reply_arg);
+                            (*it2)->fetch_fds()->push_back(fd);
+                        } else {
+                            logger(WARNING, "User limit reached");
+
+                            reply_arg.push_back((*it2)->get_name());
+                            _send_reply(fd, 471, reply_arg);
+                            break ;
+                        }
                     } else {
                         logger(INFO, "Channel is Invite Only, client was not invited");
 
                         reply_arg.push_back((*it2)->get_name());
                         _send_reply(fd, 473, reply_arg);
                     }
-
                     break ;
                 }
             }
