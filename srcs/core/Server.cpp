@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/21 11:56:08 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/21 12:55:33 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -226,7 +226,7 @@ uint8_t Server::_get_command_type_from_string(std::string &string) const {
     if (!string.compare(COMMAND_NOTICE_STR))    return (COMMAND_TYPE_NOTICE); 
     if (!string.compare(COMMAND_JOIN_STR))      return (COMMAND_TYPE_JOIN); 
     if (!string.compare(COMMAND_LIST_STR))      return (COMMAND_TYPE_LIST);
-    if (!string.compare(COMMAND_INVITE_STR))    return (COMMAND_TYPE_USER); 
+    if (!string.compare(COMMAND_INVITE_STR))    return (COMMAND_TYPE_INVITE); 
     if (!string.compare(COMMAND_KICK_STR))      return (COMMAND_TYPE_KICK); 
     if (!string.compare(COMMAND_PART_STR))      return (COMMAND_TYPE_PASS); 
     
@@ -270,6 +270,7 @@ void	Server::_exec_client_commands(User *user) {
                 case COMMAND_TYPE_KICK:     _command_kick(cmd_splited, user->get_fd());     break;
                 case COMMAND_TYPE_PRIVMSG:  _command_privmsg(*it, user->get_fd());          break;
                 case COMMAND_TYPE_MODE:     _command_mode(cmd_splited, user->get_fd());     break;
+                case COMMAND_TYPE_INVITE:   _command_invite(cmd_splited, user->get_fd());   break;
                 case COMMAND_TYPE_DIE:                                                      break;
                 case COMMAND_TYPE_KILL:                                                     break;
                 case COMMAND_TYPE_OPER:                                                     break;
@@ -277,7 +278,6 @@ void	Server::_exec_client_commands(User *user) {
                 case COMMAND_TYPE_QUIT:                                                     break;
                 case COMMAND_TYPE_NOTICE:                                                   break;
                 case COMMAND_TYPE_LIST:                                                     break;
-                case COMMAND_TYPE_INVITE:                                                   break;
                 case COMMAND_TYPE_PART:                                                     break;
 
                 default: 
@@ -371,12 +371,14 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case   4: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);         break;
         case 221: reply = CREATE_RPL_UMODEIS(_users[fd], reply_arg);                    break;
         case 332: reply = CREATE_RPL_TOPIC(_users[fd], reply_arg);                      break;
+        case 341: reply = CREATE_RPL_INVITING(_users[fd], reply_arg);                   break;
         case 401: reply = CREATE_ERR_NOSUCHNICK(_users[fd], reply_arg);                 break;
         case 403: reply = CREATE_ERR_NOSUCHCHANNEL(_users[fd], reply_arg);              break;
         case 411: reply = CREATE_ERR_NORECIPIENT(_users[fd], reply_arg);                break;
         case 412: reply = CREATE_ERR_NOTEXTTOSEND(_users[fd]);                          break;
         case 441: reply = CREATE_ERR_USERNOTINCHANNEL(_users[fd], reply_arg);           break;
         case 442: reply = CREATE_ERR_NOTONCHANNEL(_users[fd], reply_arg);               break;
+        case 443: reply = CREATE_ERR_USERONCHANNEL(_users[fd], reply_arg);              break;
         case 461: reply = CREATE_ERR_NEEDMOREPARAMS(_users[fd], reply_arg);             break;
         case 462: reply = CREATE_ERR_ALREADYREGISTERED(_users[fd]);                     break;
         case 464: reply = CREATE_ERR_PASSWDMISMATCH(_users[fd]);                        break;

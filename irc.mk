@@ -41,5 +41,6 @@ SRCS :=                             \
     commands/command_kick.cpp       \
     commands/command_privmsg.cpp    \
     commands/command_mode.cpp       \
+    commands/command_invite.cpp     \
     modes/mode_invite_only.cpp      \
 		tests/unit.cpp

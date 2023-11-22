@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 19:54:51 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/21 12:48:44 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -68,8 +68,10 @@ class Server {
         void        _command_join(std::vector<std::string> cmd, int32_t fd);
         void        _command_kick(std::vector<std::string> cmd, int32_t fd);
         void        _command_privmsg(std::string cmd, int32_t fd);
+        void        _command_invite(std::vector<std::string> cmd, int32_t fd);
+
         
-        void	    _command_mode(std::vector<std::string> cmd, int32_t fd);
+        void        _command_mode(std::vector<std::string> cmd, int32_t fd);
         void        _handle_channel_mode(std::vector<std::string> cmd, int32_t fd);
         void        _handle_user_mode(std::vector<std::string> cmd, int32_t fd);
         void        _handle_remove_mode(std::string modes, Channel *channel, int32_t fd);
