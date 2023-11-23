@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:03:06 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/22 14:49:43 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 12:26:43 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -41,7 +41,8 @@ uint64_t	            Channel::get_mflags(void)           { return (_mflags); }
 bool                    Channel::get_is_invite_only(void)   { return (_is_invite_only); }
 
 void                    Channel::set_password(std::string npass)    { _password = npass; }
-void                    Channel::set_limits(int32_t nlimits)      { _limits = nlimits; }
+void                    Channel::set_topic(std::string ntopic)      { _topic = ntopic; }
+void                    Channel::set_limits(int32_t nlimits)        { _limits = nlimits; }
 void                    Channel::set_mflags(uint64_t flags)         { _mflags = flags; }
 void                    Channel::set_is_invite_only(bool w)         { _is_invite_only = w; }
 

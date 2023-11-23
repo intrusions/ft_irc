@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/22 14:40:25 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 14:26:54 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -271,10 +271,10 @@ void	Server::_exec_client_commands(User *user) {
                 case COMMAND_TYPE_PRIVMSG:  _command_privmsg(*it, user->get_fd());          break;
                 case COMMAND_TYPE_MODE:     _command_mode(cmd_splited, user->get_fd());     break;
                 case COMMAND_TYPE_INVITE:   _command_invite(cmd_splited, user->get_fd());   break;
+                case COMMAND_TYPE_TOPIC:    _command_topic(*it, user->get_fd());            break;
                 case COMMAND_TYPE_DIE:                                                      break;
                 case COMMAND_TYPE_KILL:                                                     break;
                 case COMMAND_TYPE_OPER:                                                     break;
-                case COMMAND_TYPE_TOPIC:                                                    break;
                 case COMMAND_TYPE_QUIT:                                                     break;
                 case COMMAND_TYPE_NOTICE:                                                   break;
                 case COMMAND_TYPE_LIST:                                                     break;
@@ -370,7 +370,7 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case   3: reply = CREATE_RPL_CREATED(_users[fd], _start_time, _servername);     break;
         case   4: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);         break;
         case 221: reply = CREATE_RPL_UMODEIS(_users[fd], reply_arg);                    break;
-        case 332: reply = CREATE_RPL_TOPIC(_users[fd], reply_arg);                      break;
+        case 332: reply = CREATE_RPL_TOPIC(reply_arg);                                  break;
         case 341: reply = CREATE_RPL_INVITING(_users[fd], reply_arg);                   break;
         case 401: reply = CREATE_ERR_NOSUCHNICK(_users[fd], reply_arg);                 break;
         case 403: reply = CREATE_ERR_NOSUCHCHANNEL(_users[fd], reply_arg);              break;

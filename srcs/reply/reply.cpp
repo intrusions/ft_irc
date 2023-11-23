@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/22 14:38:12 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 14:25:02 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -55,9 +55,9 @@ std::string CREATE_RPL_UMODEIS(const User *user, const std::vector<std::string> 
 }
 
 /* 332 */
-std::string CREATE_RPL_TOPIC(const User *user, const std::vector<std::string> &reply_arg) {
+std::string CREATE_RPL_TOPIC(const std::vector<std::string> &reply_arg) {
     
-    return (user->get_prefix() + " " + reply_arg[0] + " :" + reply_arg[1] + "\r\n");
+    return (reply_arg[0] + " " + reply_arg[1] + " :" + reply_arg[2] + "\r\n");
 }
 
 /* 341 */

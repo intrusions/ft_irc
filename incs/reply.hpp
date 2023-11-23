@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/22 14:38:40 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 14:25:11 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -25,7 +25,7 @@ std::string CREATE_RPL_YOURHOST(const User *user, const std::string &servername,
 std::string CREATE_RPL_CREATED(const User *user, const std::string &start_time, const std::string &servername);
 std::string CREATE_RPL_MYINFO(const User *user, const std::string &servername, const std::string &version);
 std::string CREATE_RPL_UMODEIS(const User *user, const std::vector<std::string> &reply_arg);
-std::string CREATE_RPL_TOPIC(const User *user, const std::vector<std::string> &reply_arg);
+std::string CREATE_RPL_TOPIC(const std::vector<std::string> &reply_arg);
 std::string CREATE_RPL_INVITING(const User *user, const std::vector<std::string> &reply_arg);
 
 std::string CREATE_ERR_NOSUCHNICK(const User *user, const std::vector<std::string> &reply_arg);

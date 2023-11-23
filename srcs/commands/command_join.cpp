@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/22 15:48:22 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 14:26:24 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -79,6 +79,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                             if ((int32_t)((*it2)->fetch_fds()->size() + 1) <= (*it2)->get_limits()) {
                                 logger(INFO, "Channel is already exist, valid password, joining channel...");
                                 
+                                reply_arg.push_back(_users[fd]->get_prefix());
                                 reply_arg.push_back((*it2)->get_name());
                                 reply_arg.push_back((*it2)->get_topic());
                                 _send_reply(fd, 332, reply_arg);
@@ -103,7 +104,8 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
 
                         if ((int32_t)((*it2)->fetch_fds()->size() + 1) <= (*it2)->get_limits()) {
                             logger(INFO, "Channel is already exist, no expected password, joining channel...");
-                            
+
+                            reply_arg.push_back(_users[fd]->get_prefix());
                             reply_arg.push_back((*it2)->get_name());
                             reply_arg.push_back((*it2)->get_topic());
                             _send_reply(fd, 332, reply_arg);
@@ -124,6 +126,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                         if ((int32_t)((*it2)->fetch_fds()->size() + 1) <= (*it2)->get_limits()) {
                             logger(INFO, "Channel is Invite Only, client has been invited, joining channel...");
                             
+                            reply_arg.push_back(_users[fd]->get_prefix());
                             reply_arg.push_back((*it2)->get_name());
                             reply_arg.push_back((*it2)->get_topic());
                             _send_reply(fd, 332, reply_arg);
@@ -164,6 +167,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                 _channel.push_back(new Channel(*it, fd));
             }
 
+            reply_arg.push_back(_users[fd]->get_prefix());
             reply_arg.push_back(*it);
             reply_arg.push_back(_channel.back()->get_topic());
             _send_reply(fd, 332, reply_arg);

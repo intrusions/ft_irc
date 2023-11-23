@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/23 10:55:17 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 14:24:05 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -72,6 +72,10 @@ class Server {
         void        _command_kick(std::vector<std::string> cmd, int32_t fd);
         void        _command_privmsg(std::string cmd, int32_t fd);
         void        _command_invite(std::vector<std::string> cmd, int32_t fd);
+        
+        void        _command_topic(std::string cmd, int32_t fd);
+        void        _send_ntopic_to_channel(Channel *channel, std::string cname, int32_t sender_fd, std::vector<std::string> &reply_arg);
+
 
         
         void        _command_mode(std::vector<std::string> cmd, int32_t fd);

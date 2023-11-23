@@ -42,6 +42,7 @@ SRCS :=                                 \
     commands/command_privmsg.cpp        \
     commands/command_mode.cpp           \
     commands/command_invite.cpp         \
+    commands/command_topic.cpp          \
     modes/mode_invite_only.cpp          \
     modes/mode_change_pass.cpp          \
     modes/mode_user_limit.cpp           \

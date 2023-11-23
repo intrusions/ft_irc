@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:57:29 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/22 14:49:35 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 12:26:12 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -56,6 +56,7 @@ class Channel {
         bool                    get_is_invite_only(void);
         
         void                    set_password(std::string npass);
+        void                    set_topic(std::string ntopic);
         void                    set_limits(int32_t nlimits);
         void                    set_mflags(uint64_t flag);
         void                    set_is_invite_only(bool add_or_rm);
