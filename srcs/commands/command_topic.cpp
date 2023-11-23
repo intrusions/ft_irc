@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:53:49 by xel               #+#    #+#             */
-/*   Updated: 2023/11/23 14:32:57 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 15:32:11 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -94,7 +94,7 @@ void	Server::_command_topic(std::string cmd, int32_t fd) {
             if (ntopic.size() == 1 && ntopic[0] == ':') {
                 logger(INFO, "Channel topic cleaned");
 
-                channel->set_topic("");
+                channel->set_topic("<unset>");
                 _send_ntopic_to_channel(channel, cmd_splited[1], fd, reply_arg);
 
             } else if (ntopic[0] == ':') {

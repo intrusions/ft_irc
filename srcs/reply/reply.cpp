@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/23 14:25:02 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 15:25:49 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -44,7 +44,7 @@ std::string	CREATE_RPL_MYINFO(const User *user, const std::string &servername, c
 
     return (
         ":" + servername + " 004 " + user->get_nickname() + " "
-        + servername + " " + version + " <available user modes> \n<available channel modes> [<channel modes with a parameter>]" + "\r\n"
+        + servername + " " + version + " <available user modes> \n[ -k -i -o -t -l ] [ -k -o -l ]" + "\r\n"
     );
 }
 
