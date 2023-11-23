@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 06:33:56 by xel               #+#    #+#             */
-/*   Updated: 2023/11/22 11:19:43 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 10:26:41 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -19,7 +19,7 @@
 // if a channel is invite-only, and operator invite a client, it join it, and be kicked by operator
 // ADD a remove of it old invitation
 
-std::vector<Channel *>::iterator    channel_is_existing(std::vector<Channel *> &c_list, std::string &c_name) {
+static std::vector<Channel *>::iterator    channel_is_existing(std::vector<Channel *> &c_list, std::string &c_name) {
     
     for (std::vector<Channel *>::iterator it = c_list.begin(); it != c_list.end(); it++) {
         if ((*it)->get_name() == c_name) {
@@ -29,7 +29,7 @@ std::vector<Channel *>::iterator    channel_is_existing(std::vector<Channel *> &
     return (c_list.end());
 }
 
-int32_t    user_is_in_channel(std::map<int, User *> &users, Channel *channel, std::string &nickname) {
+static int32_t    user_is_in_channel(std::map<int, User *> &users, Channel *channel, std::string &nickname) {
     
     for (std::vector<int32_t>::iterator it = channel->fetch_fds()->begin(); it != channel->fetch_fds()->end(); it++) {
         if (users[*it]->get_nickname() == nickname) {
@@ -39,7 +39,7 @@ int32_t    user_is_in_channel(std::map<int, User *> &users, Channel *channel, st
     return (0);
 }
 
-bool    kicker_is_in_channel(Channel *channel, int32_t fd) {
+static bool    kicker_is_in_channel(Channel *channel, int32_t fd) {
 
     for (std::vector<int32_t>::iterator it = channel->fetch_fds()->begin(); it != channel->fetch_fds()->end(); it++) {
         if (*it == fd) {

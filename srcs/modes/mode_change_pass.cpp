@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:50:23 by xel               #+#    #+#             */
-/*   Updated: 2023/11/22 12:57:16 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 11:37:55 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -27,10 +27,10 @@ void    Server::_mode_change_pass(Channel *channel, std::vector<std::string> cmd
     if (add_or_rm == REMOVE_MODE) {
         logger(INFO, "Mode -k set, password deleted on this channel");
 
-
         channel->set_mflags(channel->get_mflags() & ~CHANNEL_MODE_CHANGE_PASS);
         channel->set_password("");
-    } else {
+    
+    } else if (add_or_rm == ADD_MODE) {
 
         if (cmd.size() >= 4) {
             

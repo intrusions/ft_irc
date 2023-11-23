@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:50:23 by xel               #+#    #+#             */
-/*   Updated: 2023/11/22 15:20:41 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 11:39:45 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,6 +14,7 @@
 #include "utils.hpp"
 #include <cstdlib>
 
+//todo
 static int32_t  limits_is_valid(std::string limits) {
 
     return (std::atoi(limits.c_str()));
@@ -29,7 +30,8 @@ void    Server::_mode_user_limit(Channel *channel, std::vector<std::string> cmd,
 
         channel->set_mflags(channel->get_mflags() & ~CHANNEL_MODE_USER_LIMIT);
         channel->set_limits(CHANNEL_DEFAULT_LIMITS);
-    } else {
+    
+    } else if (add_or_rm == ADD_MODE) {
         
         if (cmd.size() >= 4) {
             
