@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/23 14:24:05 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 15:06:40 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -93,6 +93,8 @@ class Server {
         void        _mode_change_pass(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
         void        _mode_user_limit(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
         void        _mode_operator_priv(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
+        void        _mode_topic_manage(Channel *channel, bool add_or_rm);
+
 
         uint8_t     _get_command_type_from_string(std::string &string) const;
 

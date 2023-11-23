@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:55:28 by xel               #+#    #+#             */
-/*   Updated: 2023/11/23 10:22:35 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/23 15:14:29 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -43,7 +43,7 @@ void Server::_handle_add_mode(std::string modes, Channel *channel, std::vector<s
                 case (CHANNEL_MODE_CHANGE_PASS):    _mode_change_pass(channel, cmd, ADD_MODE, fd);      break;
                 case (CHANNEL_MODE_USER_LIMIT):     _mode_user_limit(channel, cmd, ADD_MODE, fd);       break;
                 case (CHANNEL_MODE_OPERATOR_PRIV):  _mode_operator_priv(channel, cmd, ADD_MODE, fd);    break;
-                case (CHANNEL_MODE_TOPIC_MANAGE):                                                       break;
+                case (CHANNEL_MODE_TOPIC_MANAGE):   _mode_topic_manage(channel, ADD_MODE);              break;
             }
         } else {
             logger(INFO, "Channel mode is not supported on this server");
@@ -67,7 +67,7 @@ void Server::_handle_remove_mode(std::string modes, Channel *channel, std::vecto
                 case (CHANNEL_MODE_CHANGE_PASS):    _mode_change_pass(channel, cmd, REMOVE_MODE, fd);       break;
                 case (CHANNEL_MODE_USER_LIMIT):     _mode_user_limit(channel, cmd, REMOVE_MODE, fd);        break;
                 case (CHANNEL_MODE_OPERATOR_PRIV):  _mode_operator_priv(channel, cmd, REMOVE_MODE, fd);     break;
-                case (CHANNEL_MODE_TOPIC_MANAGE):                                                           break;
+                case (CHANNEL_MODE_TOPIC_MANAGE):   _mode_topic_manage(channel, REMOVE_MODE);               break;
             }
         } else {
             logger(INFO, "Channel mode is not supported on this server");
@@ -129,10 +129,9 @@ void	Server::_command_mode(std::vector<std::string> cmd, int32_t fd) {
         return ;
     }
     
-    
     if (cmd[1][0] == '#') {
         _handle_channel_mode(cmd, fd);
     } else {
-        // handle_user_mode();
+        logger(WARNING, "Need a channel name");
     }
 }

@@ -47,4 +47,5 @@ SRCS :=                                 \
     modes/mode_change_pass.cpp          \
     modes/mode_user_limit.cpp           \
     modes/mode_operator_priv.cpp        \
+    modes/mode_topic_manage.cpp         \
 		tests/unit.cpp
