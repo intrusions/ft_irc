@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:32:24 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/24 12:31:00 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:35:23 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -17,7 +17,7 @@
 void    Server::_send_message_by_channel_name(std::string &c_name, std::string &message, int32_t fd) {
 
     std::vector<std::string>    reply_arg;
-    Channel                     *channel = NULL;
+    Channel                     *channel;
 
     if ((channel = channel_is_existing(_channel, c_name)) == NULL) {
         logger(WARNING, "Channel deos not exist, can't `/PRIVMSG`");

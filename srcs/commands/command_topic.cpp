@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:53:49 by xel               #+#    #+#             */
-/*   Updated: 2023/11/24 12:18:33 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:35:37 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,7 +29,7 @@ void	Server::_command_topic(std::string cmd, int32_t fd) {
 
     std::vector<std::string>    reply_arg;
     std::vector<std::string>    cmd_splited;
-    Channel                     *channel = NULL;
+    Channel                     *channel;
     uint64_t                    pos = 0;
     std::string                 ntopic;
 

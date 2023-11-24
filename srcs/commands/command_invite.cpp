@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:07:20 by xel               #+#    #+#             */
-/*   Updated: 2023/11/24 11:51:04 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:34:53 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -18,7 +18,7 @@
 void	Server::_command_invite(std::vector<std::string> cmd, int32_t fd) {
 
     std::vector<std::string>    reply_arg;
-    Channel                     *channel = NULL;
+    Channel                     *channel;
     int32_t                     to_invite_fd;
 
     if (cmd.size() < 3) {
