@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/23 14:26:54 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:01:02 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -374,6 +374,7 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case 341: reply = CREATE_RPL_INVITING(_users[fd], reply_arg);                   break;
         case 401: reply = CREATE_ERR_NOSUCHNICK(_users[fd], reply_arg);                 break;
         case 403: reply = CREATE_ERR_NOSUCHCHANNEL(_users[fd], reply_arg);              break;
+        case 404: reply = CREATE_ERR_CANNOTSENDTOCHAN(_users[fd], reply_arg);              break;
         case 411: reply = CREATE_ERR_NORECIPIENT(_users[fd], reply_arg);                break;
         case 412: reply = CREATE_ERR_NOTEXTTOSEND(_users[fd]);                          break;
         case 441: reply = CREATE_ERR_USERNOTINCHANNEL(_users[fd], reply_arg);           break;

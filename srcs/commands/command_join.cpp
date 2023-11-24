@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/23 14:26:24 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 11:51:16 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -149,7 +149,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
             }
         }
 
-        if (found == false) {
+        if (!found) {
             logger(INFO, "Channel doesn't exist, creating channel...");
 
             if (!channel_name_is_valid(*it)) {

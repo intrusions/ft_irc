@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:32:24 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 16:15:54 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:11:39 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -18,16 +18,8 @@ void    Server::_send_message_by_channel_name(std::string &c_name, std::string &
 
     std::vector<std::string>    reply_arg;
     Channel                     *channel = NULL;
-    bool                        sender_are_in = false;
 
-    for (std::vector<Channel *>::iterator it = _channel.begin(); it != _channel.end(); it++) {
-
-        if (c_name == (*it)->get_name()) {
-            channel = *it;
-            break ;
-        }
-    }
-    if (!channel) {
+    if ((channel = channel_is_existing(_channel, c_name)) == NULL) {
         logger(WARNING, "Channel deos not exist, can't `/PRIVMSG`");
 
         reply_arg.push_back(c_name);
@@ -35,15 +27,7 @@ void    Server::_send_message_by_channel_name(std::string &c_name, std::string &
         return ;
     }
 
-
-    for (std::vector<int32_t>::iterator it = channel->fetch_fds()->begin(); it != channel->fetch_fds()->end(); it++) {
-        
-        if (*it == fd) {
-            sender_are_in = true;
-            break;
-        }
-    }
-    if (sender_are_in == false) {
+    if (!find_fds_in_vec(channel->fetch_fds(), fd)) {
         logger(WARNING, "Client who want send message, are not in channel");
         
         reply_arg.push_back(c_name);
@@ -51,15 +35,12 @@ void    Server::_send_message_by_channel_name(std::string &c_name, std::string &
         return ;
     }
 
-    for (std::vector<int32_t>::iterator it = channel->fetch_banned_fds()->begin(); it != channel->fetch_banned_fds()->end(); it++) {
-    
-        if (*it == fd) {
-            logger(INFO, "Can't send message, client banned from channel");
-            
-            reply_arg.push_back(c_name);
-            _send_reply(fd, 404, reply_arg);
-            return ;
-        }
+    if (find_fds_in_vec(channel->fetch_banned_fds(), fd)) {
+        logger(INFO, "Can't send message, client banned from channel");
+        
+        reply_arg.push_back(c_name);
+        _send_reply(fd, 404, reply_arg);
+        return ;
     }
 
     for (std::vector<int32_t>::iterator it = channel->fetch_fds()->begin(); it != channel->fetch_fds()->end(); it++) {
@@ -79,16 +60,9 @@ void    Server::_send_message_by_channel_name(std::string &c_name, std::string &
 void    Server::_send_message_by_nickname(std::string &nickname, std::string &message, int32_t fd) {
 
     std::vector<std::string>    reply_arg;
-    int32_t                     fd_to_send = 0;
+    int32_t                     fd_to_send;
 
-    for (std::map<int32_t, User*>::iterator it = _users.begin(); it != _users.end(); it++) {
-    
-        if ((*it).second->get_nickname() == nickname) {
-            fd_to_send = (*it).second->get_fd();
-            break ;
-        }
-    }
-    if (fd_to_send == false) {
+    if ((fd_to_send = search_fd_by_nickname(_users, nickname)) == 0) {
         logger(WARNING, "Can't send message, client are not in server");
 
         reply_arg.push_back(nickname);

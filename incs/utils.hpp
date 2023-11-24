@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/20 21:32:15 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 11:39:23 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -66,6 +66,11 @@ enum e_log_lvl {
 std::vector<std::string>    split(std::string cmd, char delimiter);
 
 bool    find_fds_in_vec(std::vector<int32_t> *vec, const int32_t fd);
+
+int32_t     nickname_is_in_channel(std::map<int, User *> &users, Channel *channel, std::string &nickname);
+int32_t     search_fd_by_nickname(std::map<int, User *> &users, std::string &nickname);
+Channel     *channel_is_existing(std::vector<Channel *> &c_list, std::string &c_name);
+
 
 
 void    DEBUG_PRINT_CMD_VEC(User *user);

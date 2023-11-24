@@ -6,23 +6,13 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:53:49 by xel               #+#    #+#             */
-/*   Updated: 2023/11/23 15:32:11 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:18:33 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
 #include "utils.hpp"
-
-static bool    operator_is_in_channel(Channel *channel, int32_t fd) {
-
-    for (std::vector<int32_t>::iterator it = channel->fetch_operator_fds()->begin(); it != channel->fetch_operator_fds()->end(); it++) {
-        if (*it == fd) {
-            return (true);
-        }
-    }
-    return (false);
-}
 
 void    Server::_send_ntopic_to_channel(Channel *channel, std::string cname, int32_t sender_fd, std::vector<std::string> &reply_arg) {
     
@@ -55,14 +45,7 @@ void	Server::_command_topic(std::string cmd, int32_t fd) {
         return ;
     }
 
-  	for (std::vector<Channel *>::iterator it = _channel.begin(); it != _channel.end(); it++) {
-    	
-        if ((*it)->get_name() == cmd_splited[1]) {
-            channel = *it;
-			break ;
-        }
-    }
-	if (channel == NULL) {
+    if ((channel = channel_is_existing(_channel, cmd_splited[1])) == NULL) {
         logger(WARNING, "Channel is not in the server");
 
         reply_arg.push_back(cmd_splited[1]);
@@ -70,7 +53,7 @@ void	Server::_command_topic(std::string cmd, int32_t fd) {
 		return;
 	}
 
-    if (find_fds_in_vec(channel->fetch_fds(), fd) == false) {
+    if (!find_fds_in_vec(channel->fetch_fds(), fd)) {
         logger(WARNING, "Client are not in this channel");
         
         reply_arg.push_back(cmd_splited[1]);
@@ -88,7 +71,7 @@ void	Server::_command_topic(std::string cmd, int32_t fd) {
 
     } else {
         
-        if (((channel->get_mflags() & CHANNEL_MODE_TOPIC_MANAGE) && (operator_is_in_channel(channel, fd)))
+        if (((channel->get_mflags() & CHANNEL_MODE_TOPIC_MANAGE) && (find_fds_in_vec(channel->fetch_operator_fds(), fd)))
             || (channel->get_mflags() & CHANNEL_MODE_TOPIC_MANAGE) == 0) {
             
             if (ntopic.size() == 1 && ntopic[0] == ':') {
