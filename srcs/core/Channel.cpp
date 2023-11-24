@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:03:06 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/23 15:31:49 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:30:22 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -47,6 +47,5 @@ void                    Channel::set_mflags(uint64_t flags)         { _mflags = 
 void                    Channel::set_is_invite_only(bool w)         { _is_invite_only = w; }
 
 std::vector<int32_t>	*Channel::fetch_fds(void)           { return (&_fds); }
-std::vector<int32_t>	*Channel::fetch_banned_fds(void)    { return (&_banned_fds); }
 std::vector<int32_t>	*Channel::fetch_operator_fds(void)  { return (&_operator_fds); }
 std::vector<int32_t>	*Channel::fetch_invite_fds(void)    { return (&_invite_fds); }

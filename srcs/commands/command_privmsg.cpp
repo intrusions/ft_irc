@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:32:24 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/24 12:11:39 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:31:00 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,14 +29,6 @@ void    Server::_send_message_by_channel_name(std::string &c_name, std::string &
 
     if (!find_fds_in_vec(channel->fetch_fds(), fd)) {
         logger(WARNING, "Client who want send message, are not in channel");
-        
-        reply_arg.push_back(c_name);
-        _send_reply(fd, 404, reply_arg);
-        return ;
-    }
-
-    if (find_fds_in_vec(channel->fetch_banned_fds(), fd)) {
-        logger(INFO, "Can't send message, client banned from channel");
         
         reply_arg.push_back(c_name);
         _send_reply(fd, 404, reply_arg);

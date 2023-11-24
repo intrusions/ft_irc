@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/24 12:01:02 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:30:29 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -387,7 +387,6 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case 432: reply = CREATE_ERR_ERRONEUSNICKNAME(_users[fd], reply_arg);           break;
         case 433: reply = CREATE_ERR_NICKNAMEINUSE(_users[fd], reply_arg);              break;
         case 471: reply = CREATE_ERR_CHANNELISFULL(_users[fd], reply_arg);              break;
-        case 474: reply = CREATE_ERR_BANNEDFROMCHAN(_users[fd], reply_arg);             break;
         case 475: reply = CREATE_ERR_BADCHANNELKEY(_users[fd], reply_arg);              break;
         case 482: reply = CREATE_ERR_CHANOPRIVSNEEDED(_users[fd], reply_arg);           break;
         case 473: reply = CREATE_ERR_INVITEONLYCHAN(_users[fd], reply_arg);             break;
