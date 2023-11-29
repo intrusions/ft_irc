@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_nick.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pducos <pducos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/11 18:33:14 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/27 19:33:13 by pducos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	Server::_command_nick(std::vector<std::string> cmd, int32_t fd) {
         return ;
     }
 
-    for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++) {
-        
+    map_foreach(int, User*, _users, it) {
+
         if (it->second->get_nickname() == cmd[1]) {
             reply_arg.push_back(cmd[1]);
             _send_reply(fd, 433, reply_arg);
@@ -66,9 +66,8 @@ void	Server::_command_nick(std::vector<std::string> cmd, int32_t fd) {
         
         reply_arg.push_back(_users[fd]->get_prefix());
         reply_arg.push_back(cmd[1]);
-        for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++) {
-            _send_reply(it->second->get_fd(), 1001, reply_arg);
-        }	
+
+        map_foreach(int, User*, _users, it) { _send_reply(it->second->get_fd(), 1001, reply_arg); }	
     }
 
     _users[fd]->set_nickname(cmd[1]);

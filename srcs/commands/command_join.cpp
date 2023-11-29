@@ -6,7 +6,7 @@
 /*   By: pducos <pducos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/11 20:23:28 by pducos           ###   ########.fr       */
+/*   Updated: 2023/11/27 19:29:57 by pducos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
     if (cmd.size() >= 3)
         password_list = split(cmd[2], ',');
 
-    for (std::vector<std::string>::iterator it = channel_list.begin(); it != channel_list.end(); it++) {
+    vec_foreach(std::string, channel_list, it) {
+        
         found = false;
         reply_arg.clear();
 
-        for (std::vector<Channel *>::iterator it2 = _channel.begin(); it2 != _channel.end(); it2++) {
+        vec_foreach(Channel *, _channel, it2) {
             
             if (*it == (*it2)->get_name()) {
                 found = true;
@@ -59,10 +60,12 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                         
                         reply_arg.push_back((*it2)->get_name());
                         reply_arg.push_back((*it2)->get_topic());
+
                         _send_reply(fd, 332, reply_arg);
                         (*it2)->fetch_fds()->push_back(fd);
                         password_list.erase(password_list.begin());
                         break ;
+                    
                     } else {
                         logger(INFO, "This channel is already exist, invalid password");
                         

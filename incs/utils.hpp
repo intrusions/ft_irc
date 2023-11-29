@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pducos <pducos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/10 18:48:44 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/27 19:31:02 by pducos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ enum e_log_lvl {
     WARNING,
     ERROR
 };
+
+
+#define vec_foreach(type, container, it) \
+    for (std::vector<type>::iterator it = (container).begin(); it != (container).end(); ++it)
+
+#define map_foreach(key_type, value_type, container, it) \
+    for (std::map<key_type, value_type>::iterator it = (container).begin(); it != (container).end(); ++it)
 
 # define logger(level, str)                                         \
     do {                                                            \
