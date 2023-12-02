@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   command_user.cpp                                   :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/11 18:33:14 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:36:59 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -77,10 +77,10 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
     _users[fd]->set_hostname(hostname);
     _users[fd]->set_prefix();
     
-    _send_reply(fd, 001, reply_arg);
-    _send_reply(fd, 002, reply_arg);
-    _send_reply(fd, 003, reply_arg);
-    _send_reply(fd, 004, reply_arg);
+    _send_reply(fd, 1, reply_arg);
+    _send_reply(fd, 2, reply_arg);
+    _send_reply(fd, 3, reply_arg);
+    _send_reply(fd, 4, reply_arg);
 
     logger(INFO, "Client connected");
 }

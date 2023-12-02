@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/11 19:07:38 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:30:29 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -226,7 +226,7 @@ uint8_t Server::_get_command_type_from_string(std::string &string) const {
     if (!string.compare(COMMAND_NOTICE_STR))    return (COMMAND_TYPE_NOTICE); 
     if (!string.compare(COMMAND_JOIN_STR))      return (COMMAND_TYPE_JOIN); 
     if (!string.compare(COMMAND_LIST_STR))      return (COMMAND_TYPE_LIST);
-    if (!string.compare(COMMAND_INVITE_STR))    return (COMMAND_TYPE_USER); 
+    if (!string.compare(COMMAND_INVITE_STR))    return (COMMAND_TYPE_INVITE); 
     if (!string.compare(COMMAND_KICK_STR))      return (COMMAND_TYPE_KICK); 
     if (!string.compare(COMMAND_PART_STR))      return (COMMAND_TYPE_PASS); 
     
@@ -261,24 +261,24 @@ void	Server::_exec_client_commands(User *user) {
             uint8_t cmdtype = _get_command_type_from_string(cmd_splited[0]);
             
             switch (cmdtype) {
-                case COMMAND_TYPE_PASS: _command_pass(cmd_splited, user->get_fd());    break;
-                case COMMAND_TYPE_NICK: _command_nick(cmd_splited, user->get_fd());    break;
-                case COMMAND_TYPE_USER: _command_user(*it, user->get_fd());            break;
-                case COMMAND_TYPE_PING: _command_ping(user->get_fd());                 break;
-                case COMMAND_TYPE_PONG: _command_pong();                               break;
-                case COMMAND_TYPE_JOIN: _command_join(cmd_splited, user->get_fd());    break;
-                case COMMAND_TYPE_DIE:                                                 break;
-                case COMMAND_TYPE_KILL:                                                break;
-                case COMMAND_TYPE_OPER:                                                break;
-                case COMMAND_TYPE_TOPIC:                                               break;
-                case COMMAND_TYPE_QUIT:                                                break;
-                case COMMAND_TYPE_MODE:                                                break;
-                case COMMAND_TYPE_PRIVMSG:                                             break;
-                case COMMAND_TYPE_NOTICE:                                              break;
-                case COMMAND_TYPE_LIST:                                                break;
-                case COMMAND_TYPE_INVITE:                                              break;
-                case COMMAND_TYPE_KICK:                                                break;
-                case COMMAND_TYPE_PART:                                                break;
+                case COMMAND_TYPE_PASS:     _command_pass(cmd_splited, user->get_fd());     break;
+                case COMMAND_TYPE_NICK:     _command_nick(cmd_splited, user->get_fd());     break;
+                case COMMAND_TYPE_USER:     _command_user(*it, user->get_fd());             break;
+                case COMMAND_TYPE_PING:     _command_ping(user->get_fd());                  break;
+                case COMMAND_TYPE_PONG:     _command_pong();                                break;
+                case COMMAND_TYPE_JOIN:     _command_join(cmd_splited, user->get_fd());     break;
+                case COMMAND_TYPE_KICK:     _command_kick(cmd_splited, user->get_fd());     break;
+                case COMMAND_TYPE_PRIVMSG:  _command_privmsg(*it, user->get_fd());          break;
+                case COMMAND_TYPE_MODE:     _command_mode(cmd_splited, user->get_fd());     break;
+                case COMMAND_TYPE_INVITE:   _command_invite(cmd_splited, user->get_fd());   break;
+                case COMMAND_TYPE_TOPIC:    _command_topic(*it, user->get_fd());            break;
+                case COMMAND_TYPE_DIE:                                                      break;
+                case COMMAND_TYPE_KILL:                                                     break;
+                case COMMAND_TYPE_OPER:                                                     break;
+                case COMMAND_TYPE_QUIT:                                                     break;
+                case COMMAND_TYPE_NOTICE:                                                   break;
+                case COMMAND_TYPE_LIST:                                                     break;
+                case COMMAND_TYPE_PART:                                                     break;
 
                 default: 
                     logger(ERROR, "Unrecognized command: '" + cmd_splited[0] + "'");
@@ -365,19 +365,37 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
 
     switch(code) {
 
-        case 001: reply = CREATE_RPL_WELCOME(_users[fd], _networkname, _servername);    break;
-        case 002: reply = CREATE_RPL_YOURHOST(_users[fd], _servername, _version);       break;
-        case 003: reply = CREATE_RPL_CREATED(_users[fd], _start_time, _servername);     break;
-        case 004: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);         break;
-        case 332: reply = CREATE_RPL_TOPIC(_users[fd], reply_arg);                      break;
+        case   1: reply = CREATE_RPL_WELCOME(_users[fd], _networkname, _servername);    break;
+        case   2: reply = CREATE_RPL_YOURHOST(_users[fd], _servername, _version);       break;
+        case   3: reply = CREATE_RPL_CREATED(_users[fd], _start_time, _servername);     break;
+        case   4: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);         break;
+        case 221: reply = CREATE_RPL_UMODEIS(_users[fd], reply_arg);                    break;
+        case 332: reply = CREATE_RPL_TOPIC(reply_arg);                                  break;
+        case 341: reply = CREATE_RPL_INVITING(_users[fd], reply_arg);                   break;
+        case 401: reply = CREATE_ERR_NOSUCHNICK(_users[fd], reply_arg);                 break;
+        case 403: reply = CREATE_ERR_NOSUCHCHANNEL(_users[fd], reply_arg);              break;
+        case 404: reply = CREATE_ERR_CANNOTSENDTOCHAN(_users[fd], reply_arg);              break;
+        case 411: reply = CREATE_ERR_NORECIPIENT(_users[fd], reply_arg);                break;
+        case 412: reply = CREATE_ERR_NOTEXTTOSEND(_users[fd]);                          break;
+        case 441: reply = CREATE_ERR_USERNOTINCHANNEL(_users[fd], reply_arg);           break;
+        case 442: reply = CREATE_ERR_NOTONCHANNEL(_users[fd], reply_arg);               break;
+        case 443: reply = CREATE_ERR_USERONCHANNEL(_users[fd], reply_arg);              break;
         case 461: reply = CREATE_ERR_NEEDMOREPARAMS(_users[fd], reply_arg);             break;
         case 462: reply = CREATE_ERR_ALREADYREGISTERED(_users[fd]);                     break;
         case 464: reply = CREATE_ERR_PASSWDMISMATCH(_users[fd]);                        break;
         case 431: reply = CREATE_ERR_NONICKNAMEGIVEN(_users[fd]);                       break;
         case 432: reply = CREATE_ERR_ERRONEUSNICKNAME(_users[fd], reply_arg);           break;
         case 433: reply = CREATE_ERR_NICKNAMEINUSE(_users[fd], reply_arg);              break;
+        case 471: reply = CREATE_ERR_CHANNELISFULL(_users[fd], reply_arg);              break;
         case 475: reply = CREATE_ERR_BADCHANNELKEY(_users[fd], reply_arg);              break;
+        case 482: reply = CREATE_ERR_CHANOPRIVSNEEDED(_users[fd], reply_arg);           break;
+        case 473: reply = CREATE_ERR_INVITEONLYCHAN(_users[fd], reply_arg);             break;
+        case 476: reply = CREATE_ERR_BADCHANMASK(reply_arg);                            break;
+        case 501: reply = CREATE_ERR_UMODEUNKNOWNFLAG(_users[fd]);                      break;
+        case 502: reply = CREATE_ERR_USERSDONTMATCH(_users[fd]);                        break;
+        case 696: reply = CREATE_ERR_INVALIDMODEPARAM(_users[fd], reply_arg);           break;
         case 1001: reply = CREATE_PER_NICKNAMECHANGE(reply_arg);                        break;
+        case 1002: reply = CREATE_PER_SENDMESSAGETOCHANNEL(reply_arg);                  break;
     }
 
     if (send(fd, reply.c_str(), reply.length(), 0) == -1)

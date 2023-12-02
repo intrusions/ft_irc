@@ -25,17 +25,27 @@ CFLAGS_DBG :=                       \
     -fstack-protector-strong        \
     -fno-optimize-sibling-calls 
 
-SRCS :=                             \
-    core/Server.cpp                 \
-    core/User.cpp                   \
-    core/utils.cpp                  \
-    core/Channel.cpp                \
-    reply/reply.cpp                 \
-    core/Command.cpp                \
-    commands/command_pass.cpp       \
-    commands/command_nick.cpp       \
-    commands/command_user.cpp       \
-    commands/command_ping.cpp       \
-    commands/command_pong.cpp       \
-    commands/command_join.cpp       \
+SRCS :=                                 \
+    core/Server.cpp                     \
+    core/User.cpp                       \
+    core/utils.cpp                      \
+    core/Channel.cpp                    \
+    reply/reply.cpp                     \
+    core/Command.cpp                    \
+    commands/command_pass.cpp           \
+    commands/command_nick.cpp           \
+    commands/command_user.cpp           \
+    commands/command_ping.cpp           \
+    commands/command_pong.cpp           \
+    commands/command_join.cpp           \
+    commands/command_kick.cpp           \
+    commands/command_privmsg.cpp        \
+    commands/command_mode.cpp           \
+    commands/command_invite.cpp         \
+    commands/command_topic.cpp          \
+    modes/mode_invite_only.cpp          \
+    modes/mode_change_pass.cpp          \
+    modes/mode_user_limit.cpp           \
+    modes/mode_operator_priv.cpp        \
+    modes/mode_topic_manage.cpp         \
 		tests/unit.cpp

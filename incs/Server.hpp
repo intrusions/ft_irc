@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
@@ -6,11 +6,15 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/11 19:07:55 by xel              ###   ########.fr       */
+/*   Updated: 2023/11/24 12:52:57 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #pragma once
+
+// ========================================================================= //
+//                                   Header                                  //
+// ========================================================================= //
 
 #include "User.hpp"
 #include "Channel.hpp"
@@ -31,9 +35,26 @@
 #include <unistd.h>
 #include <signal.h>
 
+
+// ========================================================================= //
+//                                   Define                                  //
+// ========================================================================= //
+
+#define ADD_MODE    1
+#define REMOVE_MODE 0
+
+
+// ========================================================================= //
+//                                 Prototype                                 //
+// ========================================================================= //
+
 class User;
 class Channel;
 
+
+// ========================================================================= //
+//                                   Class                                   //
+// ========================================================================= //
 
 class Server {
     
@@ -60,17 +81,36 @@ class Server {
         void        _receive_client_input(User *user);
         void        _exec_client_commands(User *user);
 
+        uint8_t     _get_command_type_from_string(std::string &string) const;
+
         void        _command_pass(std::vector<std::string> cmd, int32_t fd);
         void        _command_nick(std::vector<std::string> cmd, int32_t fd);
         void        _command_user(std::string cmd, int32_t fd);
         void        _command_ping(uint32_t fd);
         void        _command_pong(void);
         void        _command_join(std::vector<std::string> cmd, int32_t fd);
+        void        _command_kick(std::vector<std::string> cmd, int32_t fd);
+        void        _command_invite(std::vector<std::string> cmd, int32_t fd);
+        
+        void        _command_privmsg(std::string cmd, int32_t fd);
+        void        _send_message_by_channel_name(std::string &c_name, std::string &message, int32_t fd);
+        void        _send_message_by_nickname(std::string &nickname, std::string &message, int32_t fd);
+        
+        void        _command_topic(std::string cmd, int32_t fd);
+        void        _send_ntopic_to_channel(Channel *channel, std::string cname, int32_t sender_fd, std::vector<std::string> &reply_arg);
+        
+        void        _command_mode(std::vector<std::string> cmd, int32_t fd);
+        void        _handle_channel_mode(std::vector<std::string> cmd, int32_t fd);
+        void        _handle_remove_mode(std::string modes, Channel *channel, std::vector<std::string> cmd, int32_t fd);
+        void        _handle_add_mode(std::string modes, Channel *channel, std::vector<std::string> cmd, int32_t fd);
+
+        void        _mode_invite_only(Channel *channel, bool add_or_rm);
+        void        _mode_topic_manage(Channel *channel, bool add_or_rm);
+        void        _mode_change_pass(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
+        void        _mode_user_limit(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
+        void        _mode_operator_priv(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
 
         void        _send_reply(int32_t fd, int32_t code, std::vector<std::string> &reply_arg);
-
-        uint8_t     _get_command_type_from_string(std::string &string) const;
-
 
     public:
         Server(const char *port, const char *pass);
