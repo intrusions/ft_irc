@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/23 15:25:49 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/02 18:26:21 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -51,158 +51,158 @@ std::string	CREATE_RPL_MYINFO(const User *user, const std::string &servername, c
 /* 221 */
 std::string CREATE_RPL_UMODEIS(const User *user, const std::vector<std::string> &reply_arg) {
     
-    return (user->get_prefix() + " " + reply_arg[0] + "\r\n");
+    return (user->get_prefix() + " 221 " + reply_arg[0] + "\r\n");
 }
 
 /* 332 */
 std::string CREATE_RPL_TOPIC(const std::vector<std::string> &reply_arg) {
     
-    return (reply_arg[0] + " " + reply_arg[1] + " :" + reply_arg[2] + "\r\n");
+    return (reply_arg[0] + " 332 " + reply_arg[1] + " :" + reply_arg[2] + "\r\n");
 }
 
 /* 341 */
 std::string CREATE_RPL_INVITING(const User *user, const std::vector<std::string> &reply_arg) {
     
-    return (user->get_prefix() + " " + reply_arg[0] + " :" + reply_arg[1] + "\r\n");
+    return (user->get_prefix() + " 341 " + reply_arg[0] + " :" + reply_arg[1] + "\r\n");
 }
 
 /* 401 */
 std::string	CREATE_ERR_NOSUCHNICK(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :No such nick/channel\r\n");
+    return (user->get_prefix() + " 401 " + reply_arg[0] + " :No such nick/channel\r\n");
 }
 
 /* 403 */
 std::string	CREATE_ERR_NOSUCHCHANNEL(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :No such channel\r\n");
+    return (user->get_prefix() + " 403 " + reply_arg[0] + " :No such channel\r\n");
 }
 
 /* 404 */
 std::string	CREATE_ERR_CANNOTSENDTOCHAN(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :Cannot send to channel\r\n");
+    return (user->get_prefix() + " 404 " + reply_arg[0] + " :Cannot send to channel\r\n");
 }
 
 /* 411 */
 std::string	CREATE_ERR_NORECIPIENT(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " :No recipient given (" + reply_arg[0] + ")\r\n");
+    return (user->get_prefix() + " 411 :No recipient given (" + reply_arg[0] + ")\r\n");
 }
 
 /* 412 */
 std::string	CREATE_ERR_NOTEXTTOSEND(const User *user) {
 
-    return (user->get_prefix() + " :No text to send\r\n");
+    return (user->get_prefix() + " 412 :No text to send\r\n");
 }
 
 /* 431 */
 std::string	CREATE_ERR_NONICKNAMEGIVEN(const User *user) {
 
-    return (user->get_prefix() + " :No nickname given\r\n");
+    return (user->get_prefix() + " 431 :No nickname given\r\n");
 }
 
 /* 432 */
 std::string	CREATE_ERR_ERRONEUSNICKNAME(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :Erroneus nickname\r\n");
+    return (user->get_prefix() + " 432 " + reply_arg[0] + " :Erroneus nickname\r\n");
 }
 
 /* 433 */
 std::string	CREATE_ERR_NICKNAMEINUSE(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :Nickname is already in use\r\n");
+    return (user->get_prefix() + " 433 " + reply_arg[0] + " :Nickname is already in use\r\n");
 }
 
 /* 441 */
 std::string	CREATE_ERR_USERNOTINCHANNEL(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " " + reply_arg[1] + " :They aren't on that channel\r\n");
+    return (user->get_prefix() + " 441 " + reply_arg[0] + " " + reply_arg[1] + " :They aren't on that channel\r\n");
 }
 
 /* 442 */
 std::string	CREATE_ERR_NOTONCHANNEL(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :You're not on that channel\r\n");
+    return (user->get_prefix() + " 442 " + reply_arg[0] + " :You're not on that channel\r\n");
 }
 
 /* 443 */
 std::string	CREATE_ERR_USERONCHANNEL(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " " + reply_arg[1] + " :is already on channel\r\n");
+    return (user->get_prefix() + " 443 " + reply_arg[0] + " " + reply_arg[1] + " :is already on channel\r\n");
 }
 
 /* 461 */
 std::string	CREATE_ERR_NEEDMOREPARAMS(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :Not enough parameters\r\n");
+    return (user->get_prefix() + " 461 " + reply_arg[0] + " :Not enough parameters\r\n");
 }
 
 /* 462 */
 std::string	CREATE_ERR_ALREADYREGISTERED(const User *user) {
 
-    return (user->get_prefix() + " :You may not reregister\r\n");
+    return (user->get_prefix() + " 462 :You may not reregister\r\n");
 }
 
 /* 464 */
 std::string	CREATE_ERR_PASSWDMISMATCH(const User *user) {
 
-    return (user->get_prefix() + " :Password incorrect\r\n");
+    return (user->get_prefix() + " 464 :Password incorrect\r\n");
 }
 
 /* 471 */
 std::string	CREATE_ERR_CHANNELISFULL(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :Cannot join channel (+l)\r\n");
+    return (user->get_prefix() + " 471 " + reply_arg[0] + " :Cannot join channel (+l)\r\n");
 }
 
 /* 473 */
 std::string	CREATE_ERR_INVITEONLYCHAN(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :Cannot join channel (+i)\r\n");
+    return (user->get_prefix() + " 473 " + reply_arg[0] + " :Cannot join channel (+i)\r\n");
 }
 
 /* 474 */
 std::string	CREATE_ERR_BANNEDFROMCHAN(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :Cannot join channel (+b)\r\n");
+    return (user->get_prefix() + " 474 " + reply_arg[0] + " :Cannot join channel (+b)\r\n");
 }
 
 /* 475 */
 std::string	CREATE_ERR_BADCHANNELKEY(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :Cannot join channel (+k)\r\n");
+    return (user->get_prefix() + " 475 " + reply_arg[0] + " :Cannot join channel (+k)\r\n");
 }
 
 /* 476 */
 std::string	CREATE_ERR_BADCHANMASK(const std::vector<std::string> &reply_arg) {
 
-    return (reply_arg[0] + " :Bad Channel Mask\r\n");
+    return ("476 " + reply_arg[0] + " :Bad Channel Mask\r\n");
 }
 
 /* 482 */
 std::string	CREATE_ERR_CHANOPRIVSNEEDED(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " " + reply_arg[0] + " :You're not channel operator\r\n");
+    return (user->get_prefix() + " 482 " + reply_arg[0] + " :You're not channel operator\r\n");
 }
 
 /* 501 */
 std::string	CREATE_ERR_UMODEUNKNOWNFLAG(const User *user) {
 
-    return (user->get_prefix() + " :Unknown MODE flag\r\n");
+    return (user->get_prefix() + " 501 :Unknown MODE flag\r\n");
 }
 
 /* 502 */
 std::string	CREATE_ERR_USERSDONTMATCH(const User *user) {
 
-    return (user->get_prefix() + " :Cant change mode for other users\r\n");
+    return (user->get_prefix() + " 502 :Cant change mode for other users\r\n");
 }
 
 /* 696 */
 std::string	CREATE_ERR_INVALIDMODEPARAM(const User *user, const std::vector<std::string> &reply_arg) {
 
     return (
-        user->get_prefix() + " " + reply_arg[0] + " " + reply_arg[1] + " "
+        user->get_prefix() + " 696 " + reply_arg[0] + " " + reply_arg[1] + " "
         + reply_arg[2] + " " + reply_arg[3] + "\r\n"
     );
 }
