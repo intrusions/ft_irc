@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:03:06 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/24 12:30:22 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/06 13:19:07 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,7 +15,7 @@
 /* constructor/destructor */
 Channel::Channel(std::string name, int32_t fd)
     : _name(name)
-    , _topic("<unset>")
+    , _topic("No topic is set")
     , _password("") {
         _fds.push_back(fd);
         _operator_fds.push_back(fd);
@@ -23,7 +23,7 @@ Channel::Channel(std::string name, int32_t fd)
 
 Channel::Channel(std::string name, int32_t fd, std::string password)
     : _name(name)
-    , _topic("<unset>")
+    , _topic("No topic is set")
     , _password(password) { 
         _fds.push_back(fd);
         _operator_fds.push_back(fd);

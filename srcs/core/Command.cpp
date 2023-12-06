@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:49:36 by xel               #+#    #+#             */
-/*   Updated: 2023/11/19 17:37:15 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/12/05 17:29:33 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "Command.hpp"
 #include "utils.hpp"
@@ -16,7 +16,7 @@
 /* constructor/destructor */
 Command::Command(std::string const &command, int32_t fd)
     : _command(command)
-    , _user_fd(fd) { /*logger(DEBUG, "New command received: '" + command + "'"); */ }
+    , _user_fd(fd) { logger(DEBUG, "New command received: '" + command + "'");  }
 
 Command::~Command() {}
 

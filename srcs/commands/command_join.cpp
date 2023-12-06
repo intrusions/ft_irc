@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/24 12:30:17 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/06 15:42:46 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -21,12 +21,29 @@
 // we actually dont check if his pass is valid
 // we adding in automatically if he try to join
 
+
+// 353 when joining existing channel
+
 /**
  * Irrsi put automatically a `#` at the beginning of the string.
  */
 static bool  channel_name_is_valid(std::string c_name) {
     
     return ((c_name[0] == '#'));
+}
+
+void    Server::_send_welcome_message(int32_t fd_sender, Channel *channel, std::string cmd, std::string cname) {
+    
+    std::vector<std::string>    reply_arg;
+
+    reply_arg.push_back(_users[fd_sender]->get_prefix());
+    reply_arg.push_back(cmd);
+    reply_arg.push_back(cname);
+    reply_arg.push_back(cname);
+    
+    for (std::vector<int32_t>::iterator it = channel->fetch_fds()->begin(); it != channel->fetch_fds()->end(); it++) {
+        _send_reply(*it, 1002, reply_arg);
+    }
 }
 
 void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
@@ -39,6 +56,12 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
     if (cmd.size() <= 1) {
         reply_arg.push_back(cmd[0]);
         _send_reply(fd, 461, reply_arg);
+        return ;
+    }
+
+    if (_users[fd]->get_pass_is_valid() == 0) {
+        
+        _send_reply(fd, 451, reply_arg);
         return ;
     }
 
@@ -74,8 +97,11 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                                 reply_arg.push_back(_users[fd]->get_prefix());
                                 reply_arg.push_back((*it2)->get_name());
                                 reply_arg.push_back((*it2)->get_topic());
-                                _send_reply(fd, 332, reply_arg);
                                 (*it2)->fetch_fds()->push_back(fd);
+                                
+                                _send_welcome_message(fd, *it2, "JOIN", *it);
+                                _send_reply(fd, 332, reply_arg);
+                                
                                 password_list.erase(password_list.begin());
                                 break ;
                             } else {
@@ -100,8 +126,10 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                             reply_arg.push_back(_users[fd]->get_prefix());
                             reply_arg.push_back((*it2)->get_name());
                             reply_arg.push_back((*it2)->get_topic());
-                            _send_reply(fd, 332, reply_arg);
                             (*it2)->fetch_fds()->push_back(fd);
+                            
+                            _send_welcome_message(fd, *it2, "JOIN", *it);
+                            _send_reply(fd, 332, reply_arg);
                             break ;
                         } else {
                             logger(WARNING, "User limit reached");
@@ -121,8 +149,10 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                             reply_arg.push_back(_users[fd]->get_prefix());
                             reply_arg.push_back((*it2)->get_name());
                             reply_arg.push_back((*it2)->get_topic());
-                            _send_reply(fd, 332, reply_arg);
                             (*it2)->fetch_fds()->push_back(fd);
+                            
+                            _send_welcome_message(fd, *it2, "JOIN", *it);
+                            _send_reply(fd, 332, reply_arg);
                         } else {
                             logger(WARNING, "User limit reached");
 
@@ -162,6 +192,8 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
             reply_arg.push_back(_users[fd]->get_prefix());
             reply_arg.push_back(*it);
             reply_arg.push_back(_channel.back()->get_topic());
+
+            _send_welcome_message(fd, _channel.back(), "JOIN", *it);
             _send_reply(fd, 332, reply_arg);
         }
     }

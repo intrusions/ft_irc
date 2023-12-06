@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/24 12:51:43 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/06 15:41:54 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -39,7 +39,9 @@ std::string CREATE_RPL_INVITING(const User *user, const std::vector<std::string>
 std::string CREATE_ERR_NOSUCHNICK(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_USERNOTINCHANNEL(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_NOTONCHANNEL(const User *user, const std::vector<std::string> &reply_arg);
-std::string	CREATE_ERR_USERONCHANNEL(const User *user, const std::vector<std::string> &reply_arg);
+std::string CREATE_ERR_USERONCHANNEL(const User *user, const std::vector<std::string> &reply_arg);
+std::string CREATE_RPL_ENDOFNAMES(const User *user, const std::vector<std::string> &reply_arg);
+std::string CREATE_ERR_NOTREGISTERED(const User *user);
 std::string CREATE_ERR_NEEDMOREPARAMS(const User *user, const std::vector<std::string> &reply_arg);
 std::string CREATE_ERR_ALREADYREGISTERED(const User *user);
 std::string CREATE_ERR_PASSWDMISMATCH(const User *user);

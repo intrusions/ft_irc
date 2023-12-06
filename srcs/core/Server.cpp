@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/24 12:30:29 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/06 15:34:12 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -372,14 +372,16 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case 221: reply = CREATE_RPL_UMODEIS(_users[fd], reply_arg);                    break;
         case 332: reply = CREATE_RPL_TOPIC(reply_arg);                                  break;
         case 341: reply = CREATE_RPL_INVITING(_users[fd], reply_arg);                   break;
+        case 366: reply = CREATE_RPL_ENDOFNAMES(_users[fd], reply_arg);                 break;
         case 401: reply = CREATE_ERR_NOSUCHNICK(_users[fd], reply_arg);                 break;
         case 403: reply = CREATE_ERR_NOSUCHCHANNEL(_users[fd], reply_arg);              break;
-        case 404: reply = CREATE_ERR_CANNOTSENDTOCHAN(_users[fd], reply_arg);              break;
+        case 404: reply = CREATE_ERR_CANNOTSENDTOCHAN(_users[fd], reply_arg);           break;
         case 411: reply = CREATE_ERR_NORECIPIENT(_users[fd], reply_arg);                break;
         case 412: reply = CREATE_ERR_NOTEXTTOSEND(_users[fd]);                          break;
         case 441: reply = CREATE_ERR_USERNOTINCHANNEL(_users[fd], reply_arg);           break;
         case 442: reply = CREATE_ERR_NOTONCHANNEL(_users[fd], reply_arg);               break;
         case 443: reply = CREATE_ERR_USERONCHANNEL(_users[fd], reply_arg);              break;
+        case 451: reply = CREATE_ERR_NOTREGISTERED(_users[fd]);                         break;
         case 461: reply = CREATE_ERR_NEEDMOREPARAMS(_users[fd], reply_arg);             break;
         case 462: reply = CREATE_ERR_ALREADYREGISTERED(_users[fd]);                     break;
         case 464: reply = CREATE_ERR_PASSWDMISMATCH(_users[fd]);                        break;
@@ -398,6 +400,7 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case 1002: reply = CREATE_PER_SENDMESSAGETOCHANNEL(reply_arg);                  break;
     }
 
+    logger(DEBUG, reply);
     if (send(fd, reply.c_str(), reply.length(), 0) == -1)
         return ;
 }

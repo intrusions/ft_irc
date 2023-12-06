@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/24 12:52:57 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/06 15:04:04 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -88,9 +88,11 @@ class Server {
         void        _command_user(std::string cmd, int32_t fd);
         void        _command_ping(uint32_t fd);
         void        _command_pong(void);
-        void        _command_join(std::vector<std::string> cmd, int32_t fd);
         void        _command_kick(std::vector<std::string> cmd, int32_t fd);
         void        _command_invite(std::vector<std::string> cmd, int32_t fd);
+        
+        void        _command_join(std::vector<std::string> cmd, int32_t fd);
+        void        _send_welcome_message(int32_t fd_sender, Channel *channel, std::string cmd, std::string cname);
         
         void        _command_privmsg(std::string cmd, int32_t fd);
         void        _send_message_by_channel_name(std::string &c_name, std::string &message, int32_t fd);

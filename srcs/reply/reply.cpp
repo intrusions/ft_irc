@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/02 18:26:21 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/06 14:40:51 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -130,6 +130,18 @@ std::string	CREATE_ERR_NOTONCHANNEL(const User *user, const std::vector<std::str
 std::string	CREATE_ERR_USERONCHANNEL(const User *user, const std::vector<std::string> &reply_arg) {
 
     return (user->get_prefix() + " 443 " + reply_arg[0] + " " + reply_arg[1] + " :is already on channel\r\n");
+}
+
+/* 366 */
+std::string	CREATE_RPL_ENDOFNAMES(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (user->get_prefix() + " 366 " + reply_arg[0] + " :End of /NAMES list\r\n");
+}
+
+/* 451 */
+std::string	CREATE_ERR_NOTREGISTERED(const User *user) {
+
+    return (user->get_prefix() + " 451 :You have not registered\r\n");
 }
 
 /* 461 */

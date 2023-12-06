@@ -1,4 +1,6 @@
 /connect localhost 6667 coucou xelito
+/connect localhost 7777 coucou xelito
+/connect localhost 8888 coucou xelito
 
 /PASS coucou
 /NICK xel
@@ -6,11 +8,15 @@
 
 /PASS coucou
 /NICK xelor
-/USER l a a :b
+/USER ll aa aa :bb
 
-/PASS coucou
-/NICK paul
-/USER l a a :b
+PASS coucou
+NICK paul
+USER la aa aa :bb
+
+PASS coucou
+NICK xelor
+USER l a a :b
 
 
 /JOIN CHAN1,CHAN2,CHAN3, PASS1,PASS2
