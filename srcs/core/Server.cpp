@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/08 06:32:56 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/08 06:38:46 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -401,7 +401,6 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case 1002: reply = CREATE_PER_SENDMESSAGETOCHANNEL(reply_arg);                  break;
     }
 
-    logger(DEBUG, reply);
     if (send(fd, reply.c_str(), reply.length(), 0) == -1)
         return ;
 }
