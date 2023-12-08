@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/06 15:04:04 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/08 06:12:30 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -105,9 +105,12 @@ class Server {
         void        _handle_channel_mode(std::vector<std::string> cmd, int32_t fd);
         void        _handle_remove_mode(std::string modes, Channel *channel, std::vector<std::string> cmd, int32_t fd);
         void        _handle_add_mode(std::string modes, Channel *channel, std::vector<std::string> cmd, int32_t fd);
+        void        _send_nmode_to_channel(Channel *channel, int32_t sender_fd, std::vector<std::string> &reply_arg);
 
-        void        _mode_invite_only(Channel *channel, bool add_or_rm);
-        void        _mode_topic_manage(Channel *channel, bool add_or_rm);
+
+
+        void        _mode_invite_only(Channel *channel, bool add_or_rm, int32_t fd);
+        void        _mode_topic_manage(Channel *channel, bool add_or_rm, int32_t fd);
         void        _mode_change_pass(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
         void        _mode_user_limit(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
         void        _mode_operator_priv(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);

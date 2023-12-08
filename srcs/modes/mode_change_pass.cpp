@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:50:23 by xel               #+#    #+#             */
-/*   Updated: 2023/11/23 11:37:55 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/08 06:20:58 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,6 +29,9 @@ void    Server::_mode_change_pass(Channel *channel, std::vector<std::string> cmd
 
         channel->set_mflags(channel->get_mflags() & ~CHANNEL_MODE_CHANGE_PASS);
         channel->set_password("");
+
+        reply_arg.push_back("-k");
+        _send_nmode_to_channel(channel, fd, reply_arg);
     
     } else if (add_or_rm == ADD_MODE) {
 
@@ -39,6 +42,10 @@ void    Server::_mode_change_pass(Channel *channel, std::vector<std::string> cmd
 
                 channel->set_mflags(channel->get_mflags() | CHANNEL_MODE_CHANGE_PASS);
                 channel->set_password(cmd[3]);
+
+                reply_arg.push_back("+k");    
+                _send_nmode_to_channel(channel, fd, reply_arg);
+            
             } else {
                 logger(WARNING, "Key is invalid");
 

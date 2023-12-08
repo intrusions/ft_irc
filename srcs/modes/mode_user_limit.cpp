@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:50:23 by xel               #+#    #+#             */
-/*   Updated: 2023/11/23 11:39:45 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/08 06:23:40 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -30,6 +30,9 @@ void    Server::_mode_user_limit(Channel *channel, std::vector<std::string> cmd,
 
         channel->set_mflags(channel->get_mflags() & ~CHANNEL_MODE_USER_LIMIT);
         channel->set_limits(CHANNEL_DEFAULT_LIMITS);
+
+        reply_arg.push_back("-l");    
+        _send_nmode_to_channel(channel, fd, reply_arg);
     
     } else if (add_or_rm == ADD_MODE) {
         
@@ -40,6 +43,10 @@ void    Server::_mode_user_limit(Channel *channel, std::vector<std::string> cmd,
                 
                 channel->set_mflags(channel->get_mflags() | CHANNEL_MODE_USER_LIMIT);
                 channel->set_limits(nlimits);
+
+                reply_arg.push_back("+l");    
+                _send_nmode_to_channel(channel, fd, reply_arg);
+
             } else {
                 logger(WARNING, "Invalid user limit");
 

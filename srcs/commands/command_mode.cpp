@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:55:28 by xel               #+#    #+#             */
-/*   Updated: 2023/11/23 15:14:29 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/08 06:12:45 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -28,6 +28,16 @@ static uint64_t mode_to_flag(const char mode) {
     }
 }
 
+void    Server::_send_nmode_to_channel(Channel *channel, int32_t sender_fd, std::vector<std::string> &reply_arg) {
+    
+    reply_arg.push_back(_users[sender_fd]->get_prefix());
+    reply_arg.push_back("MODE " + channel->get_name());
+    
+    for (std::vector<int32_t>::iterator it = channel->fetch_fds()->begin(); it != channel->fetch_fds()->end(); it++) {
+        _send_reply(*it, 324, reply_arg);
+    }
+}
+
 void Server::_handle_add_mode(std::string modes, Channel *channel, std::vector<std::string> cmd, int32_t fd) {
     
     std::string                 message;
@@ -39,11 +49,11 @@ void Server::_handle_add_mode(std::string modes, Channel *channel, std::vector<s
         if (mode) {
             
             switch (mode) {
-                case (CHANNEL_MODE_INVITE_ONLY):    _mode_invite_only(channel, ADD_MODE);               break;
+                case (CHANNEL_MODE_INVITE_ONLY):    _mode_invite_only(channel, ADD_MODE, fd);           break;
                 case (CHANNEL_MODE_CHANGE_PASS):    _mode_change_pass(channel, cmd, ADD_MODE, fd);      break;
                 case (CHANNEL_MODE_USER_LIMIT):     _mode_user_limit(channel, cmd, ADD_MODE, fd);       break;
                 case (CHANNEL_MODE_OPERATOR_PRIV):  _mode_operator_priv(channel, cmd, ADD_MODE, fd);    break;
-                case (CHANNEL_MODE_TOPIC_MANAGE):   _mode_topic_manage(channel, ADD_MODE);              break;
+                case (CHANNEL_MODE_TOPIC_MANAGE):   _mode_topic_manage(channel, ADD_MODE, fd);          break;
             }
         } else {
             logger(INFO, "Channel mode is not supported on this server");
@@ -63,11 +73,11 @@ void Server::_handle_remove_mode(std::string modes, Channel *channel, std::vecto
         if (mode) {
             
             switch (mode) {
-                case (CHANNEL_MODE_INVITE_ONLY):    _mode_invite_only(channel, REMOVE_MODE);                break;
+                case (CHANNEL_MODE_INVITE_ONLY):    _mode_invite_only(channel, REMOVE_MODE, fd);            break;
                 case (CHANNEL_MODE_CHANGE_PASS):    _mode_change_pass(channel, cmd, REMOVE_MODE, fd);       break;
                 case (CHANNEL_MODE_USER_LIMIT):     _mode_user_limit(channel, cmd, REMOVE_MODE, fd);        break;
                 case (CHANNEL_MODE_OPERATOR_PRIV):  _mode_operator_priv(channel, cmd, REMOVE_MODE, fd);     break;
-                case (CHANNEL_MODE_TOPIC_MANAGE):   _mode_topic_manage(channel, REMOVE_MODE);               break;
+                case (CHANNEL_MODE_TOPIC_MANAGE):   _mode_topic_manage(channel, REMOVE_MODE, fd);           break;
             }
         } else {
             logger(INFO, "Channel mode is not supported on this server");

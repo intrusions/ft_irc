@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/06 15:34:12 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/08 06:32:56 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -370,7 +370,8 @@ void	Server::_send_reply(int32_t fd, int32_t code, std::vector<std::string> &rep
         case   3: reply = CREATE_RPL_CREATED(_users[fd], _start_time, _servername);     break;
         case   4: reply = CREATE_RPL_MYINFO(_users[fd], _servername, _version);         break;
         case 221: reply = CREATE_RPL_UMODEIS(_users[fd], reply_arg);                    break;
-        case 332: reply = CREATE_RPL_TOPIC(reply_arg);                                  break;
+        case 324: reply = CREATE_RPL_CHANNELMODEIS(reply_arg);                          break;
+        case 332: reply = CREATE_RPL_TOPIC(_users[fd], reply_arg);                      break;
         case 341: reply = CREATE_RPL_INVITING(_users[fd], reply_arg);                   break;
         case 366: reply = CREATE_RPL_ENDOFNAMES(_users[fd], reply_arg);                 break;
         case 401: reply = CREATE_ERR_NOSUCHNICK(_users[fd], reply_arg);                 break;

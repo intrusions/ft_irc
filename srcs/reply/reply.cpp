@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/06 14:40:51 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/08 06:15:40 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -54,16 +54,27 @@ std::string CREATE_RPL_UMODEIS(const User *user, const std::vector<std::string> 
     return (user->get_prefix() + " 221 " + reply_arg[0] + "\r\n");
 }
 
+/* 324 */
+std::string CREATE_RPL_CHANNELMODEIS(const std::vector<std::string> &reply_arg) {
+    return (reply_arg[1] + " " + reply_arg[2] + " " + reply_arg[0] + "\r\n");
+}
+
 /* 332 */
-std::string CREATE_RPL_TOPIC(const std::vector<std::string> &reply_arg) {
+std::string CREATE_RPL_TOPIC(const User *user, const std::vector<std::string> &reply_arg) {
     
-    return (reply_arg[0] + " 332 " + reply_arg[1] + " :" + reply_arg[2] + "\r\n");
+    return (":" + user->get_hostname() + " 332 " + user->get_nickname() + " " + reply_arg[1] + " :" + reply_arg[2] + "\r\n");
 }
 
 /* 341 */
 std::string CREATE_RPL_INVITING(const User *user, const std::vector<std::string> &reply_arg) {
     
     return (user->get_prefix() + " 341 " + reply_arg[0] + " :" + reply_arg[1] + "\r\n");
+}
+
+/* 366 */
+std::string	CREATE_RPL_ENDOFNAMES(const User *user, const std::vector<std::string> &reply_arg) {
+
+    return (user->get_prefix() + " 366 " + reply_arg[0] + " :End of /NAMES list\r\n");
 }
 
 /* 401 */
@@ -132,12 +143,6 @@ std::string	CREATE_ERR_USERONCHANNEL(const User *user, const std::vector<std::st
     return (user->get_prefix() + " 443 " + reply_arg[0] + " " + reply_arg[1] + " :is already on channel\r\n");
 }
 
-/* 366 */
-std::string	CREATE_RPL_ENDOFNAMES(const User *user, const std::vector<std::string> &reply_arg) {
-
-    return (user->get_prefix() + " 366 " + reply_arg[0] + " :End of /NAMES list\r\n");
-}
-
 /* 451 */
 std::string	CREATE_ERR_NOTREGISTERED(const User *user) {
 
@@ -165,13 +170,13 @@ std::string	CREATE_ERR_PASSWDMISMATCH(const User *user) {
 /* 471 */
 std::string	CREATE_ERR_CHANNELISFULL(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " 471 " + reply_arg[0] + " :Cannot join channel (+l)\r\n");
+    return (":" + user->get_hostname() + " 471 " + user->get_nickname() + " " + reply_arg[0] + " :Cannot join channel (+l)\r\n");
 }
 
 /* 473 */
 std::string	CREATE_ERR_INVITEONLYCHAN(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " 473 " + reply_arg[0] + " :Cannot join channel (+i)\r\n");
+    return (":" + user->get_hostname() + " 473 " + user->get_nickname() + " " + reply_arg[0] + " :Cannot join channel (+i)\r\n");
 }
 
 /* 474 */
@@ -183,7 +188,7 @@ std::string	CREATE_ERR_BANNEDFROMCHAN(const User *user, const std::vector<std::s
 /* 475 */
 std::string	CREATE_ERR_BADCHANNELKEY(const User *user, const std::vector<std::string> &reply_arg) {
 
-    return (user->get_prefix() + " 475 " + reply_arg[0] + " :Cannot join channel (+k)\r\n");
+    return (":" + user->get_hostname() + " 475 " + user->get_nickname() + " " + reply_arg[0] + " :Cannot join channel (+k)\r\n");
 }
 
 /* 476 */

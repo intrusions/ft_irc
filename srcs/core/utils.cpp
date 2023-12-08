@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/24 11:57:32 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/08 06:05:06 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -66,7 +66,6 @@ Channel     *channel_is_existing(std::vector<Channel *> &c_list, std::string &c_
     }
     return (NULL);
 }
-
 
 /* debug */
 void	DEBUG_PRINT_CMD_VEC(User *user) {

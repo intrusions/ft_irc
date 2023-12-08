@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 06:33:56 by xel               #+#    #+#             */
-/*   Updated: 2023/11/24 11:48:05 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/08 06:29:19 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -65,7 +65,7 @@ void	Server::_command_kick(std::vector<std::string> cmd, int32_t fd) {
     }
     
     
-    if (find_fds_in_vec(channel->fetch_operator_fds(), fd)) {
+    if (!find_fds_in_vec(channel->fetch_operator_fds(), fd)) {
         logger(WARNING, "The client who would like kick, is not operator on this channel");
 
         reply_arg.push_back(cmd[1]);
