@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/08 06:38:46 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/13 21:22:22 by jucheval         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -228,7 +228,7 @@ uint8_t Server::_get_command_type_from_string(std::string &string) const {
     if (!string.compare(COMMAND_LIST_STR))      return (COMMAND_TYPE_LIST);
     if (!string.compare(COMMAND_INVITE_STR))    return (COMMAND_TYPE_INVITE); 
     if (!string.compare(COMMAND_KICK_STR))      return (COMMAND_TYPE_KICK); 
-    if (!string.compare(COMMAND_PART_STR))      return (COMMAND_TYPE_PASS); 
+    if (!string.compare(COMMAND_PART_STR))      return (COMMAND_TYPE_PART); 
     
     return (COMMAND_TYPE_UNKNOWN);
 }
@@ -272,13 +272,13 @@ void	Server::_exec_client_commands(User *user) {
                 case COMMAND_TYPE_MODE:     _command_mode(cmd_splited, user->get_fd());     break;
                 case COMMAND_TYPE_INVITE:   _command_invite(cmd_splited, user->get_fd());   break;
                 case COMMAND_TYPE_TOPIC:    _command_topic(*it, user->get_fd());            break;
+                case COMMAND_TYPE_PART:     _command_part(*it, user->get_fd());             break;
                 case COMMAND_TYPE_DIE:                                                      break;
                 case COMMAND_TYPE_KILL:                                                     break;
                 case COMMAND_TYPE_OPER:                                                     break;
                 case COMMAND_TYPE_QUIT:                                                     break;
                 case COMMAND_TYPE_NOTICE:                                                   break;
                 case COMMAND_TYPE_LIST:                                                     break;
-                case COMMAND_TYPE_PART:                                                     break;
 
                 default: 
                     logger(ERROR, "Unrecognized command: '" + cmd_splited[0] + "'");

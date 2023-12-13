@@ -1,4 +1,6 @@
 /connect localhost 6667 coucou xelito
+/connect localhost 6667 coucou polo
+
 /connect localhost 7777 coucou xelito
 /connect localhost 8888 coucou xelito
 

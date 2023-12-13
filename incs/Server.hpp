@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/08 06:12:30 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/13 21:11:14 by jucheval         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #pragma once
 
@@ -107,6 +107,8 @@ class Server {
         void        _handle_add_mode(std::string modes, Channel *channel, std::vector<std::string> cmd, int32_t fd);
         void        _send_nmode_to_channel(Channel *channel, int32_t sender_fd, std::vector<std::string> &reply_arg);
 
+        void        _command_part(std::string cmd, int32_t fd);
+        void        _send_part_message_by_channel_name(std::string &c_name, std::string &message, int32_t fd);
 
 
         void        _mode_invite_only(Channel *channel, bool add_or_rm, int32_t fd);
