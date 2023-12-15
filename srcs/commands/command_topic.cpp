@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   command_topic.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:53:49 by xel               #+#    #+#             */
-/*   Updated: 2023/12/13 20:07:22 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:45:03 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -61,7 +61,7 @@ void	Server::_command_topic(std::string cmd, int32_t fd) {
         return;
 	}
 
-    if (!ntopic.size()) {
+    if (ntopic.empty()) {
         logger(INFO, "Actual topic sensed to the client");
         
         reply_arg.push_back(_users[fd]->get_prefix());

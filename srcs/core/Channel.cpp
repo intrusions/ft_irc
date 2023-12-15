@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:03:06 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/06 13:19:07 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/15 18:43:34 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -19,7 +19,8 @@ Channel::Channel(std::string name, int32_t fd)
     , _password("") {
         _fds.push_back(fd);
         _operator_fds.push_back(fd);
-        _limits = CHANNEL_DEFAULT_LIMITS; }
+        _limits = CHANNEL_DEFAULT_LIMITS;
+        _mflags = 0; }
 
 Channel::Channel(std::string name, int32_t fd, std::string password)
     : _name(name)
