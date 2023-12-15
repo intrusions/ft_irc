@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   command_privmsg.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:32:24 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/24 12:35:23 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/15 22:31:19 by jucheval         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -64,7 +64,7 @@ void    Server::_send_message_by_nickname(std::string &nickname, std::string &me
 
     if (fd != fd_to_send) {
         logger(INFO, "Message sended to client");
-        reply_arg.push_back(_users[fd]->get_nickname());
+        reply_arg.push_back(_users[fd]->get_prefix());
         reply_arg.push_back("PRIVMSG");
         reply_arg.push_back(nickname);
         reply_arg.push_back(message);

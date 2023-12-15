@@ -20,6 +20,8 @@ PASS coucou
 NICK xelor
 USER l a a :b
 
+/dcc send nickname file.text
+/dcc get nickname file.txt
 
 /JOIN CHAN1,CHAN2,CHAN3, PASS1,PASS2
 

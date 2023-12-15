@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/13 21:22:22 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/12/15 23:07:10 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,14 @@ Server::Server(const char *port, const char *password) {
     _start_time = std::string(date);
 }
 
-Server::~Server() {}
+Server::~Server() {
+
+    std::cout << std::endl;
+    logger(INFO, "Cleaning before exit...");
+    for (std::vector<Channel *>::iterator it = _channel.begin(); it != _channel.end(); it++)    { delete *it; }
+    for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)         { delete it->second; }
+    logger(INFO, "Exit");
+}
 
 
 /**
