@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   command_join.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/12/06 15:42:46 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/15 20:55:21 by jucheval         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -90,7 +90,7 @@ void	Server::_command_join(std::vector<std::string> cmd, int32_t fd) {
                     if ((*it2)->get_password() != "") {
 
                         if (password_list.size() && (*it2)->get_password() == password_list[0]) {
-
+                            
                             if ((int32_t)((*it2)->fetch_fds()->size() + 1) <= (*it2)->get_limits()) {
                                 logger(INFO, "Channel is already exist, valid password, joining channel...");
                                 

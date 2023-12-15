@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:03:06 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/15 18:43:34 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/15 21:01:19 by jucheval         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "Channel.hpp"
 
@@ -16,21 +16,24 @@
 Channel::Channel(std::string name, int32_t fd)
     : _name(name)
     , _topic("No topic is set")
-    , _password("") {
+    , _password("")
+    , _limits(CHANNEL_DEFAULT_LIMITS)
+    , _mflags(0)
+    , _is_invite_only(false) {
         _fds.push_back(fd);
-        _operator_fds.push_back(fd);
-        _limits = CHANNEL_DEFAULT_LIMITS;
-        _mflags = 0; }
-
+        _operator_fds.push_back(fd); }
+        
 Channel::Channel(std::string name, int32_t fd, std::string password)
     : _name(name)
     , _topic("No topic is set")
-    , _password(password) { 
+    , _password(password)
+    , _limits(CHANNEL_DEFAULT_LIMITS)
+    , _mflags(0)
+    , _is_invite_only(false) { 
         _fds.push_back(fd);
         _operator_fds.push_back(fd);
-        _mflags = CHANNEL_MODE_CHANGE_PASS;
-        _limits = CHANNEL_DEFAULT_LIMITS; }
-
+        _mflags = CHANNEL_MODE_CHANGE_PASS; }
+    
 Channel::~Channel() {}
 
 /* accessors */
