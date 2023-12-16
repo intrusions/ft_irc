@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 06:33:56 by xel               #+#    #+#             */
-/*   Updated: 2023/12/08 06:29:19 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/16 02:12:35 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,10 +14,6 @@
 #include "User.hpp"
 #include "Channel.hpp"
 #include "utils.hpp"
-
-// todo
-// if a channel is invite-only, and operator invite a client, it join it, and be kicked by operator
-// ADD a remove of it old invitation
 
 void	Server::_command_kick(std::vector<std::string> cmd, int32_t fd) {
     
@@ -91,5 +87,16 @@ void	Server::_command_kick(std::vector<std::string> cmd, int32_t fd) {
             it++;
         }
     }
+
+    for (std::vector<int32_t>::iterator it = channel->fetch_invite_fds()->begin(); it != channel->fetch_invite_fds()->end(); it++) {
+
+        if (*it == user_to_kick) {
+            logger(INFO, "Client is removed from invite list");
+            
+            channel->fetch_invite_fds()->erase(it);
+            break;
+        }
+    }
+
     DEBUG_PRINT_ALL_CHANNEL(_channel);
 }

@@ -6,18 +6,16 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:50:23 by xel               #+#    #+#             */
-/*   Updated: 2023/12/16 01:46:02 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/16 02:26:31 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "Channel.hpp"
 #include "utils.hpp"
 
-// todo
 static bool     pass_is_valid(std::string pass) {
     
-    (void)pass;
-    return (true);
+    return (pass.size() >= 2);
 }
 
 void    Server::_mode_change_pass(Channel *channel, std::vector<std::string> &cmd, bool add_or_rm, int32_t fd) {

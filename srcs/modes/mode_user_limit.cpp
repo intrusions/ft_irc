@@ -6,18 +6,22 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:50:23 by xel               #+#    #+#             */
-/*   Updated: 2023/12/16 01:46:07 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/16 02:36:14 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "Channel.hpp"
 #include "utils.hpp"
 #include <cstdlib>
+#include <limits.h>
 
-//todo
 static int32_t  limits_is_valid(std::string limits) {
 
-    return (std::atoi(limits.c_str()));
+    uint64_t    nlimits = std::atoi(limits.c_str());
+    
+    if (nlimits > INT_MAX)
+        return (0);
+    return (nlimits);
 }
 
 void    Server::_mode_user_limit(Channel *channel, std::vector<std::string> &cmd, bool add_or_rm, int32_t fd) {

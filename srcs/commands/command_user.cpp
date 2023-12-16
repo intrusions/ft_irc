@@ -6,19 +6,13 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/24 12:36:59 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/16 03:15:57 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
 #include "utils.hpp"
-
-/* todo */
-static bool	is_valid_realname(std::string realname) {
-    (void)realname;
-    return (true);
-}
 
 void	Server::_command_user(std::string cmd, int32_t fd) {
 
@@ -50,15 +44,8 @@ void	Server::_command_user(std::string cmd, int32_t fd) {
         hostname = cmd_splited[3];
     }
 
-    if (!is_valid_realname(realname)) {
-        reply_arg.push_back("/USER");
-        _send_reply(fd, 461, reply_arg);
-        return ;
-    }
-
-    /**
-     * Let this function commented if you work on local with multiple irssi client.
-     */
+    
+    // Let this function commented if you work on local with multiple irssi client.
     // for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); it++) {
 
     // 	if (it->second->get_username() == username) {

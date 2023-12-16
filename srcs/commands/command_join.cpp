@@ -1,32 +1,20 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   command_join.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/12/15 20:55:21 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/12/16 02:04:59 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
 #include "Channel.hpp"
 #include "utils.hpp"
 
-
-//todo
-// if a user is invited in a channel with a password
-// we actually dont check if his pass is valid
-// we adding in automatically if he try to join
-
-
-// 353 when joining existing channel
-
-/**
- * Irrsi put automatically a `#` at the beginning of the string.
- */
 static bool  channel_name_is_valid(std::string c_name) {
     
     return ((c_name[0] == '#'));

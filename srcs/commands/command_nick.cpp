@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/11/24 11:48:22 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/16 02:21:33 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,25 +14,24 @@
 #include "User.hpp"
 #include "utils.hpp"
 
-//todo
-// static bool is_nickname_valid(const std::string &nickname) {
-//     if (nickname.empty()
-// 		|| nickname[0] == '$'
-// 		|| nickname[0] == ':') {
-//         return (false);
-//     }
+static bool is_nickname_valid(const std::string &nickname) {
+    if (nickname.empty()
+		|| nickname[0] == '$'
+		|| nickname[0] == ':') {
+        return (false);
+    }
 
-//     const std::string forbiddenChars = " *,?!@";
-//     const std::string channelTypePrefixes = "#&+!";
+    const std::string forbiddenChars = " *,?!@";
+    const std::string channelTypePrefixes = "#&+!";
 
-//     if (nickname.find_first_of(forbiddenChars) != std::string::npos
-// 		|| channelTypePrefixes.find(nickname[0]) != std::string::npos
-// 		|| nickname.find('.') != std::string::npos) {
-//         return (false);
-//     }
+    if (nickname.find_first_of(forbiddenChars) != std::string::npos
+		|| channelTypePrefixes.find(nickname[0]) != std::string::npos
+		|| nickname.find('.') != std::string::npos) {
+        return (false);
+    }
 
-//     return (true);
-// }
+    return (true);
+}
 
 void	Server::_command_nick(std::vector<std::string> cmd, int32_t fd) {
 
@@ -43,7 +42,7 @@ void	Server::_command_nick(std::vector<std::string> cmd, int32_t fd) {
         return ;
     }
 
-    if (isdigit(cmd[1][0]) || cmd[1][0] == '#' || cmd[1][0] == ':' || cmd[1].length() > 31) {
+    if (!is_nickname_valid(cmd[1])) {
         reply_arg.push_back(cmd[1]);
         _send_reply(fd, 432, reply_arg);
         return ;
