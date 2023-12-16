@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/15 23:07:10 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/12/16 20:32:39 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -223,18 +223,12 @@ uint8_t Server::_get_command_type_from_string(std::string &string) const {
     if (!string.compare(COMMAND_USER_STR))      return (COMMAND_TYPE_USER); 
     if (!string.compare(COMMAND_PING_STR))      return (COMMAND_TYPE_PING); 
     if (!string.compare(COMMAND_PONG_STR))      return (COMMAND_TYPE_PONG); 
-    if (!string.compare(COMMAND_DIE_STR))       return (COMMAND_TYPE_DIE); 
-    if (!string.compare(COMMAND_KILL_STR))      return (COMMAND_TYPE_KILL); 
-    if (!string.compare(COMMAND_OPER_STR))      return (COMMAND_TYPE_OPER); 
-    if (!string.compare(COMMAND_TOPIC_STR))     return (COMMAND_TYPE_TOPIC); 
-    if (!string.compare(COMMAND_QUIT_STR))      return (COMMAND_TYPE_QUIT); 
-    if (!string.compare(COMMAND_MODE_STR))      return (COMMAND_TYPE_MODE); 
-    if (!string.compare(COMMAND_PRIVMSG_STR))   return (COMMAND_TYPE_PRIVMSG); 
-    if (!string.compare(COMMAND_NOTICE_STR))    return (COMMAND_TYPE_NOTICE); 
     if (!string.compare(COMMAND_JOIN_STR))      return (COMMAND_TYPE_JOIN); 
-    if (!string.compare(COMMAND_LIST_STR))      return (COMMAND_TYPE_LIST);
-    if (!string.compare(COMMAND_INVITE_STR))    return (COMMAND_TYPE_INVITE); 
     if (!string.compare(COMMAND_KICK_STR))      return (COMMAND_TYPE_KICK); 
+    if (!string.compare(COMMAND_PRIVMSG_STR))   return (COMMAND_TYPE_PRIVMSG); 
+    if (!string.compare(COMMAND_MODE_STR))      return (COMMAND_TYPE_MODE); 
+    if (!string.compare(COMMAND_INVITE_STR))    return (COMMAND_TYPE_INVITE); 
+    if (!string.compare(COMMAND_TOPIC_STR))     return (COMMAND_TYPE_TOPIC); 
     if (!string.compare(COMMAND_PART_STR))      return (COMMAND_TYPE_PART); 
     
     return (COMMAND_TYPE_UNKNOWN);
@@ -280,13 +274,6 @@ void	Server::_exec_client_commands(User *user) {
                 case COMMAND_TYPE_INVITE:   _command_invite(cmd_splited, user->get_fd());   break;
                 case COMMAND_TYPE_TOPIC:    _command_topic(*it, user->get_fd());            break;
                 case COMMAND_TYPE_PART:     _command_part(*it, user->get_fd());             break;
-                case COMMAND_TYPE_DIE:                                                      break;
-                case COMMAND_TYPE_KILL:                                                     break;
-                case COMMAND_TYPE_OPER:                                                     break;
-                case COMMAND_TYPE_QUIT:                                                     break;
-                case COMMAND_TYPE_NOTICE:                                                   break;
-                case COMMAND_TYPE_LIST:                                                     break;
-
                 default: 
                     logger(ERROR, "Unrecognized command: '" + cmd_splited[0] + "'");
             }

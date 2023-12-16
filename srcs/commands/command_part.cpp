@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   command_part.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 20:36:53 by xel               #+#    #+#             */
-/*   Updated: 2023/12/13 22:22:11 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/12/16 20:28:05 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -63,6 +63,16 @@ void    Server::_send_part_message_by_channel_name(std::string &c_name, std::str
             logger(INFO, "Client deleted in _fds_operator of Channel");
 
             channel->fetch_operator_fds()->erase(it);
+            break ;
+        }
+    }
+
+    for (std::vector<int32_t>::iterator it = channel->fetch_invite_fds()->begin(); it != channel->fetch_invite_fds()->end(); it++) {
+        
+        if (fd == *it) {
+            logger(INFO, "Client deleted in _fds_invite of Channel");
+
+            channel->fetch_invite_fds()->erase(it);
             break ;
         }
     }

@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:44:28 by xel               #+#    #+#             */
-/*   Updated: 2023/11/24 12:50:43 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/16 20:34:51 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -32,16 +32,11 @@
 #define COMMAND_USER_STR     "USER"
 #define COMMAND_PING_STR     "PING"
 #define COMMAND_PONG_STR     "PONG"
-#define COMMAND_DIE_STR      "die"
-#define COMMAND_KILL_STR     "kill"
-#define COMMAND_OPER_STR     "OPER"
 #define COMMAND_TOPIC_STR    "TOPIC"
 #define COMMAND_QUIT_STR     "QUIT"
 #define COMMAND_MODE_STR     "MODE"
 #define COMMAND_PRIVMSG_STR  "PRIVMSG"
-#define COMMAND_NOTICE_STR   "NOTICE"
 #define COMMAND_JOIN_STR     "JOIN"
-#define COMMAND_LIST_STR     "LIST"
 #define COMMAND_INVITE_STR   "INVITE"
 #define COMMAND_KICK_STR     "KICK"
 #define COMMAND_PART_STR     "PART"
@@ -57,14 +52,9 @@ typedef enum e_command_type {
     COMMAND_TYPE_USER,
     COMMAND_TYPE_PING,
     COMMAND_TYPE_PONG,
-    COMMAND_TYPE_DIE,
-    COMMAND_TYPE_KILL,
-    COMMAND_TYPE_OPER,
     COMMAND_TYPE_TOPIC,
-    COMMAND_TYPE_QUIT,
     COMMAND_TYPE_MODE,
     COMMAND_TYPE_PRIVMSG,
-    COMMAND_TYPE_NOTICE,
     COMMAND_TYPE_JOIN,
     COMMAND_TYPE_LIST,
     COMMAND_TYPE_INVITE,
