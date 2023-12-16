@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:50:23 by xel               #+#    #+#             */
-/*   Updated: 2023/11/24 11:38:53 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/16 01:49:44 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -30,8 +30,9 @@ static void     add_operator(Channel *channel, int32_t fd) {
 }
 
 
-void    Server::_mode_operator_priv(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd) {
+void    Server::_mode_operator_priv(Channel *channel, std::vector<std::string> &cmd, bool add_or_rm, int32_t fd) {
 
+    std::string                 nickname;
     std::vector<std::string>    reply_arg;
     int32_t                     user_fd;
 
@@ -61,7 +62,9 @@ void    Server::_mode_operator_priv(Channel *channel, std::vector<std::string> c
     
     } else if (add_or_rm == ADD_MODE) {
         
-        if ((user_fd = nickname_is_in_channel(_users, channel, cmd[3])) != false) {
+        nickname = cmd[3].substr(0, cmd[3].find(','));
+        
+        if ((user_fd = nickname_is_in_channel(_users, channel, nickname)) != false) {
 
             if (find_fds_in_vec(channel->fetch_operator_fds(), user_fd)) {
                 logger(INFO, "User is already operator channel");
@@ -77,5 +80,6 @@ void    Server::_mode_operator_priv(Channel *channel, std::vector<std::string> c
             reply_arg.push_back(cmd[1]);
             _send_reply(fd, 441, reply_arg);
         }
+        cmd[3].erase(0, cmd[3].find(',') + 1);
     }
 }

@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:05 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/13 21:11:14 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/12/16 01:09:56 by xel              ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #pragma once
 
@@ -113,9 +113,9 @@ class Server {
 
         void        _mode_invite_only(Channel *channel, bool add_or_rm, int32_t fd);
         void        _mode_topic_manage(Channel *channel, bool add_or_rm, int32_t fd);
-        void        _mode_change_pass(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
-        void        _mode_user_limit(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
-        void        _mode_operator_priv(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd);
+        void        _mode_change_pass(Channel *channel, std::vector<std::string> &cmd, bool add_or_rm, int32_t fd);
+        void        _mode_user_limit(Channel *channel, std::vector<std::string> &cmd, bool add_or_rm, int32_t fd);
+        void        _mode_operator_priv(Channel *channel, std::vector<std::string> &cmd, bool add_or_rm, int32_t fd);
 
         void        _send_reply(int32_t fd, int32_t code, std::vector<std::string> &reply_arg);
 

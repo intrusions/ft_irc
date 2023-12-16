@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:55:28 by xel               #+#    #+#             */
-/*   Updated: 2023/12/08 06:12:45 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/16 01:19:06 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -55,6 +55,7 @@ void Server::_handle_add_mode(std::string modes, Channel *channel, std::vector<s
                 case (CHANNEL_MODE_OPERATOR_PRIV):  _mode_operator_priv(channel, cmd, ADD_MODE, fd);    break;
                 case (CHANNEL_MODE_TOPIC_MANAGE):   _mode_topic_manage(channel, ADD_MODE, fd);          break;
             }
+            
         } else {
             logger(INFO, "Channel mode is not supported on this server");
             _send_reply(fd, 501, reply_arg);

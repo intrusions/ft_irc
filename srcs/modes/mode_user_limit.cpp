@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:50:23 by xel               #+#    #+#             */
-/*   Updated: 2023/12/08 06:23:40 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/16 01:46:07 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -20,8 +20,9 @@ static int32_t  limits_is_valid(std::string limits) {
     return (std::atoi(limits.c_str()));
 }
 
-void    Server::_mode_user_limit(Channel *channel, std::vector<std::string> cmd, bool add_or_rm, int32_t fd) {
-    
+void    Server::_mode_user_limit(Channel *channel, std::vector<std::string> &cmd, bool add_or_rm, int32_t fd) {
+
+    std::string                 limits;    
     uint8_t                     nlimits;
     std::vector<std::string>    reply_arg;
 
@@ -38,7 +39,9 @@ void    Server::_mode_user_limit(Channel *channel, std::vector<std::string> cmd,
         
         if (cmd.size() >= 4) {
             
-            if ((nlimits = limits_is_valid(cmd[3])) != false) {
+            limits = cmd[3].substr(0, cmd[3].find(','));
+
+            if ((nlimits = limits_is_valid(limits)) != false) {
                 logger(INFO, "Mode +l set, new user limit on this channel");
                 
                 channel->set_mflags(channel->get_mflags() | CHANNEL_MODE_USER_LIMIT);
@@ -52,7 +55,7 @@ void    Server::_mode_user_limit(Channel *channel, std::vector<std::string> cmd,
 
                 reply_arg.push_back(cmd[1]);
                 reply_arg.push_back("+l");
-                reply_arg.push_back(cmd[3]);
+                reply_arg.push_back(limits);
                 reply_arg.push_back(":Invalid user limit");
                 _send_reply(fd, 696, reply_arg);
             }
@@ -65,5 +68,6 @@ void    Server::_mode_user_limit(Channel *channel, std::vector<std::string> cmd,
             reply_arg.push_back(":Missing user limit");
             _send_reply(fd, 696, reply_arg);
         }
+        cmd[3].erase(0, cmd[3].find(',') + 1);
     }
 }
