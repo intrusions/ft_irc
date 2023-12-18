@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/16 20:32:39 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/18 04:08:22 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -176,12 +176,12 @@ void	Server::run() {
  */
 void	Server::_receive_client_input(User *user) {
     __abort_if_fail__(user);
-    
-    char            buff[512] = {};
-    int64_t         bytes_read;
-    uint8_t         delimiter_size = 0;
-    uint64_t        pos_delimiter;
-    std::string     copy_buff;
+
+    char                buff[512] = {};
+    int64_t             bytes_read;
+    uint8_t             delimiter_size = 0;
+    uint64_t            pos_delimiter;
+    std::string         copy_buff;
 
     bytes_read = recv(user->get_fd(), &buff, sizeof(buff), 0);
     
@@ -191,7 +191,7 @@ void	Server::_receive_client_input(User *user) {
         buff[bytes_read] = 0;
     }
 
-    copy_buff = buff;
+    copy_buff = user->get_sbuffer() + buff;
 
     while (copy_buff.length()){
     
@@ -199,10 +199,14 @@ void	Server::_receive_client_input(User *user) {
             delimiter_size = 2;
         } else if ((pos_delimiter = copy_buff.find("\n")) != std::string::npos) {
             delimiter_size = 1;
+        } else {
+            user->set_sbuffer(copy_buff);
+            return ;
         }
 
         user->fetch_commands()->push_back(copy_buff.substr(0, pos_delimiter));
         copy_buff.erase(0, pos_delimiter + delimiter_size);
+        user->set_sbuffer("");
     }
 }
 

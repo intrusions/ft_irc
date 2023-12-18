@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/11/24 12:53:53 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/18 04:02:00 by xel              ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -47,6 +47,7 @@ class User {
     private:
         int32_t                     _fd;
         std::vector<std::string>    _commands;
+        std::string                 _sbuffer;
         
         std::string                 _prefix;
         std::string                 _nickname;
@@ -61,6 +62,7 @@ class User {
         ~User();
         
         int32_t         get_fd(void) const;
+        std::string     get_sbuffer(void) const;
         std::string     get_prefix(void) const;
         std::string     get_nickname(void) const;
         std::string     get_username(void) const;
@@ -69,6 +71,7 @@ class User {
         int32_t         get_pass_is_valid(void) const;
 
         void            set_prefix(void);
+        void            set_sbuffer(const std::string &n);
         void            set_nickname(const std::string &n);
         void            set_username(const std::string &n);
         void            set_realname(const std::string &n);
