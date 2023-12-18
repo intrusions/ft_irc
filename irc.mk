@@ -3,7 +3,6 @@ CC           := c++
 SRCS_DIR     := srcs
 OBJS_DIR     := .objs
 INCS_DIR     := incs
-TEST_MAIN    := srcs/tests/__main__.cpp
 MAIN         := srcs/main.cpp
 
 CFLAGS :=                           \

@@ -1,5 +1,4 @@
 include irc.mk
-include specs.mk
 
 SRCS_OBJS := $(patsubst %.cpp,$(OBJS_DIR)/%.o,$(SRCS))
 
