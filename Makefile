@@ -25,15 +25,6 @@ $(NAME): $(SRCS_OBJS)
 		-o $(NAME) \
 		-I $(INCS_DIR)
 
-spec: $(SRCS_OBJS)
-	$(CC) \
-		$^ \
-		$(TEST_MAIN) \
-		$(SPECS_SRCS) \
-		$(CFLAGS_DBG) \
-		-o $(NAME) \
-		-I $(INCS_DIR) \
-
 g: CFLAGS += $(CFLAGS_DBG)
 g: all
 
@@ -46,4 +37,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY	: all clean g spec fclean re 
+.PHONY	: all clean g fclean re 
