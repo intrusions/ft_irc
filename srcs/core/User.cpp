@@ -1,16 +1,17 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:52:09 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/18 03:59:37 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/19 20:47:59 by jucheval         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "User.hpp"
+#include <fcntl.h>
 
 /* constructor/destructor */
 User::User(int32_t fd)
@@ -19,7 +20,10 @@ User::User(int32_t fd)
     , _username(DEFAULT_INFO_VALUE)
     , _realname(DEFAULT_INFO_VALUE)
     , _hostname(DEFAULT_INFO_VALUE)
-    , _pass_is_valid(0) { set_prefix(); }
+    , _pass_is_valid(0) {
+        (void)fcntl(fd, F_SETFL, O_NONBLOCK);
+        set_prefix();
+    }
 
 User::~User() {}
 

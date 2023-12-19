@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:33:13 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/18 04:08:22 by xel              ###   ########.fr       */
+/*   Updated: 2023/12/19 21:28:58 by jucheval         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "Server.hpp"
 #include "User.hpp"
@@ -47,6 +47,7 @@ Server::~Server() {
     logger(INFO, "Cleaning before exit...");
     for (std::vector<Channel *>::iterator it = _channel.begin(); it != _channel.end(); it++)    { delete *it; }
     for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)         { delete it->second; }
+    for (std::vector<pollfd>::iterator it = _fds.begin(); it != _fds.end(); it++)               { (void)close(it->fd); }
     logger(INFO, "Exit");
 }
 
@@ -94,7 +95,7 @@ std::string Server::_check_password(const char *password) const{
 void		Server::server_initialisation() {
 
     int32_t	optsock = 1;
-    _sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    _sockfd = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
 
     if (_sockfd == -1)
         throw Server::SocketInitialisationFailed();
@@ -174,10 +175,13 @@ void	Server::run() {
  * The received data is parsed based on newline characters ("\r\n" or "\n"), and
  * individual commands are added to the user's command queue for further processing.
  */
+
+# define MAX_BUF_SIZE 2048
+
 void	Server::_receive_client_input(User *user) {
     __abort_if_fail__(user);
 
-    char                buff[512] = {};
+    char                buff[MAX_BUF_SIZE] = {};
     int64_t             bytes_read;
     uint8_t             delimiter_size = 0;
     uint64_t            pos_delimiter;
@@ -188,7 +192,9 @@ void	Server::_receive_client_input(User *user) {
     if (bytes_read == -1) {
         return ;
     } else {
-        buff[bytes_read] = 0;
+        buff[bytes_read >= MAX_BUF_SIZE
+            ? MAX_BUF_SIZE - 1
+            : bytes_read] = 0;
     }
 
     copy_buff = user->get_sbuffer() + buff;

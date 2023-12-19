@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:51:08 by jucheval          #+#    #+#             */
-/*   Updated: 2023/12/13 20:06:52 by jucheval         ###   ########.fr       */
+/*   Updated: 2023/12/19 19:30:50 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ enum e_log_lvl {
             << std::endl;                                           \
 } while (0)
 
-#if 0
+#if !defined(DEBUG_MODE)
     #define __abort_if_fail__(expr) (void)expr
 #else
     #define __abort_if_fail__(expr)                         \
